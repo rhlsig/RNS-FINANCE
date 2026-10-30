@@ -101,7 +101,7 @@
             <i class="fa-solid fa-envelope-open-text"></i> rnsgpl2316@gmail.com
           </a>
           <div class="text-[11px] text-slate-200">(ईमेल भेजने के लिए ऊपर ईमेल आईडी पर टैप करें)</div>
-          <div class="pt-0.5"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Digital Agreement & No-Dues Facility</div>
+          <div class="pt-0.5"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Digital Agreement & EMI Receipt Facility</div>
         </div>
       </div>
 
@@ -118,7 +118,7 @@
         <button type="button" onclick="switchCustomerTab('track')" id="tabTrackCustomer" class="tab-btn p-4 rounded-xl border-2 font-bold text-left flex items-center justify-between shadow-sm">
           <div>
             <div class="text-base flex items-center gap-2"><i class="fa-solid fa-magnifying-glass-location"></i> <span id="txtTabTrack">Tracking Services (ट्रैक स्टेटस)</span></div>
-            <div class="text-xs opacity-85 font-normal mt-0.5">अंतिम 4 अंक या Order ID से लोन ट्रैक करें</div>
+            <div class="text-xs opacity-85 font-normal mt-0.5">अंतिम 4 अंक या Order ID से लोन व रसीद देखें</div>
           </div>
           <i class="fa-solid fa-chevron-right"></i>
         </button>
@@ -191,7 +191,7 @@
             <div><label class="block font-bold mb-1">Date of Birth (जन्मतिथि - मैनुअल लिखें) *</label><input type="text" id="appDob" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY (जैसे: 15/08/1995)"></div>
             <div><label class="block font-bold mb-1">Mobile Number (मोबाइल नंबर) *</label><input type="tel" id="appMobile" required pattern="[0-9]{10}" maxlength="10" class="w-full rounded-lg border px-3 py-2" placeholder="10 Digit Mobile"></div>
             <div><label class="block font-bold mb-1">Email ID (ईमेल आईडी) *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2" placeholder="example@gmail.com"></div>
-            <div><label class="block font-bold mb-1">ID / Aadhaar Number (12 अंक) *</label><input type="text" id="appAadhaar" required pattern="[0-9]{12}" maxlength="12" class="w-full rounded-lg border px-3 py-2" placeholder="12 Digit Number"></div>
+            <div><label class="block font-bold mb-1">ID Card Number (12 अंक) *</label><input type="text" id="appAadhaar" required pattern="[0-9]{12}" maxlength="12" class="w-full rounded-lg border px-3 py-2" placeholder="12 Digit ID Number"></div>
             <div><label class="block font-bold mb-1">PAN Number (पैन नंबर) *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase" placeholder="ABCDE1234F"></div>
           </div>
 
@@ -223,21 +223,14 @@
         </form>
       </div>
 
-      <!-- TAB 2: DEDICATED CLEAN TRACKING VIEW (NO CLUTTER, NO HEADER/FOOTER DISTRACTION) -->
-      <div id="viewTrackCustomer" class="hidden max-w-3xl mx-auto space-y-4">
-        <div class="bg-white card-bg rounded-2xl shadow-sm border-2 border-indigo-200 p-4">
-          <div class="flex items-center justify-between border-b pb-2.5 mb-3">
-            <div>
-              <h3 class="text-base font-extrabold text-indigo-900 dark:text-indigo-300">📦 Loan Application Tracking Portal</h3>
-              <p class="text-[11px] text-slate-500">अपना <strong>Order ID (RNSF...)</strong> या मोबाइल / आधार के <strong>अंतिम 4 अंक</strong> डालें।</p>
-            </div>
-            <button type="button" onclick="switchCustomerTab('new')" class="text-xs font-extrabold bg-slate-100 hover:bg-slate-200 text-slate-800 px-3 py-1.5 rounded-lg border">
-              ← Home / New Loan
-            </button>
-          </div>
+      <!-- TAB 2: TRACKING VIEW (SAME NORMAL LAYOUT AS BEFORE) -->
+      <div id="viewTrackCustomer" class="hidden space-y-4">
+        <div class="bg-white card-bg rounded-2xl shadow-sm border-2 border-indigo-200 p-5">
+          <h3 class="text-lg font-extrabold text-indigo-900 dark:text-indigo-300 mb-1">📦 Track Loan Application, Interest & EMI Receipt</h3>
+          <p class="text-xs text-slate-500 mb-3">अपना <strong>Order ID (RNSF...)</strong> या मोबाइल / आईडी के <strong>अंतिम 4 अंक</strong> डालें।</p>
           <div class="flex flex-col sm:flex-row gap-2">
             <input type="text" id="trackSearchInput" oninput="autoDetectCustomerTrack(this.value)" class="flex-grow rounded-xl border px-4 py-2.5 text-sm font-bold" placeholder="Enter Order ID (e.g. RNSF1024) or Last 4 Digits...">
-            <button type="button" onclick="searchCustomerApplication()" class="px-6 py-2.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-sm">Track</button>
+            <button type="button" onclick="searchCustomerApplication()" class="px-6 py-2.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-sm">Track Now</button>
           </div>
         </div>
 
@@ -251,15 +244,12 @@
           <div id="multiLoanSlidePills" class="flex gap-2 overflow-x-auto pb-1"></div>
         </div>
 
-        <!-- CLEAN TRACKING RESULT CARD -->
+        <!-- TRACKING RESULT CARD -->
         <div id="trackingResultContainer"></div>
       </div>
 
       <!-- TAB 3: CIBIL (500 TO 650 IN-HOUSE + EXTERNAL PORTAL LINK) -->
       <div id="viewCibilCheck" class="hidden bg-white card-bg rounded-2xl shadow-sm border p-6 text-center max-w-xl mx-auto space-y-4">
-        <div class="flex justify-end">
-          <button type="button" onclick="switchCustomerTab('new')" class="text-xs font-bold border px-3 py-1 rounded-lg">← Back</button>
-        </div>
         <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto text-2xl">
           <i class="fa-solid fa-gauge-high"></i>
         </div>
@@ -326,27 +316,33 @@
         </button>
       </div>
 
-      <!-- OWNER SUB 3: COLLECT AMOUNT (FULL ACCESS) -->
+      <!-- OWNER SUB 3: COLLECT AMOUNT (STRICT TENURE CAP + NACH / ONLINE UPI / CASH DROPDOWN) -->
       <div id="ownerViewCollect" class="hidden max-w-xl mx-auto bg-white card-bg rounded-2xl p-5 border space-y-3 text-xs">
         <h3 class="text-base font-extrabold border-b pb-2">Collect Amount & Update EMI Receipt (Full Access)</h3>
         <div>
           <label class="block font-bold mb-1">Select Customer</label>
           <select id="collectAppCustomerSelect" onchange="loadCustomerForCollectApp()" class="w-full rounded-lg border px-3 py-2 font-bold"></select>
         </div>
-        <div id="collectCustomerSummary" class="bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border"></div>
+        <div id="collectCustomerSummary" class="bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border font-semibold"></div>
         <div class="grid grid-cols-2 gap-2">
-          <div><label class="block font-bold mb-1">1. Serial No.</label><input type="text" id="collectSerialNo" class="w-full rounded border px-3 py-1.5 font-bold" value="1"></div>
-          <div><label class="block font-bold mb-1">2. Installment</label><input type="text" id="collectEmiMonth" class="w-full rounded border px-3 py-1.5" placeholder="1st EMI"></div>
+          <div><label class="block font-bold mb-1">1. Serial No.</label><input type="text" id="collectSerialNo" readonly class="w-full rounded border px-3 py-1.5 font-extrabold bg-slate-100 dark:bg-slate-900" value="1"></div>
+          <div><label class="block font-bold mb-1">2. Installment</label><input type="text" id="collectEmiMonth" class="w-full rounded border px-3 py-1.5 font-bold" placeholder="1st EMI"></div>
           <div><label class="block font-bold mb-1">3. Transaction ID</label><input type="text" id="collectTxnId" class="w-full rounded border px-3 py-1.5 font-bold" placeholder="TXN1001"></div>
           <div><label class="block font-bold mb-1">4. Transaction Date</label><input type="date" id="collectTxnDate" class="w-full rounded border px-3 py-1.5"></div>
           <div><label class="block font-bold mb-1">5. Late Fee (₹)</label><input type="number" id="collectLateFee" value="0" class="w-full rounded border px-3 py-1.5 font-bold"></div>
           <div><label class="block font-bold mb-1">6. Installment Amount (₹)</label><input type="number" id="collectEmiAmount" class="w-full rounded border px-3 py-1.5 font-extrabold text-emerald-700"></div>
         </div>
         <div>
-          <label class="block font-bold mb-1">Payment Mode / Remark</label>
-          <input type="text" id="collectEmiMode" value="NACH Auto-Debit / Online" class="w-full rounded border px-3 py-1.5">
+          <label class="block font-bold mb-1">7. Payment Mode (भुगतान का माध्यम चुनें)</label>
+          <select id="collectEmiMode" class="w-full rounded-lg border px-3 py-2 font-extrabold">
+            <option value="NACH">NACH</option>
+            <option value="Online UPI">Online UPI</option>
+            <option value="Cash">Cash</option>
+          </select>
         </div>
-        <button type="button" onclick="recordMonthlyEmi()" class="w-full py-2.5 rounded-xl bg-emerald-700 text-white font-extrabold">Final Submit & Sync EMI</button>
+        <button type="button" id="btnSubmitCollectEmi" onclick="recordMonthlyEmi()" class="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
+          Final Submit & Generate Customer Receipt
+        </button>
       </div>
 
       <!-- OWNER SUB 4: EDITABLE AGREEMENT -->
@@ -394,13 +390,15 @@
     </div>
   </div>
 
-  <!-- MODAL FOR AGREEMENT / NO DUES -->
+  <!-- MODAL FOR AGREEMENT / NO DUES / EMI PAYMENT RECEIPT -->
   <div id="documentModal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-3xl w-full p-5 space-y-3 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview (Click text below to edit)</h3>
+        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview</h3>
         <div class="flex gap-2">
-          <button type="button" onclick="downloadModalPdf()" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-bold">Download PDF</button>
+          <button type="button" onclick="downloadModalPdf()" class="px-3.5 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold flex items-center gap-1">
+            <i class="fa-solid fa-file-pdf"></i> Download PDF
+          </button>
           <button type="button" onclick="closeDocumentModal()" class="px-3 py-1.5 rounded-lg bg-slate-200 text-slate-800 text-xs font-bold">✕ Close</button>
         </div>
       </div>
@@ -408,7 +406,7 @@
     </div>
   </div>
 
-  <!-- FOOTER (HIDDEN AUTOMATICALLY IN TRACKING VIEW) -->
+  <!-- FOOTER -->
   <div id="mainBottomFooter" class="mt-10">
     <div class="bg-emerald-900 text-white py-2.5 px-4 text-center text-xs font-bold">
       🏦 SMALL & ALL TYPES OF PERSONAL LOAN AND ONLINE SHOPPING EMI FINANCE SERVICES AVAILABLE
@@ -448,7 +446,6 @@
     let currentOwnerStatusFilter = 'Pending';
     let currentSelectedOwnerOrderId = '';
 
-    // HELPER TO PREVENT CORRUPTED HTML IN URL/TEXT FIELDS
     function cleanSafeUrl(url) {
       if (!url || typeof url !== 'string') return '';
       const trimmed = url.trim();
@@ -496,7 +493,6 @@
           if (!parsed.agreementSettings) parsed.agreementSettings = { interestRate: '3% Monthly', emiDate: '5', penaltyText: '3% प्रति माह | बाउंस शुल्क: ₹500', customBody: DEFAULT_AGREEMENT_CLAUSES };
           if (!parsed.promos) parsed.promos = [];
           if (!parsed.applications) parsed.applications = [];
-          // Auto-clean any corrupted nachLink or purpose that broke the layout earlier
           parsed.applications.forEach(a => {
             a.nachLink = cleanSafeUrl(a.nachLink);
             if (a.purpose && (a.purpose.includes('<') || a.purpose.length > 350)) {
@@ -555,9 +551,6 @@
       document.getElementById('customerPortalSection').classList.toggle('hidden', view !== 'customer');
       document.getElementById('ownerPortalSection').classList.toggle('hidden', view === 'customer');
       if (view === 'owner') {
-        document.getElementById('mainBottomFooter').classList.remove('hidden');
-        document.getElementById('headerSubPills').classList.remove('hidden');
-        document.getElementById('headerAddressBar').classList.remove('hidden');
         renderOwnerApplications();
         renderPromoCodes();
         populateCollectAppDropdown();
@@ -574,43 +567,12 @@
       }
     }
 
-    // CLEAN SEPARATION: HIDES HERO, TABS, EXTRA HEADER PILLS & FOOTER WHEN IN TRACKING MODE
+    // NORMAL FULL LAYOUT RESTORED FOR ALL CUSTOMER TABS (HEADER, BANNER, 3 TABS & FOOTER STAY VISIBLE)
     function switchCustomerTab(tab) {
       switchMainView('customer');
-      const vNew = document.getElementById('viewNewCustomer');
-      const vTrack = document.getElementById('viewTrackCustomer');
-      const vCibil = document.getElementById('viewCibilCheck');
-      const hero = document.getElementById('customerHeroBanner');
-      const tabsBar = document.getElementById('customerMainTabsBar');
-      const footer = document.getElementById('mainBottomFooter');
-      const subPills = document.getElementById('headerSubPills');
-      const addrBar = document.getElementById('headerAddressBar');
-
-      vNew.classList.add('hidden');
-      vTrack.classList.add('hidden');
-      vCibil.classList.add('hidden');
-
-      if (tab === 'new') {
-        hero.classList.remove('hidden');
-        tabsBar.classList.remove('hidden');
-        footer.classList.remove('hidden');
-        subPills.classList.remove('hidden');
-        addrBar.classList.remove('hidden');
-        vNew.classList.remove('hidden');
-      } else if (tab === 'track') {
-        // Ultra-clean dedicated tracking screen
-        hero.classList.add('hidden');
-        tabsBar.classList.add('hidden');
-        footer.classList.add('hidden');
-        subPills.classList.add('hidden');
-        addrBar.classList.add('hidden');
-        vTrack.classList.remove('hidden');
-      } else if (tab === 'cibil') {
-        hero.classList.add('hidden');
-        tabsBar.classList.remove('hidden');
-        footer.classList.add('hidden');
-        vCibil.classList.remove('hidden');
-      }
+      document.getElementById('viewNewCustomer').classList.toggle('hidden', tab !== 'new');
+      document.getElementById('viewTrackCustomer').classList.toggle('hidden', tab !== 'track');
+      document.getElementById('viewCibilCheck').classList.toggle('hidden', tab !== 'cibil');
 
       const btnNew = document.getElementById('tabNewCustomer');
       const btnTrack = document.getElementById('tabTrackCustomer');
@@ -695,7 +657,8 @@
       const feeObj = updateFeeCalculation();
       const amount = parseFloat(document.getElementById('appLoanAmount').value);
       const tenure = parseInt(document.getElementById('appTenure').value);
-      const monthlyEmi = Math.round((amount + (amount * 0.03 * tenure)) / tenure);
+      const totalInterest = Math.round(amount * 0.03 * tenure);
+      const monthlyEmi = Math.round((amount + totalInterest) / tenure);
 
       const bankName = document.getElementById('appBankName').value.trim();
       const bankHolder = document.getElementById('appBankHolder').value.trim();
@@ -710,6 +673,8 @@
         customerType: document.getElementById('appCustomerType').value,
         purpose: purpose || 'Personal / Shopping Loan',
         amount, tenure, monthlyEmi,
+        interestRate: '3% Monthly',
+        extraInterest: totalInterest,
         name: document.getElementById('appName').value.trim(),
         dob: document.getElementById('appDob').value.trim(),
         mobile: document.getElementById('appMobile').value.trim(),
@@ -729,6 +694,8 @@
         insuranceNote: '',
         nachLink: '',
         nachState: 'Not Sent',
+        nachRefNo: '',
+        nachNote: '',
         docs: { ...uploadedDocsTemp },
         reuploadedDocs: [],
         emis: []
@@ -763,7 +730,7 @@
 
       if (matchedApps.length === 0) {
         selectorBar.classList.add('hidden');
-        container.innerHTML = `<div class="p-4 rounded-xl bg-white card-bg border text-center text-xs text-rose-600 font-bold">कोई रिकॉर्ड नहीं मिला। कृपया सही Order ID (RNSF...) या मोबाइल/आधार के अंतिम 4 अंक डालें।</div>`;
+        container.innerHTML = `<div class="p-4 rounded-xl bg-white card-bg border text-center text-xs text-rose-600 font-bold">कोई रिकॉर्ड नहीं मिला। कृपया सही Order ID (RNSF...) या मोबाइल/आईडी के अंतिम 4 अंक डालें।</div>`;
         return;
       }
 
@@ -793,11 +760,15 @@
       }
     }
 
-    // CLEAN CUSTOMER TRACKING VIEW WITH PERSONAL, BANK, PURPOSE, AND CONDITIONAL AGREEMENT (ONLY WHEN NACH IS APPROVED)
+    // CUSTOMER TRACKING CARD: INTEREST RATE + EXTRA INTEREST + NACH LINK HIDDEN ON APPROVAL + EMI RECEIPT BUTTON
     function renderCustomerTrackingCard(app) {
       const container = document.getElementById('trackingResultContainer');
+      const db = getCloudData();
+      const interestRateStr = app.interestRate || db.agreementSettings.interestRate || '3% Monthly';
+      const totalPayable = app.monthlyEmi * app.tenure;
+      const extraInterestAmt = app.extraInterest !== undefined ? app.extraInterest : Math.max(0, totalPayable - app.amount);
       const totalPaid = app.emis.reduce((s, i) => s + Number(i.amount), 0);
-      const rem = Math.max(0, (app.monthlyEmi * app.tenure) - totalPaid);
+      const rem = Math.max(0, totalPayable - totalPaid);
       const procPlusGst = app.totalFee || (app.processingFee + app.gstFee);
       const insAmt = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
       const totalDeductible = procPlusGst + insAmt;
@@ -823,11 +794,41 @@
           </div>
         </div>` : '';
 
+      // Step 1 NACH Box: If NACH is Approved, HIDE the link and show Reference Number + Approved Status Note
+      let nachBoxHtml = '';
+      if (isNachApproved) {
+        const refNo = app.nachRefNo || ('NACH-' + app.orderId + '-OK');
+        const refNote = app.nachNote || 'आपका NACH ऑटो-डेबिट सफलतापूर्वक वेरिफाई और अप्रूव हो चुका है।';
+        nachBoxHtml = `
+          <div class="bg-emerald-100/90 dark:bg-slate-900 p-3.5 rounded-xl border-2 border-emerald-500 space-y-1">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-extrabold text-emerald-900 dark:text-emerald-300"><i class="fa-solid fa-circle-check mr-1"></i> Step 1: NACH Auto-Debit Status — APPROVED ✔</span>
+              <span class="bg-emerald-800 text-white px-2.5 py-0.5 rounded font-mono font-bold text-[11px]">Ref No: ${escapeHtml(refNo)}</span>
+            </div>
+            <p class="text-[11px] font-semibold text-emerald-950 dark:text-slate-300"><strong>Note:</strong> ${escapeHtml(refNote)}</p>
+          </div>
+        `;
+      } else {
+        nachBoxHtml = `
+          <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="font-extrabold">Step 1: NACH Auto-Debit Mandate</div>
+              <div class="text-slate-500">NACH Status: <strong class="text-amber-600">${escapeHtml(app.nachState || 'Not Sent')}</strong></div>
+            </div>
+            ${safeNachUrl ? `
+              <a href="${escapeHtml(safeNachUrl)}" target="_blank" rel="noopener noreferrer" onclick="markNachProcessing('${escapeHtml(app.orderId)}')" class="px-4 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-bold text-center">
+                🔗 Open NACH Form ↗
+              </a>
+            ` : `<span class="text-amber-600 font-bold">ओनर द्वारा NACH लिंक भेजा जा रहा है...</span>`}
+          </div>
+        `;
+      }
+
       let approvalHtml = (app.status === 'Approved' || app.status === 'Loan Closed') ? `
         <div class="p-4 rounded-xl bg-emerald-50 dark:bg-slate-800 border-2 border-emerald-500 space-y-3 text-xs">
           <div class="flex flex-wrap justify-between gap-2 font-extrabold text-emerald-900 dark:text-emerald-300 border-b border-emerald-200 pb-2">
             <span>✅ LOAN APPROVED</span>
-            <span>खाते में भेजी जाने वाली शुद्ध राशि: <u class="text-sm">₹${netBankDisbursal}</u></span>
+            <span>खाते में भेजी जाने वाली शुद्ध राशि (Net Disbursal): <u class="text-sm">₹${netBankDisbursal}</u></span>
           </div>
 
           <!-- Insurance Option -->
@@ -844,20 +845,9 @@
             ${app.insuranceOpted && app.insuranceNote ? `<div class="text-[11px] text-emerald-800 bg-emerald-50 p-1.5 rounded"><strong>Insurance Note:</strong> ${escapeHtml(app.insuranceNote)}</div>` : ''}
           </div>
 
-          <!-- Step 1: NACH Process -->
-          <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <div class="font-extrabold">Step 1: NACH Auto-Debit Mandate</div>
-              <div class="text-slate-500">NACH Status: <strong class="${isNachApproved ? 'text-emerald-700' : 'text-amber-600'}">${escapeHtml(app.nachState || 'Not Sent')}</strong></div>
-            </div>
-            ${safeNachUrl ? `
-              <a href="${escapeHtml(safeNachUrl)}" target="_blank" rel="noopener noreferrer" onclick="markNachProcessing('${escapeHtml(app.orderId)}')" class="px-4 py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-bold text-center">
-                🔗 Open NACH Form ↗
-              </a>
-            ` : `<span class="text-amber-600 font-bold">ओनर द्वारा NACH लिंक भेजा जा रहा है...</span>`}
-          </div>
+          ${nachBoxHtml}
 
-          <!-- Step 2: Agreement Letter (STRICTLY SHOWN ONLY WHEN NACH IS APPROVED) -->
+          <!-- Step 2: Agreement Letter (SHOWN ONLY WHEN NACH IS APPROVED) -->
           ${isNachApproved ? `
             <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border-2 border-emerald-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
@@ -929,28 +919,148 @@
             </div>
           </div>
 
-          <!-- Loan Financial Summary -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 bg-slate-100 dark:bg-slate-800 p-3.5 rounded-xl border">
-            <div><span class="text-slate-500 block">स्वीकृत ऋण राशि</span><strong class="text-sm">₹${app.amount}</strong></div>
-            <div><span class="text-slate-500 block">मासिक किस्त (EMI)</span><strong class="text-sm text-emerald-700">₹${app.monthlyEmi} (${app.tenure} माह)</strong></div>
-            <div><span class="text-slate-500 block">शेष बकाया (Remaining)</span><strong class="text-sm text-rose-600">₹${rem}</strong></div>
-            <div><span class="text-slate-500 block">प्रोसेसिंग शुल्क (18% GST)</span><strong class="text-sm">₹${procPlusGst}</strong></div>
-            <div><span class="text-slate-500 block">इंश्योरेंस शुल्क</span><strong class="text-sm text-sky-700">₹${insAmt}</strong></div>
-            <div><span class="text-slate-500 block">खाते में शुद्ध राशि</span><strong class="text-sm text-emerald-700">₹${netBankDisbursal}</strong></div>
+          <!-- Loan Financial Summary (WITH INTEREST RATE & EXTRA INTEREST AMOUNT) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 bg-slate-100 dark:bg-slate-800 p-3.5 rounded-xl border">
+            <div><span class="text-slate-500 block">स्वीकृत ऋण राशि (Loan)</span><strong class="text-sm">₹${app.amount}</strong></div>
+            <div><span class="text-slate-500 block">प्रोसेसिंग शुल्क (18% GST)</span><strong class="text-sm text-rose-700">- ₹${procPlusGst}</strong></div>
+            <div><span class="text-slate-500 block">इंश्योरेंस कटौती (Insurance)</span><strong class="text-sm text-sky-700">- ₹${insAmt}</strong></div>
+            <div><span class="text-slate-500 block">खाते में प्राप्त शुद्ध राशि</span><strong class="text-sm text-emerald-700">₹${netBankDisbursal}</strong></div>
+            <div><span class="text-slate-500 block">ब्याज दर (Interest Rate)</span><strong class="text-sm text-indigo-700">${escapeHtml(interestRateStr)}</strong></div>
+            <div><span class="text-slate-500 block">कुल अतिरिक्त ब्याज (Extra Interest)</span><strong class="text-sm text-amber-700">+ ₹${extraInterestAmt}</strong></div>
+            <div><span class="text-slate-500 block">मासिक किस्त (${app.tenure} माह)</span><strong class="text-sm text-emerald-700">₹${app.monthlyEmi} / माह</strong></div>
+            <div><span class="text-slate-500 block">शेष बकाया (Remaining Due)</span><strong class="text-sm text-rose-600">₹${rem} (कुल: ₹${totalPayable})</strong></div>
           </div>
 
           ${approvalHtml}
 
-          <!-- EMI Installment Table -->
+          <!-- EMI Installment Table WITH RECEIPT DOWNLOAD BUTTON FOR EACH EMI -->
           <div>
-            <h5 class="font-extrabold uppercase text-slate-500 mb-1.5">📊 मासिक किस्त विवरण (EMI Payment History)</h5>
-            ${app.emis.length === 0 ? `<div class="text-slate-400 bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border">अभी तक कोई किस्त दर्ज नहीं हुई है।</div>` : `
-              <div class="overflow-x-auto"><table class="w-full text-left border">
-                <thead class="bg-slate-100 dark:bg-slate-800"><tr><th class="p-2 border">S.No</th><th class="p-2 border">Installment</th><th class="p-2 border">Txn ID</th><th class="p-2 border">Date</th><th class="p-2 border">Late Fee</th><th class="p-2 border">Amount</th></tr></thead>
-                <tbody>${app.emis.map(e => `<tr><td class="p-2 border">${escapeHtml(e.serial || 1)}</td><td class="p-2 border">${escapeHtml(e.month)}</td><td class="p-2 border">${escapeHtml(e.txnId || '-')}</td><td class="p-2 border">${escapeHtml(e.date)}</td><td class="p-2 border">₹${e.lateFee || 0}</td><td class="p-2 border font-bold text-emerald-700">₹${e.amount}</td></tr>`).join('')}</tbody>
+            <div class="flex items-center justify-between mb-1.5">
+              <h5 class="font-extrabold uppercase text-slate-500">📊 मासिक किस्त एवं रसीद (EMI Payment History — ${app.emis.length} / ${app.tenure} Paid)</h5>
+            </div>
+            ${app.emis.length === 0 ? `<div class="text-slate-400 bg-slate-50 dark:bg-slate-800 p-2.5 rounded-lg border">अभी तक कोई किस्त जमा नहीं हुई है।</div>` : `
+              <div class="overflow-x-auto"><table class="w-full text-left border rounded-lg overflow-hidden">
+                <thead class="bg-slate-100 dark:bg-slate-800">
+                  <tr>
+                    <th class="p-2 border">S.No</th>
+                    <th class="p-2 border">Installment</th>
+                    <th class="p-2 border">Txn ID</th>
+                    <th class="p-2 border">Date</th>
+                    <th class="p-2 border">Mode</th>
+                    <th class="p-2 border">Late Fee</th>
+                    <th class="p-2 border">Amount</th>
+                    <th class="p-2 border text-center">Receipt (रसीद)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${app.emis.map((e, idx) => `
+                    <tr class="border-b">
+                      <td class="p-2 border font-bold">${escapeHtml(e.serial || (idx + 1))}</td>
+                      <td class="p-2 border font-semibold">${escapeHtml(e.month)}</td>
+                      <td class="p-2 border font-mono">${escapeHtml(e.txnId || '-')}</td>
+                      <td class="p-2 border">${escapeHtml(e.date)}</td>
+                      <td class="p-2 border"><span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 font-bold">${escapeHtml(e.mode || 'NACH')}</span></td>
+                      <td class="p-2 border">₹${e.lateFee || 0}</td>
+                      <td class="p-2 border font-extrabold text-emerald-700">₹${e.amount}</td>
+                      <td class="p-2 border text-center">
+                        <button type="button" onclick="openEmiReceiptModal('${escapeHtml(app.orderId)}', ${idx})" class="px-3 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[11px] shadow">
+                          🧾 Receipt
+                        </button>
+                      </td>
+                    </tr>
+                  `).join('')}
+                </tbody>
               </table></div>`}
           </div>
         </div>`;
+    }
+
+    // GENERATE OFFICIAL EMI PAYMENT RECEIVING RECEIPT FOR CUSTOMER
+    function openEmiReceiptModal(orderId, emiIdx) {
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (!app || !app.emis[emiIdx]) return;
+      const emi = app.emis[emiIdx];
+      const totalReceived = Number(emi.amount) + (Number(emi.lateFee) || 0);
+      const paidUpToThis = app.emis.slice(0, emiIdx + 1).reduce((s, x) => s + Number(x.amount), 0);
+      const balanceAfterThis = Math.max(0, (app.monthlyEmi * app.tenure) - paidUpToThis);
+      const receiptNo = `RCPT-${app.orderId}-${emi.serial || (emiIdx + 1)}`;
+
+      document.getElementById('modalTitle').innerText = `EMI Payment Receipt - ${receiptNo}`;
+      document.getElementById('modalPrintableArea').innerHTML = `
+        <div class="agreement-paper text-xs space-y-4" id="pdfTargetContent">
+          <div class="text-center border-b-2 border-slate-900 pb-3">
+            <h2 class="text-2xl font-extrabold text-emerald-900">RNS FINANCE</h2>
+            <p class="font-bold">24 Hour Apply Loan & Helpline | Personal & Online Shopping Finance</p>
+            <p>Corporate Office: Plot No. 42, Bandra Kurla Complex (BKC), Mumbai - 400051 | Connaught Place, New Delhi - 110001</p>
+            <p>Helpline & WhatsApp: +91 7668273774 | Email: rnsgpl2316@gmail.com | CIN: U65929MH2026PTC123456</p>
+          </div>
+
+          <div class="flex justify-between items-center bg-slate-100 p-2.5 rounded border font-bold">
+            <span>रसीद संख्या (Receipt No): ${escapeHtml(receiptNo)}</span>
+            <span class="text-emerald-800 uppercase">✔ PAYMENT RECEIVED RECEIPT</span>
+            <span>दिनांक (Date): ${escapeHtml(emi.date)}</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 border p-3.5 rounded-xl">
+            <div class="space-y-1">
+              <div class="font-extrabold text-slate-700 border-b pb-1">ग्राहक विवरण (Customer Details)</div>
+              <div><strong>ग्राहक का नाम (Name):</strong> ${escapeHtml(app.name)}</div>
+              <div><strong>मोबाइल नंबर (Mobile):</strong> ${escapeHtml(app.mobile)}</div>
+              <div><strong>ईमेल आईडी (Email ID):</strong> ${escapeHtml(app.email || '-')}</div>
+              <div><strong>लोन आईडी (Order ID):</strong> ${escapeHtml(app.orderId)} (${escapeHtml(app.loanType)})</div>
+            </div>
+            <div class="space-y-1">
+              <div class="font-extrabold text-slate-700 border-b pb-1">भुगतान विवरण (Transaction Details)</div>
+              <div><strong>किस्त संख्या (Installment):</strong> ${escapeHtml(emi.month)} (${emiIdx + 1} of ${app.tenure})</div>
+              <div><strong>ट्रांजैक्शन आईडी (Txn ID):</strong> <span class="font-mono font-bold">${escapeHtml(emi.txnId)}</span></div>
+              <div><strong>भुगतान माध्यम (Payment Mode):</strong> <strong>${escapeHtml(emi.mode || 'NACH')}</strong></div>
+              <div><strong>भुगतान स्थिति (Status):</strong> <span class="text-emerald-700 font-extrabold">PAID & VERIFIED ✔</span></div>
+            </div>
+          </div>
+
+          <table class="w-full text-left border-collapse border border-slate-400">
+            <thead class="bg-slate-200 font-extrabold">
+              <tr>
+                <th class="p-2 border border-slate-400">विवरण (Description)</th>
+                <th class="p-2 border border-slate-400 text-right">राशि (Amount ₹)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="p-2 border border-slate-400">मासिक किस्त राशि (Monthly Installment Amount - ${escapeHtml(emi.month)})</td>
+                <td class="p-2 border border-slate-400 text-right font-bold">₹${emi.amount}</td>
+              </tr>
+              <tr>
+                <td class="p-2 border border-slate-400">विलंब शुल्क (Late Fee Charges)</td>
+                <td class="p-2 border border-slate-400 text-right font-bold">₹${emi.lateFee || 0}</td>
+              </tr>
+              <tr class="bg-emerald-50 font-extrabold text-sm">
+                <td class="p-2.5 border border-slate-400">कुल प्राप्त राशि (Total Received Amount)</td>
+                <td class="p-2.5 border border-slate-400 text-right text-emerald-800">₹${totalReceived}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="flex justify-between items-center bg-slate-50 p-2.5 rounded border text-[11px] font-bold">
+            <span>कुल पूर्ण किस्तें (Completed EMIs): ${emiIdx + 1} / ${app.tenure}</span>
+            <span>इस किस्त के बाद शेष बकाया (Remaining Balance): ₹${balanceAfterThis}</span>
+          </div>
+
+          <div class="pt-6 mt-4 border-t flex justify-between items-end">
+            <div class="text-[11px] text-slate-600">
+              * यह कंप्यूटर जनित आधिकारिक भुगतान रसीद है।<br>
+              * RNS Finance में समय पर किस्त भुगतान करने के लिए धन्यवाद।
+            </div>
+            <div class="text-center">
+              <div class="font-bold text-emerald-800">Digitally Verified & Signed</div>
+              <div class="border-t border-slate-900 mt-3 pt-1 font-extrabold">Authorized Signatory (RNS Finance)</div>
+            </div>
+          </div>
+        </div>
+      `;
+      document.getElementById('documentModal').classList.remove('hidden');
+      document.getElementById('documentModal').classList.add('flex');
     }
 
     function customerReuploadDocument(event, orderId, docKey) {
@@ -1002,7 +1112,6 @@
       }
     }
 
-    // OWNER PORTAL: STATUS TABS + DROPDOWN SELECTOR + SINGLE APPLICATION DOSSIER
     function selectOwnerStatusCategory(status) {
       currentOwnerStatusFilter = status;
       renderOwnerApplications();
@@ -1077,13 +1186,14 @@
       const procFee = app.totalFee || (app.processingFee + app.gstFee);
       const insFee = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
       const netDisb = Math.max(0, app.amount - procFee - insFee);
+      const extraInterestAmt = app.extraInterest !== undefined ? app.extraInterest : Math.max(0, (app.monthlyEmi * app.tenure) - app.amount);
       const purposeVal = app.purpose || 'Not specified';
       const isUrl = (purposeVal.startsWith('http://') || purposeVal.startsWith('https://') || purposeVal.startsWith('www.')) && !purposeVal.includes('<');
       const cleanUrl = purposeVal.startsWith('www.') ? 'https://' + purposeVal : purposeVal;
 
       const docList = [
         { key: 'pan', title: '1. PAN Card', img: app.docs.pan },
-        { key: 'aadhaar', title: '2. ID / Aadhaar', img: app.docs.aadhaar },
+        { key: 'aadhaar', title: '2. ID Card', img: app.docs.aadhaar },
         { key: 'passbook', title: '3. Bank Passbook', img: app.docs.passbook },
         { key: 'photo', title: '4. Customer Photo', img: app.docs.photo },
         { key: 'sign', title: '5. Signature', img: app.docs.sign }
@@ -1129,7 +1239,7 @@
                 <div><span class="text-slate-500 block">Account Number:</span><strong class="text-sm font-mono text-indigo-700 dark:text-indigo-300">${escapeHtml(app.accNo || app.bank)}</strong></div>
                 <div><span class="text-slate-500 block">IFSC Code:</span><strong class="font-mono">${escapeHtml(app.ifsc || '-')}</strong></div>
                 <div><span class="text-slate-500 block">Sanctioned Loan:</span><strong class="text-sm text-emerald-700">₹${app.amount} (${app.tenure}M)</strong></div>
-                <div><span class="text-slate-500 block">Monthly EMI:</span><strong>₹${app.monthlyEmi} / Month</strong></div>
+                <div><span class="text-slate-500 block">Extra Interest (3%/M):</span><strong class="text-amber-700">+ ₹${extraInterestAmt} (EMI: ₹${app.monthlyEmi})</strong></div>
               </div>
             </div>
           </div>
@@ -1142,10 +1252,11 @@
             ${isUrl ? `<a href="${escapeHtml(cleanUrl)}" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-extrabold shadow">🔗 Open Product Link ↗</a>` : ''}
           </div>
 
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-emerald-950 text-white p-4 rounded-xl">
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 bg-emerald-950 text-white p-4 rounded-xl">
             <div><span class="text-emerald-300 block text-[11px]">Loan Amount</span><strong class="text-base">₹${app.amount}</strong></div>
-            <div><span class="text-emerald-300 block text-[11px]">Proc. Fee (With 18% GST)</span><strong class="text-base">- ₹${procFee}</strong></div>
-            <div><span class="text-emerald-300 block text-[11px]">Insurance (${app.insuranceOpted ? 'Selected' : 'No'})</span><strong class="text-base">- ₹${insFee}</strong></div>
+            <div><span class="text-emerald-300 block text-[11px]">Proc. Fee (18% GST)</span><strong class="text-base">- ₹${procFee}</strong></div>
+            <div><span class="text-emerald-300 block text-[11px]">Insurance (${app.insuranceOpted ? 'Yes' : 'No'})</span><strong class="text-base">- ₹${insFee}</strong></div>
+            <div><span class="text-emerald-300 block text-[11px]">Extra Interest (3%/M)</span><strong class="text-base text-amber-300">+ ₹${extraInterestAmt}</strong></div>
             <div><span class="text-emerald-300 block text-[11px]">Net Payable to Customer A/C</span><strong class="text-lg text-emerald-400">₹${netDisb}</strong></div>
           </div>
 
@@ -1214,19 +1325,21 @@
               </button>
             </div>
 
-            <div class="p-3.5 rounded-xl border bg-slate-50 dark:bg-slate-800 space-y-2.5">
-              <div class="font-extrabold">🔗 NACH Approval (Unlocks Customer Agreement)</div>
-              <div class="text-[11px]">NACH Status: <strong class="text-amber-700">${escapeHtml(app.nachState || 'Not Sent')}</strong></div>
+            <div class="p-3.5 rounded-xl border bg-slate-50 dark:bg-slate-800 space-y-2">
+              <div class="font-extrabold">🔗 NACH Approval (Hides Link & Shows Ref No.)</div>
+              <div class="text-[11px]">Status: <strong class="text-amber-700">${escapeHtml(app.nachState || 'Not Sent')}</strong></div>
+              <input type="text" id="nachRefInput_${escapeHtml(app.orderId)}" value="${escapeHtml(app.nachRefNo || ('NACH-' + app.orderId + '-OK'))}" placeholder="NACH Reference No." class="w-full rounded border px-2.5 py-1 font-mono font-bold">
+              <input type="text" id="nachNoteInput_${escapeHtml(app.orderId)}" value="${escapeHtml(app.nachNote || 'आपका NACH ऑटो-डेबिट सफलतापूर्वक अप्रूव हो चुका है।')}" placeholder="NACH Approval Note..." class="w-full rounded border px-2.5 py-1">
               <div class="grid grid-cols-2 gap-1.5">
                 <button type="button" onclick="setOwnerNachDecision('${escapeHtml(app.orderId)}','Approved')" class="py-1.5 rounded-lg bg-emerald-600 text-white font-bold">✔ NACH Approved</button>
                 <button type="button" onclick="setOwnerNachDecision('${escapeHtml(app.orderId)}','Not Approved')" class="py-1.5 rounded-lg bg-rose-600 text-white font-bold">✕ Not Approved</button>
               </div>
-              <div class="pt-1 border-t space-y-1.5">
+              <div class="pt-1 border-t space-y-1">
                 <div class="flex gap-1">
-                  <select id="remarkDoc_${escapeHtml(app.orderId)}" class="rounded-lg border px-2 py-1.5"><option value="photo">Photo</option><option value="aadhaar">ID Card</option><option value="pan">PAN</option><option value="passbook">Passbook</option><option value="sign">Signature</option></select>
-                  <input type="text" id="remarkInput_${escapeHtml(app.orderId)}" value="${escapeHtml(app.remarkText)}" placeholder="Remark note..." class="w-full rounded-lg border px-2 py-1.5">
+                  <select id="remarkDoc_${escapeHtml(app.orderId)}" class="rounded-lg border px-2 py-1"><option value="photo">Photo</option><option value="aadhaar">ID Card</option><option value="pan">PAN</option><option value="passbook">Passbook</option><option value="sign">Signature</option></select>
+                  <input type="text" id="remarkInput_${escapeHtml(app.orderId)}" value="${escapeHtml(app.remarkText)}" placeholder="Remark note..." class="w-full rounded-lg border px-2 py-1">
                 </div>
-                <button type="button" onclick="sendRemarkToCustomer('${escapeHtml(app.orderId)}')" class="w-full py-1.5 rounded-lg bg-teal-700 text-white font-bold">Send Re-upload Remark</button>
+                <button type="button" onclick="sendRemarkToCustomer('${escapeHtml(app.orderId)}')" class="w-full py-1 rounded-lg bg-teal-700 text-white font-bold">Send Re-upload Remark</button>
               </div>
             </div>
 
@@ -1254,7 +1367,7 @@
       const rawUrl = document.getElementById('nachPasteUrl').value.trim();
       const safeUrl = cleanSafeUrl(rawUrl);
       if (!q || !safeUrl || (!safeUrl.startsWith('http://') && !safeUrl.startsWith('https://'))) {
-        return alert('कृपया सही Customer ID/Mobile और वैध वेबसाइट लिंक (https://...) ही डालें! HTML कोड पेस्ट न करें।');
+        return alert('कृपया सही Customer ID/Mobile और वैध वेबसाइट लिंक (https://...) ही डालें!');
       }
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId.toUpperCase() === q || a.mobile === q || a.aadhaar === q || (q.length === 4 && (a.mobile.endsWith(q) || a.aadhaar.endsWith(q))));
@@ -1267,12 +1380,20 @@
       alert(`NACH Link sent to ${app.name} (${app.orderId})`);
     }
 
+    // WHEN OWNER APPROVES NACH: REMOVE LINK & SAVE REFERENCE NUMBER + NOTE
     function setOwnerNachDecision(orderId, decision) {
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       if (app) {
+        const refInput = document.getElementById('nachRefInput_' + orderId);
+        const noteInput = document.getElementById('nachNoteInput_' + orderId);
         app.nachState = decision;
-        if (decision === 'Approved') app.status = 'Approved';
+        if (decision === 'Approved') {
+          app.status = 'Approved';
+          app.nachLink = ''; // Automatically remove NACH form link upon approval
+          app.nachRefNo = refInput ? refInput.value.trim() : ('NACH-' + app.orderId + '-OK');
+          app.nachNote = noteInput ? noteInput.value.trim() : 'आपका NACH ऑटो-डेबिट सफलतापूर्वक अप्रूव हो चुका है।';
+        }
         saveCloudData(db, `NACH marked ${decision}`);
         renderOwnerApplications();
       }
@@ -1342,18 +1463,40 @@
     function populateCollectAppDropdown() {
       const db = getCloudData();
       const sel = document.getElementById('collectAppCustomerSelect');
-      sel.innerHTML = db.applications.map(a => `<option value="${escapeHtml(a.orderId)}">${escapeHtml(a.orderId)} - ${escapeHtml(a.name)} (EMI: ₹${a.monthlyEmi})</option>`).join('');
+      sel.innerHTML = db.applications.map(a => `<option value="${escapeHtml(a.orderId)}">${escapeHtml(a.orderId)} - ${escapeHtml(a.name)} (EMI: ₹${a.monthlyEmi} | Paid: ${a.emis.length}/${a.tenure})</option>`).join('');
       loadCustomerForCollectApp();
     }
 
+    // STRICT INSTALLMENT LIMIT CHECK IN COLLECT AMOUNT
     function loadCustomerForCollectApp() {
       const orderId = document.getElementById('collectAppCustomerSelect').value;
       const app = getCloudData().applications.find(a => a.orderId === orderId);
+      const btn = document.getElementById('btnSubmitCollectEmi');
+      const summary = document.getElementById('collectCustomerSummary');
       if (!app) return;
-      document.getElementById('collectSerialNo').value = app.emis.length + 1;
-      document.getElementById('collectEmiMonth').value = `Installment #${app.emis.length + 1}`;
-      document.getElementById('collectEmiAmount').value = app.monthlyEmi;
-      document.getElementById('collectCustomerSummary').innerHTML = `Customer: <strong>${escapeHtml(app.name)}</strong> | Loan: ₹${app.amount} | Paid EMIs: ${app.emis.length}`;
+
+      const maxTenure = Number(app.tenure) || 6;
+      const paidCount = app.emis.length;
+
+      if (paidCount >= maxTenure) {
+        document.getElementById('collectSerialNo').value = `${maxTenure} (Completed)`;
+        document.getElementById('collectEmiMonth').value = `All ${maxTenure} EMIs Completed`;
+        document.getElementById('collectEmiAmount').value = 0;
+        btn.disabled = true;
+        btn.className = 'w-full py-2.5 rounded-xl bg-slate-400 text-white font-extrabold cursor-not-allowed';
+        btn.innerText = `✅ सभी ${maxTenure} किस्तें पूर्ण हो चुकी हैं (No Further EMI Allowed)`;
+        summary.innerHTML = `<span class="text-emerald-700 font-extrabold">✅ Customer: ${escapeHtml(app.name)} | सभी ${maxTenure}/${maxTenure} किस्तें जमा हो चुकी हैं! इसके आगे किस्त सबमिट नहीं होगी।</span>`;
+      } else {
+        const nextNum = paidCount + 1;
+        document.getElementById('collectSerialNo').value = nextNum;
+        document.getElementById('collectEmiMonth').value = `Installment #${nextNum} (of ${maxTenure})`;
+        document.getElementById('collectEmiAmount').value = app.monthlyEmi;
+        document.getElementById('collectTxnDate').value = new Date().toISOString().split('T')[0];
+        btn.disabled = false;
+        btn.className = 'w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow';
+        btn.innerText = `Final Submit Installment #${nextNum} & Generate Receipt`;
+        summary.innerHTML = `Customer: <strong>${escapeHtml(app.name)}</strong> | Loan: ₹${app.amount} | Paid EMIs: <strong>${paidCount} of ${maxTenure}</strong>`;
+      }
     }
 
     function recordMonthlyEmi() {
@@ -1361,16 +1504,33 @@
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       if (!app) return;
+
+      const maxTenure = Number(app.tenure) || 6;
+      if (app.emis.length >= maxTenure) {
+        alert(`⚠️ इस ग्राहक की कुल ${maxTenure} किस्तें पहले ही पूरी जमा हो चुकी हैं! ${maxTenure} किस्तों के बाद और किस्त सबमिट नहीं हो सकती।`);
+        loadCustomerForCollectApp();
+        return;
+      }
+
+      const nextSerial = app.emis.length + 1;
       app.emis.push({
-        serial: document.getElementById('collectSerialNo').value,
-        month: document.getElementById('collectEmiMonth').value || 'EMI',
-        txnId: document.getElementById('collectTxnId').value || 'TXN-' + Date.now().toString().slice(-5),
+        serial: nextSerial,
+        month: document.getElementById('collectEmiMonth').value || `Installment #${nextSerial}`,
+        txnId: document.getElementById('collectTxnId').value.trim() || 'TXN-' + Date.now().toString().slice(-6),
         date: document.getElementById('collectTxnDate').value || new Date().toLocaleDateString('hi-IN'),
         lateFee: parseFloat(document.getElementById('collectLateFee').value) || 0,
         amount: parseFloat(document.getElementById('collectEmiAmount').value) || app.monthlyEmi,
         mode: document.getElementById('collectEmiMode').value
       });
-      saveCloudData(db, 'Installment Recorded & Synced!');
+
+      if (app.emis.length >= maxTenure) {
+        app.status = 'Loan Closed';
+      }
+
+      saveCloudData(db, `Installment #${nextSerial}/${maxTenure} Recorded & Receipt Ready!`);
+      document.getElementById('collectTxnId').value = '';
+      populateCollectAppDropdown();
+      document.getElementById('collectAppCustomerSelect').value = orderId;
       loadCustomerForCollectApp();
     }
 
@@ -1393,6 +1553,7 @@
       const fee = app.totalFee || (app.processingFee + app.gstFee);
       const insAmt = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
       const netDisbursed = Math.max(0, app.amount - fee - insAmt);
+      const extraInterestAmt = app.extraInterest !== undefined ? app.extraInterest : Math.max(0, (app.monthlyEmi * app.tenure) - app.amount);
       document.getElementById('modalTitle').innerText = `Loan Agreement - ${app.orderId}`;
       document.getElementById('modalPrintableArea').innerHTML = `
         <div class="agreement-paper text-xs space-y-3" id="pdfTargetContent" contenteditable="true">
@@ -1403,8 +1564,8 @@
             <div class="flex justify-between font-bold mt-2 pt-1 border-t"><span>अनुबंध संख्याः ${escapeHtml(app.orderId)}</span><span>दिनांकः ${escapeHtml(app.createdAt)}</span></div>
           </div>
           <h3 class="text-center text-base font-extrabold underline">ऋण एवं फाइनेंस सेवा अनुबंध (LOAN AGREEMENT)</h3>
-          <p><strong>1. ऋण एवं कटौती विवरण:</strong> यह अनुबंध RNS Finance और श्री/श्रीमती <strong>${escapeHtml(app.name)}</strong> (जन्मतिथि: ${escapeHtml(app.dob || '-')}, मोबाइल: ${escapeHtml(app.mobile)}) के मध्य निष्पादित है। स्वीकृत ऋण राशि <strong>₹${app.amount}</strong> (${escapeHtml(app.loanType)} - उद्देश्य: ${escapeHtml(app.purpose || '-')}) है, जिस पर ब्याज दर <strong>${escapeHtml(cfg.interestRate)}</strong> लागू होगी। प्रोसेसिंग शुल्क <strong>₹${fee} (18% GST सहित)</strong> तथा बीमा (Insurance) शुल्क <strong>₹${insAmt}</strong> ${app.insuranceNote ? `(${escapeHtml(app.insuranceNote)})` : ''} ऋण राशि से कटकर (Deduct होकर) ग्राहक के बैंक खाते (${escapeHtml(app.bankName || '')} A/C: ${escapeHtml(app.accNo || app.bank)}, IFSC: ${escapeHtml(app.ifsc || '')}) में शुद्ध राशि <strong>₹${netDisbursed}</strong> भेजी जाएगी।</p>
-          <p><strong>2. जमा दस्तावेज (काटने या जोड़ने के लिए क्लिक कर एडिट करें):</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर &nbsp; ☐ अन्य: ________</p>
+          <p><strong>1. ऋण एवं कटौती विवरण:</strong> यह अनुबंध RNS Finance और श्री/श्रीमती <strong>${escapeHtml(app.name)}</strong> (जन्मतिथि: ${escapeHtml(app.dob || '-')}, मोबाइल: ${escapeHtml(app.mobile)}) के मध्य निष्पादित है। स्वीकृत ऋण राशि <strong>₹${app.amount}</strong> (${escapeHtml(app.loanType)} - उद्देश्य: ${escapeHtml(app.purpose || '-')}) है, जिस पर ब्याज दर <strong>${escapeHtml(cfg.interestRate)}</strong> (कुल अतिरिक्त ब्याज: <strong>₹${extraInterestAmt}</strong>) लागू होगी। प्रोसेसिंग शुल्क <strong>₹${fee} (18% GST सहित)</strong> तथा बीमा (Insurance) शुल्क <strong>₹${insAmt}</strong> ${app.insuranceNote ? `(${escapeHtml(app.insuranceNote)})` : ''} ऋण राशि से कटकर (Deduct होकर) ग्राहक के बैंक खाते (${escapeHtml(app.bankName || '')} A/C: ${escapeHtml(app.accNo || app.bank)}, IFSC: ${escapeHtml(app.ifsc || '')}) में शुद्ध राशि <strong>₹${netDisbursed}</strong> भेजी जाएगी।</p>
+          <p><strong>2. जमा दस्तावेज (काटने या जोड़ने के लिए क्लिक कर एडिट करें):</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर &nbsp; ☑ NACH Reference: ${escapeHtml(app.nachRefNo || 'Verified')}</p>
           <p><strong>3. पुनर्भुगतान शर्तें:</strong> मासिक किस्त (EMI): <strong>₹${app.monthlyEmi}</strong> प्रति माह की <strong>${escapeHtml(cfg.emiDate)}</strong> तारीख तक देय होगी। कुल अवधि: <strong>${app.tenure} माह</strong>। विलंब/बाउंस शुल्क: ${escapeHtml(cfg.penaltyText)}।</p>
           <div class="whitespace-pre-line"><strong>4. शर्तें:</strong>\n${escapeHtml(cfg.customBody)}</div>
           <div class="grid grid-cols-2 gap-6 pt-8 mt-4 border-t text-center">
@@ -1427,7 +1588,7 @@
             <p>Corporate Office: BKC, Mumbai - 400051 | Connaught Place, New Delhi - 110001 | CIN: U65929MH2026PTC123456</p>
           </div>
           <h3 class="text-center text-base font-extrabold underline text-emerald-800">नो ड्यू लेटर (NO DUES CERTIFICATE)</h3>
-          <p>प्रमाणित किया जाता है कि श्री/श्रीमती <strong>${escapeHtml(app.name)}</strong> (Order ID: <strong>${escapeHtml(app.orderId)}</strong>) ने RNS Finance से <strong>₹${app.amount}</strong> का ऋण लिया था, जिसकी सभी किस्तें पूर्ण रूप से चुकता हो चुकी हैं। अब इस खाते पर कोई बकाया शेष नहीं है।</p>
+          <p>प्रमाणित किया जाता है कि श्री/श्रीमती <strong>${escapeHtml(app.name)}</strong> (Order ID: <strong>${escapeHtml(app.orderId)}</strong>) ने RNS Finance से <strong>₹${app.amount}</strong> का ऋण लिया था, जिसकी सभी ${app.tenure} किस्तें पूर्ण रूप से चुकता हो चुकी हैं। अब इस खाते पर कोई बकाया शेष नहीं है।</p>
           <div class="pt-8 flex justify-between font-bold"><span>Status: 100% LOAN CLOSED</span><span>अधिकृत हस्ताक्षर (RNS Finance)</span></div>
         </div>`;
       document.getElementById('documentModal').classList.remove('hidden');
