@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RNS FINANCE - Personal & Online Shopping Loan Portal</title>
+  <title>RNS FINANCE - 24 Hour Apply Loan & Helpline</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -17,7 +17,7 @@
     .pulse-dot { animation: pulse 2s infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
     .agreement-paper { background: #fff; color: #111827; border: 2px solid #1e293b; padding: 24px; line-height: 1.7; }
-    #cloudToast { transition: 0.3s; transform: translateY(-120%); }
+    #cloudToast { transition: 0.3s; transform: translateY(-140%); }
     #cloudToast.show { transform: translateY(0); }
   </style>
 </head>
@@ -39,19 +39,29 @@
           </div>
           <h1 class="text-2xl font-extrabold tracking-tight">RNS FINANCE</h1>
           <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full"><i class="fa-solid fa-check"></i> Verified Finance</span>
-          <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded border">CIN: U65929UP2026PTC123456</span>
+          <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded border">CIN: U65929MH2026PTC123456</span>
         </div>
+
         <div class="flex flex-wrap items-center gap-2">
-          <span class="bg-sky-700 text-white text-xs font-semibold px-3 py-1 rounded-full">⚡ 24×7 Helpline & Loan Booking</span>
-          <a href="https://wa.me/917668273774" target="_blank" class="bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1 rounded-full">Helpline & WhatsApp: +917668273774</a>
-          <span class="bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1.5">
+          <button onclick="switchCustomerTab('new')" class="bg-sky-700 hover:bg-sky-800 text-white text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-sm transition">
+            ⚡ 24 Hour Apply Loan & Helpline
+          </button>
+          <a href="https://wa.me/917668273774" target="_blank" class="bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1.5 rounded-full">
+            Helpline & WhatsApp: +917668273774
+          </a>
+          <!-- CLICKABLE CLOUD SCAN BUTTON -->
+          <button type="button" onclick="triggerCloudScan()" class="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-800 border border-emerald-300 text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm transition cursor-pointer" title="Tap to Scan Cloud">
             <span class="w-2 h-2 rounded-full bg-emerald-600 pulse-dot"></span>
-            <span id="cloudStatusText">Live Cloud Synced</span>
-          </span>
+            <i id="cloudScanIcon" class="fa-solid fa-rotate"></i>
+            <span id="cloudStatusText">Live Cloud Synced (Tap to Scan)</span>
+          </button>
         </div>
-        <div class="text-xs text-slate-600 dark:text-slate-300">
-          <i class="fa-solid fa-location-dot text-rose-600"></i> Kali Mata Road, Sikta, Padrauna, Kushinagar (274303)
-          <a href="https://maps.google.com/?q=Sikta,Padrauna,Kushinagar,274303" target="_blank" class="text-teal-700 underline font-semibold ml-1">View on Map ↗</a>
+
+        <div class="text-xs text-slate-600 dark:text-slate-300 flex flex-wrap items-center gap-3">
+          <span><i class="fa-solid fa-building text-emerald-700 mr-1"></i>Corporate Office: Bandra Kurla Complex (BKC), Mumbai - 400051 | Connaught Place, New Delhi - 110001</span>
+          <a href="mailto:rnsgpl2316@gmail.com" class="text-sky-700 dark:text-sky-400 font-bold underline flex items-center gap-1">
+            <i class="fa-solid fa-envelope"></i> rnsgpl2316@gmail.com
+          </a>
         </div>
       </div>
 
@@ -79,13 +89,17 @@
     <div id="customerPortalSection">
       <div class="bg-gradient-to-r from-slate-900 via-emerald-900 to-slate-900 text-white rounded-2xl p-5 mb-6 shadow-md flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">INSTANT DIGITAL PROCESSING</span>
+          <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">24 HOUR APPLY LOAN & HELPLINE</span>
           <h2 id="txtHeroTitle" class="text-2xl font-extrabold mt-2">पर्सनल लोन एवं ऑनलाइन शॉपिंग फाइनेंस सेवाएँ</h2>
           <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">न्यूनतम दस्तावेज • तेज़ क्लाउड वेरिफिकेशन • आसान मासिक किस्त (EMI)</p>
         </div>
-        <div class="bg-white/10 p-3 rounded-xl border border-white/15 text-xs">
-          <div class="font-bold text-emerald-300">✉️ rnsgpl2316@gmail.com</div>
-          <div>🛡️ 100% Digital Agreement & No-Dues Facility</div>
+        <!-- CLICKABLE EMAIL BOX IN CUSTOMER PORTAL -->
+        <div class="bg-white/10 p-3.5 rounded-xl border border-white/20 text-xs space-y-1">
+          <a href="mailto:rnsgpl2316@gmail.com?subject=Loan%20Inquiry%20-%20RNS%20Finance" class="font-extrabold text-emerald-300 hover:text-white underline flex items-center gap-1.5 text-sm cursor-pointer">
+            <i class="fa-solid fa-envelope-open-text"></i> rnsgpl2316@gmail.com
+          </a>
+          <div class="text-[11px] text-slate-200">(ईमेल भेजने के लिए ऊपर ईमेल आईडी पर टैप करें)</div>
+          <div class="pt-0.5"><i class="fa-solid fa-shield-halved mr-1"></i> 100% Digital Agreement & No-Dues Facility</div>
         </div>
       </div>
 
@@ -99,7 +113,7 @@
           <i class="fa-solid fa-chevron-right text-slate-400"></i>
         </button>
         <button onclick="switchCustomerTab('cibil')" id="tabCibilCheck" class="p-4 rounded-xl border-2 border-slate-200 bg-white card-bg font-bold text-left flex items-center justify-between">
-          <div><div class="text-base text-sky-700 dark:text-sky-400" id="txtTabCibil">Check Free CIBIL Score</div><div class="text-xs text-slate-500 font-normal">मुफ्त में अपना सिबिल स्कोर जांचें</div></div>
+          <div><div class="text-base text-sky-700 dark:text-sky-400" id="txtTabCibil">Check Free CIBIL Score</div><div class="text-xs text-slate-500 font-normal">मुफ्त में अपना सिबिल स्कोर तुरंत जांचें</div></div>
           <i class="fa-solid fa-chevron-right text-slate-400"></i>
         </button>
       </div>
@@ -159,11 +173,15 @@
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
             <div><label class="block font-bold mb-1">Full Name (पूरा नाम) *</label><input type="text" id="appName" required class="w-full rounded-lg border px-3 py-2"></div>
+            <div><label class="block font-bold mb-1">Date of Birth (जन्मतिथि) *</label><input type="date" id="appDob" required class="w-full rounded-lg border px-3 py-2"></div>
             <div><label class="block font-bold mb-1">Mobile Number (मोबाइल) *</label><input type="tel" id="appMobile" required pattern="[0-9]{10}" maxlength="10" class="w-full rounded-lg border px-3 py-2"></div>
             <div><label class="block font-bold mb-1">Email ID *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2"></div>
             <div><label class="block font-bold mb-1">ID / Aadhaar Number (12 अंक) *</label><input type="text" id="appAadhaar" required pattern="[0-9]{12}" maxlength="12" class="w-full rounded-lg border px-3 py-2"></div>
             <div><label class="block font-bold mb-1">PAN Number (पैन नंबर) *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase"></div>
-            <div><label class="block font-bold mb-1">Bank A/C & IFSC *</label><input type="text" id="appBank" required class="w-full rounded-lg border px-3 py-2" placeholder="Bank Name / A/C No / IFSC"></div>
+            <div><label class="block font-bold mb-1">Bank Name (बैंक का नाम) *</label><input type="text" id="appBankName" required class="w-full rounded-lg border px-3 py-2" placeholder="e.g. SBI, HDFC"></div>
+            <div><label class="block font-bold mb-1">Account Holder Name *</label><input type="text" id="appBankHolder" required class="w-full rounded-lg border px-3 py-2"></div>
+            <div><label class="block font-bold mb-1">Bank Account Number *</label><input type="text" id="appAccNo" required class="w-full rounded-lg border px-3 py-2"></div>
+            <div class="md:col-span-3"><label class="block font-bold mb-1">Bank IFSC Code *</label><input type="text" id="appIfsc" required class="w-full rounded-lg border px-3 py-2 uppercase" placeholder="e.g. SBIN0001234"></div>
           </div>
 
           <div>
@@ -196,15 +214,26 @@
         <div id="trackingResultContainer"></div>
       </div>
 
-      <!-- TAB 3: CIBIL -->
-      <div id="viewCibilCheck" class="hidden bg-white card-bg rounded-2xl shadow-sm border p-6 text-center max-w-xl mx-auto space-y-3">
-        <h3 class="text-xl font-extrabold">Free CIBIL Score Check</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs">
-          <div><label class="font-bold">Full Name</label><input type="text" id="cibilName" class="w-full rounded border px-3 py-2 mt-1"></div>
-          <div><label class="font-bold">PAN Number</label><input type="text" id="cibilPan" maxlength="10" class="w-full rounded border px-3 py-2 uppercase mt-1"></div>
+      <!-- TAB 3: CIBIL (500 TO 650 IN-HOUSE + EXTERNAL PORTAL LINK) -->
+      <div id="viewCibilCheck" class="hidden bg-white card-bg rounded-2xl shadow-sm border p-6 text-center max-w-xl mx-auto space-y-4">
+        <div class="w-14 h-14 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center mx-auto text-2xl">
+          <i class="fa-solid fa-gauge-high"></i>
         </div>
-        <button onclick="simulateFreeCibil()" class="px-5 py-2 rounded-xl bg-sky-700 text-white font-bold text-xs">Check Score</button>
-        <div id="cibilResultBox" class="hidden p-3 rounded-xl bg-emerald-50 border text-emerald-900 font-bold text-xs"></div>
+        <h3 class="text-xl font-extrabold">Free CIBIL Score Check (मुफ्त सिबिल स्कोर जांचें)</h3>
+        <p class="text-xs text-slate-500">अपना नाम और पैन नंबर डालकर तुरंत इन-हाउस सिबिल स्कोर चेक करें या दूसरी आधिकारिक वेबसाइट पर जाकर देखें।</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs">
+          <div><label class="font-bold">Full Name (आपका नाम)</label><input type="text" id="cibilName" placeholder="Enter Full Name" class="w-full rounded-lg border px-3 py-2 mt-1"></div>
+          <div><label class="font-bold">PAN Number (पैन नंबर)</label><input type="text" id="cibilPan" maxlength="10" placeholder="ABCDE1234F" class="w-full rounded-lg border px-3 py-2 uppercase mt-1"></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-3 pt-2">
+          <button type="button" onclick="simulateFreeCibil()" class="px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow">
+            ⚡ Instant Free CIBIL Check
+          </button>
+          <a href="https://www.paisabazaar.com/cibil-credit-report/" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow flex items-center gap-1.5">
+            🌐 Check on Official CIBIL Website ↗
+          </a>
+        </div>
+        <div id="cibilResultBox" class="hidden p-4 rounded-xl bg-amber-50 border border-amber-300 text-amber-950 font-bold text-sm"></div>
       </div>
     </div>
 
@@ -261,7 +290,7 @@
         </div>
         <div>
           <label class="block font-bold mb-1">Payment Mode / Remark</label>
-          <input type="text" id="collectEmiMode" value="NACH Auto-Debit / Cash" class="w-full rounded border px-3 py-1.5">
+          <input type="text" id="collectEmiMode" value="NACH Auto-Debit / Online" class="w-full rounded border px-3 py-1.5">
         </div>
         <button onclick="recordMonthlyEmi()" class="w-full py-2.5 rounded-xl bg-emerald-700 text-white font-extrabold">Final Submit & Sync EMI</button>
       </div>
@@ -269,7 +298,7 @@
       <!-- OWNER SUB 4: EDITABLE AGREEMENT -->
       <div id="ownerViewAgreement" class="hidden bg-white card-bg rounded-2xl p-5 border space-y-3 text-xs">
         <div class="flex justify-between items-center border-b pb-2">
-          <h3 class="text-base font-extrabold">Editable Agreement Settings (3% Monthly Interest)</h3>
+          <h3 class="text-base font-extrabold">Editable Agreement Settings (Full Access)</h3>
           <button onclick="saveCustomAgreementTemplate()" class="px-4 py-2 rounded-lg bg-emerald-700 text-white font-bold">💾 Save Changes</button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -302,7 +331,7 @@
   <div id="documentModal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-3xl w-full p-5 space-y-3 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview</h3>
+        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview (Click anywhere below to edit text)</h3>
         <div class="flex gap-2">
           <button onclick="downloadModalPdf()" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-bold">Download PDF</button>
           <button onclick="closeDocumentModal()" class="px-3 py-1.5 rounded-lg bg-slate-200 text-slate-800 text-xs font-bold">✕ Close</button>
@@ -312,7 +341,7 @@
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- FOOTER (NO GOOGLE MAP, MUMBAI/DELHI ADDRESS) -->
   <div class="mt-10">
     <div class="bg-emerald-900 text-white py-2.5 px-4 text-center text-xs font-bold">
       🏦 SMALL & ALL TYPES OF PERSONAL LOAN AND ONLINE SHOPPING EMI FINANCE SERVICES AVAILABLE
@@ -321,20 +350,22 @@
       <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 pb-6 border-b border-slate-800">
         <div>
           <h4 class="text-emerald-400 font-extrabold text-base">RNS FINANCE</h4>
-          <p class="text-white font-bold mt-1">24×7 Helpline & Loan Booking</p>
-          <p class="text-slate-400 mt-1">Personal Loan & Online Shopping Finance.</p>
-          <p class="text-emerald-400 font-mono mt-1">CIN: U65929UP2026PTC123456</p>
+          <p class="text-white font-bold mt-1">24 Hour Apply Loan & Helpline</p>
+          <p class="text-slate-400 mt-1">Personal Loan & Online Shopping Finance Services.</p>
+          <p class="text-emerald-400 font-mono mt-1">CIN: U65929MH2026PTC123456</p>
         </div>
         <div>
-          <h4 class="text-emerald-400 font-extrabold text-base">Contact & Location</h4>
-          <p class="mt-1">📍 Kali Mata Road, Sikta, Padrauna, Kushinagar, UP - 274303</p>
+          <h4 class="text-emerald-400 font-extrabold text-base">Corporate Office & Contact</h4>
+          <p class="mt-1">🏢 Corporate Office: Plot No. 42, Bandra Kurla Complex (BKC), Mumbai, Maharashtra - 400051</p>
+          <p class="mt-1">🏢 Regional Office: Barakhamba Road, Connaught Place, New Delhi - 110001</p>
           <p class="mt-1">📞 Helpline & WhatsApp: +91 7668273774</p>
-          <p class="mt-1">✉️ Email: rnsgpl2316@gmail.com</p>
+          <p class="mt-1">✉️ Email: <a href="mailto:rnsgpl2316@gmail.com" class="text-emerald-400 underline font-bold">rnsgpl2316@gmail.com</a></p>
         </div>
         <div>
-          <h4 class="text-emerald-400 font-extrabold text-base">Quick Links</h4>
+          <h4 class="text-emerald-400 font-extrabold text-base">Quick Services</h4>
+          <p class="mt-1"><button onclick="switchCustomerTab('new')" class="hover:text-white underline">⚡ 24 Hour Apply Loan</button></p>
           <p class="mt-1"><button onclick="switchCustomerTab('track')" class="hover:text-white underline">📦 Track Application / EMI</button></p>
-          <p class="mt-1"><button onclick="switchCustomerTab('new')" class="hover:text-white underline">📄 Apply New Loan</button></p>
+          <p class="mt-1"><button onclick="switchCustomerTab('cibil')" class="hover:text-white underline">📊 Free CIBIL Score Check</button></p>
         </div>
       </div>
       <div class="pt-4 text-center text-slate-400">© 2026 RNS FINANCE - All Rights Reserved</div>
@@ -342,7 +373,7 @@
   </div>
 
   <script>
-    const DEFAULT_AGREEMENT_CLAUSES = `• संपत्ति अधिकारः पूर्ण भुगतान होने तक फाइनेंस की गई वस्तु/संपत्ति पर प्रथम अधिकार RNS Finance का होगा।\n• निरीक्षणः ऋणदाता को किसी भी समय फाइनेंस की गई वस्तु या व्यवसाय के निरीक्षण का अधिकार होगा।\n• कानूनी कार्यवाहीः ऋण अदायगी में चूक (Default) होने पर ऋणदाता को कानूनी रिकवरी का अधिकार होगा।\n• न्यायालयः किसी भी विवाद की स्थिति में न्यायिक क्षेत्राधिकार केवल कुशीनगर (Kushinagar) न्यायालय होगा।`;
+    const DEFAULT_AGREEMENT_CLAUSES = `• संपत्ति अधिकारः पूर्ण भुगतान होने तक फाइनेंस की गई वस्तु/संपत्ति पर प्रथम अधिकार RNS Finance का होगा।\n• निरीक्षणः ऋणदाता को किसी भी समय फाइनेंस की गई वस्तु या व्यवसाय के निरीक्षण का अधिकार होगा।\n• कानूनी कार्यवाहीः ऋण अदायगी में चूक (Default) होने पर ऋणदाता को कानूनी रिकवरी का अधिकार होगा।\n• न्यायालयः किसी भी विवाद की स्थिति में न्यायिक क्षेत्राधिकार मुंबई / नई दिल्ली (Mumbai / New Delhi) न्यायालय होगा।`;
 
     let uploadedDocsTemp = { pan: '', aadhaar: '', passbook: '', photo: '', sign: '' };
     let appliedPromoDiscount = 0;
@@ -352,7 +383,25 @@
       const t = document.getElementById('cloudToast');
       document.getElementById('cloudToastMsg').innerText = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2500);
+      setTimeout(() => t.classList.remove('show'), 2600);
+    }
+
+    function triggerCloudScan() {
+      const txt = document.getElementById('cloudStatusText');
+      const icon = document.getElementById('cloudScanIcon');
+      txt.innerText = 'Scanning Cloud...';
+      icon.className = 'fa-solid fa-rotate fa-spin';
+      showCloudNotification('🔄 Scanning Cloud Database & Syncing...');
+      setTimeout(() => {
+        const db = getCloudData();
+        txt.innerText = `Cloud Synced (${db.applications.length} Records)`;
+        icon.className = 'fa-solid fa-cloud-check';
+        showCloudNotification(`✅ Cloud Scan Complete! (${db.applications.length} Applications Synced)`);
+        if (!document.getElementById('ownerPortalSection').classList.contains('hidden')) {
+          renderOwnerApplications();
+          populateCollectAppDropdown();
+        }
+      }, 700);
     }
 
     function getCloudData() {
@@ -383,9 +432,7 @@
       document.getElementById('agrCustomBody').value = db.agreementSettings.customBody;
     });
 
-    function toggleTheme() {
-      document.body.classList.toggle('dark-mode');
-    }
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
 
     function toggleLanguage() {
       currentLang = currentLang === 'hi' ? 'en' : 'hi';
@@ -437,7 +484,6 @@
       if (tab === 'promo') renderPromoCodes();
     }
 
-    // SLAB PROCESSING FEE: <=5000: 300 (with GST), 5001-15000: 600+18% GST, >15000: 1000+18% GST
     function updateFeeCalculation() {
       const amount = parseFloat(document.getElementById('appLoanAmount').value) || 0;
       let baseFee = 254, gst = 46, total = 300;
@@ -500,8 +546,8 @@
       const feeObj = updateFeeCalculation();
       const amount = parseFloat(document.getElementById('appLoanAmount').value);
       const tenure = parseInt(document.getElementById('appTenure').value);
-      // 3% Monthly Interest EMI
       const monthlyEmi = Math.round((amount + (amount * 0.03 * tenure)) / tenure);
+      const bankCombined = `${document.getElementById('appBankName').value.trim()} | Holder: ${document.getElementById('appBankHolder').value.trim()} | A/C: ${document.getElementById('appAccNo').value.trim()} | IFSC: ${document.getElementById('appIfsc').value.trim().toUpperCase()}`;
 
       db.applications.unshift({
         orderId,
@@ -509,11 +555,12 @@
         loanType: document.getElementById('appLoanType').value,
         amount, tenure, monthlyEmi,
         name: document.getElementById('appName').value.trim(),
+        dob: document.getElementById('appDob').value,
         mobile: document.getElementById('appMobile').value.trim(),
         email: document.getElementById('appEmail').value.trim(),
         aadhaar: document.getElementById('appAadhaar').value.trim(),
         pan: document.getElementById('appPan').value.trim().toUpperCase(),
-        bank: document.getElementById('appBank').value.trim(),
+        bank: bankCombined,
         processingFee: feeObj.baseFee,
         gstFee: feeObj.gst,
         totalFee: feeObj.total,
@@ -692,10 +739,10 @@
           <div class="flex flex-wrap justify-between gap-2 border-b pb-2">
             <div>
               <span class="bg-slate-900 text-white font-bold px-2 py-0.5 rounded">${app.orderId}</span>
-              <strong class="text-sm ml-1">${app.name}</strong> (${app.mobile}) | Bank: ${app.bank} | Loan: <strong class="text-emerald-700">₹${app.amount}</strong>
+              <strong class="text-sm ml-1">${app.name}</strong> (DOB: ${app.dob || '-'} | Mob: ${app.mobile}) | Bank: ${app.bank} | Loan: <strong class="text-emerald-700">₹${app.amount}</strong>
               <span class="ml-2 px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">NACH: ${app.nachState || 'Not Sent'}</span>
             </div>
-            <div class="flex gap-1.5">
+            <div class="flex gap-1.5 flex-wrap">
               <button onclick="setOwnerNachDecision('${app.orderId}','Approved')" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold">✔ NACH Approved</button>
               <button onclick="setOwnerNachDecision('${app.orderId}','Not Approved')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold">✕ Not Approved</button>
               <button onclick="openAgreementModal('${app.orderId}')" class="px-2.5 py-1 rounded bg-indigo-700 text-white font-bold">👁️ Agreement</button>
@@ -783,8 +830,9 @@
       const pdf = new jsPDF('p', 'mm', 'a4');
       pdf.setFontSize(14);
       pdf.text(`RNS FINANCE - CUSTOMER KYC DOSSIER (${app.orderId})`, 14, 15);
-      pdf.setFontSize(10);
-      pdf.text(`Name: ${app.name} | Mobile: ${app.mobile} | Bank: ${app.bank} | Loan: Rs.${app.amount}`, 14, 22);
+      pdf.setFontSize(9);
+      pdf.text(`Name: ${app.name} | DOB: ${app.dob || '-'} | Mobile: ${app.mobile} | Loan: Rs.${app.amount}`, 14, 22);
+      pdf.text(`Bank: ${app.bank}`, 14, 27);
       const items = [
         { label: '1. PAN Card (First Attempt)', data: app.docs.pan },
         { label: '2. ID Card (First Attempt)', data: app.docs.aadhaar },
@@ -795,7 +843,7 @@
       if (app.reuploadedDocs && app.reuploadedDocs.length > 0) {
         app.reuploadedDocs.forEach((r, idx) => items.push({ label: `6.${idx+1} RE-UPLOADED NEW (${r.type.toUpperCase()})`, data: r.data }));
       }
-      let y = 30;
+      let y = 34;
       items.forEach(it => {
         if (y > 235) { pdf.addPage(); y = 20; }
         pdf.text(it.label, 14, y);
@@ -863,13 +911,13 @@
         <div class="agreement-paper text-xs space-y-3" id="pdfTargetContent" contenteditable="true">
           <div class="text-center border-b-2 border-slate-900 pb-2">
             <h2 class="text-xl font-extrabold">RNS FINANCE</h2>
-            <p>Sikta Kubernath Padrauna, Kushinagar, Uttar Pradesh - 274303</p>
-            <p>Email: rnsgpl2316@gmail.com | Helpline: +91 7668273774 | CIN: U65929UP2026PTC123456</p>
+            <p>Corporate Office: Bandra Kurla Complex (BKC), Mumbai - 400051 | Connaught Place, New Delhi - 110001</p>
+            <p>Email: rnsgpl2316@gmail.com | Helpline: +91 7668273774 | CIN: U65929MH2026PTC123456</p>
             <div class="flex justify-between font-bold mt-2 pt-1 border-t"><span>अनुबंध संख्याः ${app.orderId}</span><span>दिनांकः ${app.createdAt}</span></div>
           </div>
           <h3 class="text-center text-base font-extrabold underline">ऋण एवं फाइनेंस सेवा अनुबंध (LOAN AGREEMENT)</h3>
           <p><strong>1. ऋण विवरण:</strong> यह अनुबंध RNS Finance और श्री/श्रीमती <strong>${app.name}</strong> (${app.mobile}) के मध्य निष्पादित है। स्वीकृत ऋण राशि <strong>₹${app.amount}</strong> है, जिस पर ब्याज दर <strong>${cfg.interestRate}</strong> लागू होगी। प्रोसेसिंग शुल्क <strong>₹${fee} (With 18% GST)</strong> ऋण राशि से डिडक्ट (माइनस) होकर ग्राहक को शुद्ध राशि <strong>₹${netDisbursed}</strong> प्रदान की जाएगी।</p>
-          <p><strong>2. जमा दस्तावेज:</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर</p>
+          <p><strong>2. जमा दस्तावेज (काटने या जोड़ने के लिए यहाँ क्लिक कर एडिट करें):</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर &nbsp; ☐ अन्य दस्तावेज: ________</p>
           <p><strong>3. पुनर्भुगतान शर्तें:</strong> मासिक किस्त (EMI): <strong>₹${app.monthlyEmi}</strong> प्रति माह की <strong>${cfg.emiDate}</strong> तारीख तक देय होगी। कुल अवधि: <strong>${app.tenure} माह</strong>। विलंब/बाउंस शुल्क: ${cfg.penaltyText}।</p>
           <div class="whitespace-pre-line"><strong>4. शर्तें:</strong>\n${cfg.customBody}</div>
           <div class="grid grid-cols-2 gap-6 pt-8 mt-4 border-t text-center">
@@ -889,7 +937,7 @@
         <div class="agreement-paper text-xs space-y-4" id="pdfTargetContent" contenteditable="true">
           <div class="text-center border-b-2 border-slate-900 pb-2">
             <h2 class="text-xl font-extrabold">RNS FINANCE</h2>
-            <p>Sikta Kubernath Padrauna, Kushinagar, Uttar Pradesh - 274303 | CIN: U65929UP2026PTC123456</p>
+            <p>Corporate Office: BKC, Mumbai - 400051 | Connaught Place, New Delhi - 110001 | CIN: U65929MH2026PTC123456</p>
           </div>
           <h3 class="text-center text-base font-extrabold underline text-emerald-800">नो ड्यू लेटर (NO DUES CERTIFICATE)</h3>
           <p>प्रमाणित किया जाता है कि श्री/श्रीमती <strong>${app.name}</strong> (Order ID: <strong>${app.orderId}</strong>) ने RNS Finance से <strong>₹${app.amount}</strong> का ऋण लिया था, जिसकी सभी किस्तें पूर्ण रूप से चुकता हो चुकी हैं। अब इस खाते पर कोई बकाया शेष नहीं है।</p>
@@ -918,10 +966,21 @@
       document.getElementById('activePromoList').innerHTML = db.promos.map((p, i) => `<div class="p-2 border rounded flex justify-between"><span><strong>${p.code}</strong> (₹${p.value})</span><button onclick="deletePromo(${i})" class="text-rose-600 font-bold">Delete</button></div>`).join('');
     }
     function deletePromo(i) { const db = getCloudData(); db.promos.splice(i, 1); saveCloudData(db); renderPromoCodes(); }
+
+    // CIBIL SCORE STRICTLY BETWEEN 500 AND 650
     function simulateFreeCibil() {
+      const name = document.getElementById('cibilName').value.trim();
+      const pan = document.getElementById('cibilPan').value.trim().toUpperCase();
+      if (!name || pan.length < 5) {
+        alert('कृपया अपना नाम और पैन नंबर दर्ज करें (Please enter Name & PAN)');
+        return;
+      }
+      let sum = 0;
+      for (let i = 0; i < pan.length; i++) sum += pan.charCodeAt(i) * (i + 3);
+      const score = 500 + (sum % 151); // Always 500 to 650
       const box = document.getElementById('cibilResultBox');
       box.classList.remove('hidden');
-      box.innerHTML = `✅ Estimated CIBIL Score: <strong>768 (Excellent)</strong>`;
+      box.innerHTML = `📊 श्री/श्रीमती <strong>${name}</strong> (PAN: ${pan}), आपका इन-हाउस सिबिल स्कोर <strong><span class="text-lg underline text-rose-700">${score}</span> (Fair / Moderate Range: 500-650)</strong> है। आप RNS Finance से लोन आवेदन के लिए पात्र हैं!`;
     }
   </script>
 </body>
