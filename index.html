@@ -19,6 +19,8 @@
     .agreement-paper { background: #fff; color: #111827; border: 2px solid #1e293b; padding: 24px; line-height: 1.7; }
     #cloudToast { transition: 0.3s; transform: translateY(-140%); }
     #cloudToast.show { transform: translateY(0); }
+    .tab-btn { transition: all 0.2s ease; }
+    .tab-btn:active { transform: scale(0.98); filter: brightness(1.15); }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
@@ -49,8 +51,7 @@
           <a href="https://wa.me/917668273774" target="_blank" class="bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1.5 rounded-full">
             Helpline & WhatsApp: +917668273774
           </a>
-          <!-- CLICKABLE CLOUD SCAN BUTTON -->
-          <button type="button" onclick="triggerCloudScan()" class="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-800 border border-emerald-300 text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm transition cursor-pointer" title="Tap to Scan Cloud">
+          <button type="button" onclick="triggerCloudScan()" class="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-800 border border-emerald-300 text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-600 pulse-dot"></span>
             <i id="cloudScanIcon" class="fa-solid fa-rotate"></i>
             <span id="cloudStatusText">Live Cloud Synced (Tap to Scan)</span>
@@ -93,7 +94,6 @@
           <h2 id="txtHeroTitle" class="text-2xl font-extrabold mt-2">पर्सनल लोन एवं ऑनलाइन शॉपिंग फाइनेंस सेवाएँ</h2>
           <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">न्यूनतम दस्तावेज • तेज़ क्लाउड वेरिफिकेशन • आसान मासिक किस्त (EMI)</p>
         </div>
-        <!-- CLICKABLE EMAIL BOX IN CUSTOMER PORTAL -->
         <div class="bg-white/10 p-3.5 rounded-xl border border-white/20 text-xs space-y-1">
           <a href="mailto:rnsgpl2316@gmail.com?subject=Loan%20Inquiry%20-%20RNS%20Finance" class="font-extrabold text-emerald-300 hover:text-white underline flex items-center gap-1.5 text-sm cursor-pointer">
             <i class="fa-solid fa-envelope-open-text"></i> rnsgpl2316@gmail.com
@@ -103,18 +103,30 @@
         </div>
       </div>
 
+      <!-- 3 DISTINCT COLORED TABS (TURN LIGHT WHEN PUSHED/ACTIVE) -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-        <button onclick="switchCustomerTab('new')" id="tabNewCustomer" class="p-4 rounded-xl border-2 border-emerald-600 bg-emerald-600 text-white font-bold text-left flex items-center justify-between">
-          <div><div class="text-base" id="txtTabNew">New Customer (नया आवेदन)</div><div class="text-xs opacity-90 font-normal">Apply Personal / Shopping Loan</div></div>
+        <button onclick="switchCustomerTab('new')" id="tabNewCustomer" class="tab-btn p-4 rounded-xl border-2 font-bold text-left flex items-center justify-between shadow-sm">
+          <div>
+            <div class="text-base flex items-center gap-2"><i class="fa-solid fa-user-plus"></i> <span id="txtTabNew">New Customer (नया आवेदन)</span></div>
+            <div class="text-xs opacity-85 font-normal mt-0.5">Apply Personal / Shopping Loan</div>
+          </div>
           <i class="fa-solid fa-chevron-right"></i>
         </button>
-        <button onclick="switchCustomerTab('track')" id="tabTrackCustomer" class="p-4 rounded-xl border-2 border-slate-200 bg-white card-bg font-bold text-left flex items-center justify-between">
-          <div><div class="text-base text-emerald-700 dark:text-emerald-400" id="txtTabTrack">Old Customer / Track Status</div><div class="text-xs text-slate-500 font-normal">अंतिम 4 अंक या Order ID से ट्रैक करें</div></div>
-          <i class="fa-solid fa-chevron-right text-slate-400"></i>
+
+        <button onclick="switchCustomerTab('track')" id="tabTrackCustomer" class="tab-btn p-4 rounded-xl border-2 font-bold text-left flex items-center justify-between shadow-sm">
+          <div>
+            <div class="text-base flex items-center gap-2"><i class="fa-solid fa-magnifying-glass-location"></i> <span id="txtTabTrack">Tracking Services (ट्रैक स्टेटस)</span></div>
+            <div class="text-xs opacity-85 font-normal mt-0.5">अंतिम 4 अंक या Order ID से सभी लोन देखें</div>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
         </button>
-        <button onclick="switchCustomerTab('cibil')" id="tabCibilCheck" class="p-4 rounded-xl border-2 border-slate-200 bg-white card-bg font-bold text-left flex items-center justify-between">
-          <div><div class="text-base text-sky-700 dark:text-sky-400" id="txtTabCibil">Check Free CIBIL Score</div><div class="text-xs text-slate-500 font-normal">मुफ्त में अपना सिबिल स्कोर तुरंत जांचें</div></div>
-          <i class="fa-solid fa-chevron-right text-slate-400"></i>
+
+        <button onclick="switchCustomerTab('cibil')" id="tabCibilCheck" class="tab-btn p-4 rounded-xl border-2 font-bold text-left flex items-center justify-between shadow-sm">
+          <div>
+            <div class="text-base flex items-center gap-2"><i class="fa-solid fa-gauge-high"></i> <span id="txtTabCibil">Check CIBIL Score (सिबिल स्कोर)</span></div>
+            <div class="text-xs opacity-85 font-normal mt-0.5">मुफ्त में अपना सिबिल स्कोर तुरंत जांचें</div>
+          </div>
+          <i class="fa-solid fa-chevron-right"></i>
         </button>
       </div>
 
@@ -139,8 +151,8 @@
                 </select>
               </div>
               <div>
-                <label class="block font-bold mb-1">Loan Amount (₹) *</label>
-                <input type="number" id="appLoanAmount" required min="500" max="500000" value="5000" oninput="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
+                <label class="block font-bold mb-1">Loan Amount (₹1 - ₹50,000) *</label>
+                <input type="number" id="appLoanAmount" required min="1" max="500000" value="5000" oninput="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
               </div>
               <div>
                 <label class="block font-bold mb-1">Tenure (Months) *</label>
@@ -163,25 +175,33 @@
                 <span id="promoMsg" class="font-bold"></span>
               </div>
               <div class="flex flex-wrap gap-3 bg-white dark:bg-slate-900 px-3 py-2 rounded-lg border">
-                <span>Processing Fee: <strong id="dispProcFee">₹254</strong></span>
-                <span>GST (18%): <strong id="dispGstFee">₹46</strong></span>
+                <span>Processing Fee: <strong id="dispProcFee">₹300</strong></span>
+                <span>GST (18%): <strong id="dispGstFee">₹54</strong></span>
                 <span>Discount: <strong id="dispDiscount" class="text-emerald-600">-₹0</strong></span>
-                <span class="font-extrabold text-emerald-700">Total Fee (Deductible): <span id="dispTotalFee">₹300</span></span>
+                <span class="font-extrabold text-emerald-700">Total Fee (With 18% GST): <span id="dispTotalFee">₹354</span></span>
               </div>
             </div>
           </div>
 
+          <!-- PERSONAL & SEPARATE BANK COLUMNS + MANUAL DOB -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-            <div><label class="block font-bold mb-1">Full Name (पूरा नाम) *</label><input type="text" id="appName" required class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">Date of Birth (जन्मतिथि) *</label><input type="date" id="appDob" required class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">Mobile Number (मोबाइल) *</label><input type="tel" id="appMobile" required pattern="[0-9]{10}" maxlength="10" class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">Email ID *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">ID / Aadhaar Number (12 अंक) *</label><input type="text" id="appAadhaar" required pattern="[0-9]{12}" maxlength="12" class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">PAN Number (पैन नंबर) *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase"></div>
-            <div><label class="block font-bold mb-1">Bank Name (बैंक का नाम) *</label><input type="text" id="appBankName" required class="w-full rounded-lg border px-3 py-2" placeholder="e.g. SBI, HDFC"></div>
-            <div><label class="block font-bold mb-1">Account Holder Name *</label><input type="text" id="appBankHolder" required class="w-full rounded-lg border px-3 py-2"></div>
-            <div><label class="block font-bold mb-1">Bank Account Number *</label><input type="text" id="appAccNo" required class="w-full rounded-lg border px-3 py-2"></div>
-            <div class="md:col-span-3"><label class="block font-bold mb-1">Bank IFSC Code *</label><input type="text" id="appIfsc" required class="w-full rounded-lg border px-3 py-2 uppercase" placeholder="e.g. SBIN0001234"></div>
+            <div><label class="block font-bold mb-1">Full Name (पूरा नाम) *</label><input type="text" id="appName" required class="w-full rounded-lg border px-3 py-2" placeholder="Enter Full Name"></div>
+            <div><label class="block font-bold mb-1">Date of Birth (जन्मतिथि - मैनुअल लिखें) *</label><input type="text" id="appDob" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY (जैसे: 15/08/1995)"></div>
+            <div><label class="block font-bold mb-1">Mobile Number (मोबाइल नंबर) *</label><input type="tel" id="appMobile" required pattern="[0-9]{10}" maxlength="10" class="w-full rounded-lg border px-3 py-2" placeholder="10 Digit Mobile"></div>
+            <div><label class="block font-bold mb-1">Email ID (ईमेल आईडी) *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2" placeholder="example@gmail.com"></div>
+            <div><label class="block font-bold mb-1">ID / Aadhaar Number (12 अंक) *</label><input type="text" id="appAadhaar" required pattern="[0-9]{12}" maxlength="12" class="w-full rounded-lg border px-3 py-2" placeholder="12 Digit Number"></div>
+            <div><label class="block font-bold mb-1">PAN Number (पैन नंबर) *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase" placeholder="ABCDE1234F"></div>
+          </div>
+
+          <!-- 4 SEPARATE COLUMNS FOR BANK DETAILS -->
+          <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border">
+            <h4 class="text-xs font-bold text-emerald-700 uppercase mb-2">Bank Account Details (अलग-अलग कॉलम में बैंक विवरण भरें)</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+              <div><label class="block font-bold mb-1">1. Bank Name (बैंक का नाम) *</label><input type="text" id="appBankName" required class="w-full rounded-lg border px-3 py-2" placeholder="e.g. SBI, PNB, HDFC"></div>
+              <div><label class="block font-bold mb-1">2. Account Holder Name *</label><input type="text" id="appBankHolder" required class="w-full rounded-lg border px-3 py-2" placeholder="खाताधारक का नाम"></div>
+              <div><label class="block font-bold mb-1">3. Bank Account Number *</label><input type="text" id="appAccNo" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="खाता संख्या लिखें"></div>
+              <div><label class="block font-bold mb-1">4. IFSC Code (आईएफएससी कोड) *</label><input type="text" id="appIfsc" required class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="e.g. SBIN0001234"></div>
+            </div>
           </div>
 
           <div>
@@ -201,32 +221,43 @@
         </form>
       </div>
 
-      <!-- TAB 2: SMART TRACKING (4 DIGITS AUTO DETECT) -->
-      <div id="viewTrackCustomer" class="hidden space-y-5">
+      <!-- TAB 2: SMART TRACKING (MULTI-LOAN POPUP SELECTOR + 4 DIGITS AUTO DETECT) -->
+      <div id="viewTrackCustomer" class="hidden space-y-4">
         <div class="bg-white card-bg rounded-2xl shadow-sm border p-5">
-          <h3 class="text-lg font-bold mb-1">Track Application & EMI (स्मार्ट ट्रैकिंग)</h3>
-          <p class="text-xs text-slate-500 mb-3">अपना <strong>Order ID</strong> या मोबाइल / आधार के <strong>केवल अंतिम 4 अंक</strong> डालें, सिस्टम ऑटोमैटिक डिटेक्ट कर लेगा।</p>
+          <h3 class="text-lg font-bold mb-1">Track Application & EMI (स्मार्ट मल्टी-लोन ट्रैकिंग)</h3>
+          <p class="text-xs text-slate-500 mb-3">अपना <strong>Order ID</strong> या मोबाइल / आधार के <strong>अंतिम 4 अंक</strong> डालें। यदि एक नंबर से कई लोन हैं, तो ऊपर लिस्ट खुल जाएगी।</p>
           <div class="flex flex-col sm:flex-row gap-2">
             <input type="text" id="trackSearchInput" oninput="autoDetectCustomerTrack(this.value)" class="flex-grow rounded-xl border px-4 py-2.5 text-sm font-bold" placeholder="Enter Order ID or Last 4 Digits of Mobile / ID...">
-            <button onclick="searchCustomerApplication()" class="px-6 py-2.5 rounded-xl bg-emerald-700 text-white font-bold text-sm">Track Now</button>
+            <button onclick="searchCustomerApplication()" class="px-6 py-2.5 rounded-xl bg-indigo-700 text-white font-bold text-sm">Track Now</button>
           </div>
         </div>
+
+        <!-- MULTI-LOAN SLIDE / DROPDOWN POPUP BAR -->
+        <div id="multiLoanSelectorBar" class="hidden bg-indigo-50 dark:bg-slate-800 border-2 border-indigo-400 rounded-2xl p-4 space-y-2 shadow-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-indigo-900 dark:text-indigo-200"><i class="fa-solid fa-layer-group mr-1"></i> इस नंबर पर एक से अधिक लोन मिले हैं — नीचे स्लाइड/सेलेक्ट करें:</span>
+            <span id="multiLoanCountBadge" class="bg-indigo-700 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full"></span>
+          </div>
+          <select id="multiLoanDropdown" onchange="selectMatchedLoan(this.value)" class="w-full rounded-xl border-2 border-indigo-300 bg-white dark:bg-slate-900 px-3 py-2.5 text-xs font-extrabold text-slate-900 dark:text-white cursor-pointer"></select>
+          <div id="multiLoanSlidePills" class="flex gap-2 overflow-x-auto pb-1 pt-1"></div>
+        </div>
+
         <div id="trackingResultContainer"></div>
       </div>
 
       <!-- TAB 3: CIBIL (500 TO 650 IN-HOUSE + EXTERNAL PORTAL LINK) -->
       <div id="viewCibilCheck" class="hidden bg-white card-bg rounded-2xl shadow-sm border p-6 text-center max-w-xl mx-auto space-y-4">
-        <div class="w-14 h-14 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center mx-auto text-2xl">
+        <div class="w-14 h-14 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center mx-auto text-2xl">
           <i class="fa-solid fa-gauge-high"></i>
         </div>
         <h3 class="text-xl font-extrabold">Free CIBIL Score Check (मुफ्त सिबिल स्कोर जांचें)</h3>
-        <p class="text-xs text-slate-500">अपना नाम और पैन नंबर डालकर तुरंत इन-हाउस सिबिल स्कोर चेक करें या दूसरी आधिकारिक वेबसाइट पर जाकर देखें।</p>
+        <p class="text-xs text-slate-500">अपना नाम और पैन नंबर डालकर तुरंत इन-हाउस सिबिल स्कोर (500-650) चेक करें या आधिकारिक वेबसाइट पर देखें।</p>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left text-xs">
           <div><label class="font-bold">Full Name (आपका नाम)</label><input type="text" id="cibilName" placeholder="Enter Full Name" class="w-full rounded-lg border px-3 py-2 mt-1"></div>
           <div><label class="font-bold">PAN Number (पैन नंबर)</label><input type="text" id="cibilPan" maxlength="10" placeholder="ABCDE1234F" class="w-full rounded-lg border px-3 py-2 uppercase mt-1"></div>
         </div>
         <div class="flex flex-wrap justify-center gap-3 pt-2">
-          <button type="button" onclick="simulateFreeCibil()" class="px-5 py-2.5 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-bold text-xs shadow">
+          <button type="button" onclick="simulateFreeCibil()" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow">
             ⚡ Instant Free CIBIL Check
           </button>
           <a href="https://www.paisabazaar.com/cibil-credit-report/" target="_blank" class="px-5 py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs shadow flex items-center gap-1.5">
@@ -242,7 +273,7 @@
       <div class="bg-slate-900 text-white rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <span class="bg-emerald-500 text-slate-950 text-xs font-extrabold px-2 py-0.5 rounded">ADMIN PORTAL (PIN: 7402)</span>
-          <h2 class="text-lg font-extrabold mt-1">Loan Management & NACH Dispatch Dashboard</h2>
+          <h2 class="text-lg font-extrabold mt-1">Loan Management, Insurance & NACH Dashboard</h2>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
           <button onclick="switchOwnerTab('apps')" class="px-3 py-2 rounded-lg bg-emerald-600 font-bold">📋 Applications</button>
@@ -331,7 +362,7 @@
   <div id="documentModal" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-3xl w-full p-5 space-y-3 my-8 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-2">
-        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview (Click anywhere below to edit text)</h3>
+        <h3 id="modalTitle" class="font-extrabold text-base text-slate-900">Document Preview (Click text below to edit)</h3>
         <div class="flex gap-2">
           <button onclick="downloadModalPdf()" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-bold">Download PDF</button>
           <button onclick="closeDocumentModal()" class="px-3 py-1.5 rounded-lg bg-slate-200 text-slate-800 text-xs font-bold">✕ Close</button>
@@ -341,7 +372,7 @@
     </div>
   </div>
 
-  <!-- FOOTER (NO GOOGLE MAP, MUMBAI/DELHI ADDRESS) -->
+  <!-- FOOTER -->
   <div class="mt-10">
     <div class="bg-emerald-900 text-white py-2.5 px-4 text-center text-xs font-bold">
       🏦 SMALL & ALL TYPES OF PERSONAL LOAN AND ONLINE SHOPPING EMI FINANCE SERVICES AVAILABLE
@@ -401,7 +432,7 @@
           renderOwnerApplications();
           populateCollectAppDropdown();
         }
-      }, 700);
+      }, 600);
     }
 
     function getCloudData() {
@@ -425,6 +456,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       updateFeeCalculation();
+      switchCustomerTab('new');
       const db = getCloudData();
       document.getElementById('agrInterestRate').value = db.agreementSettings.interestRate;
       document.getElementById('agrEmiDate').value = db.agreementSettings.emiDate;
@@ -440,13 +472,13 @@
         document.getElementById('txtHeroTitle').innerText = 'Personal Loan & Online Shopping Finance Services';
         document.getElementById('txtHeroSub').innerText = 'Minimal Documents • Fast Cloud Verification • Easy Monthly EMI';
         document.getElementById('txtTabNew').innerText = 'New Customer Application';
-        document.getElementById('txtTabTrack').innerText = 'Track Application Status';
+        document.getElementById('txtTabTrack').innerText = 'Tracking Services';
         document.getElementById('txtFormHeading').innerText = 'New Loan Application Form';
       } else {
         document.getElementById('txtHeroTitle').innerText = 'पर्सनल लोन एवं ऑनलाइन शॉपिंग फाइनेंस सेवाएँ';
         document.getElementById('txtHeroSub').innerText = 'न्यूनतम दस्तावेज • तेज़ क्लाउड वेरिफिकेशन • आसान मासिक किस्त (EMI)';
         document.getElementById('txtTabNew').innerText = 'New Customer (नया आवेदन)';
-        document.getElementById('txtTabTrack').innerText = 'Old Customer / Track Status';
+        document.getElementById('txtTabTrack').innerText = 'Tracking Services (ट्रैक स्टेटस)';
         document.getElementById('txtFormHeading').innerText = 'नया ऋण आवेदन फॉर्म (New Loan Application)';
       }
       showCloudNotification(currentLang === 'en' ? 'Language switched to English' : 'भाषा हिंदी में बदल गई है');
@@ -468,11 +500,31 @@
       }
     }
 
+    // 3 DISTINCT TAB COLORS: SOLID WHEN INACTIVE, LIGHT SHADE WHEN PUSHED/ACTIVE
     function switchCustomerTab(tab) {
       switchMainView('customer');
       document.getElementById('viewNewCustomer').classList.toggle('hidden', tab !== 'new');
       document.getElementById('viewTrackCustomer').classList.toggle('hidden', tab !== 'track');
       document.getElementById('viewCibilCheck').classList.toggle('hidden', tab !== 'cibil');
+
+      const btnNew = document.getElementById('tabNewCustomer');
+      const btnTrack = document.getElementById('tabTrackCustomer');
+      const btnCibil = document.getElementById('tabCibilCheck');
+
+      // Tab 1: Emerald (Green) -> Light Emerald when pushed
+      btnNew.className = tab === 'new'
+        ? 'tab-btn p-4 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-extrabold text-left flex items-center justify-between shadow-inner scale-[0.99]'
+        : 'tab-btn p-4 rounded-xl border-2 border-emerald-700 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-left flex items-center justify-between shadow';
+
+      // Tab 2: Indigo (Purple/Blue) -> Light Indigo when pushed
+      btnTrack.className = tab === 'track'
+        ? 'tab-btn p-4 rounded-xl border-2 border-indigo-500 bg-indigo-100 text-indigo-950 font-extrabold text-left flex items-center justify-between shadow-inner scale-[0.99]'
+        : 'tab-btn p-4 rounded-xl border-2 border-indigo-700 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-left flex items-center justify-between shadow';
+
+      // Tab 3: Amber (Orange/Gold) -> Light Amber when pushed
+      btnCibil.className = tab === 'cibil'
+        ? 'tab-btn p-4 rounded-xl border-2 border-amber-500 bg-amber-100 text-amber-950 font-extrabold text-left flex items-center justify-between shadow-inner scale-[0.99]'
+        : 'tab-btn p-4 rounded-xl border-2 border-amber-600 bg-amber-500 hover:bg-amber-600 text-white font-bold text-left flex items-center justify-between shadow';
     }
 
     function switchOwnerTab(tab) {
@@ -484,22 +536,21 @@
       if (tab === 'promo') renderPromoCodes();
     }
 
+    // UPDATED SLAB FEE: 1-5000 => 300 + 18% GST (354) | 5001-15000 => 600 + 18% GST (708) | 15001-50000+ => 1000 + 18% GST (1180)
     function updateFeeCalculation() {
       const amount = parseFloat(document.getElementById('appLoanAmount').value) || 0;
-      let baseFee = 254, gst = 46, total = 300;
+      let slabFee = 300;
       if (amount <= 5000) {
-        baseFee = Math.max(0, 254 - appliedPromoDiscount);
-        gst = Math.round(baseFee * 0.18);
-        total = appliedPromoDiscount === 0 ? 300 : baseFee + gst;
+        slabFee = 300;
       } else if (amount <= 15000) {
-        baseFee = Math.max(0, 600 - appliedPromoDiscount);
-        gst = Math.round(baseFee * 0.18);
-        total = baseFee + gst;
+        slabFee = 600;
       } else {
-        baseFee = Math.max(0, 1000 - appliedPromoDiscount);
-        gst = Math.round(baseFee * 0.18);
-        total = baseFee + gst;
+        slabFee = 1000;
       }
+      const baseFee = Math.max(0, slabFee - appliedPromoDiscount);
+      const gst = Math.round(baseFee * 0.18);
+      const total = baseFee + gst;
+
       document.getElementById('dispProcFee').innerText = `₹${baseFee}`;
       document.getElementById('dispDiscount').innerText = `-₹${appliedPromoDiscount}`;
       document.getElementById('dispGstFee').innerText = `₹${gst}`;
@@ -547,7 +598,11 @@
       const amount = parseFloat(document.getElementById('appLoanAmount').value);
       const tenure = parseInt(document.getElementById('appTenure').value);
       const monthlyEmi = Math.round((amount + (amount * 0.03 * tenure)) / tenure);
-      const bankCombined = `${document.getElementById('appBankName').value.trim()} | Holder: ${document.getElementById('appBankHolder').value.trim()} | A/C: ${document.getElementById('appAccNo').value.trim()} | IFSC: ${document.getElementById('appIfsc').value.trim().toUpperCase()}`;
+
+      const bankName = document.getElementById('appBankName').value.trim();
+      const bankHolder = document.getElementById('appBankHolder').value.trim();
+      const accNo = document.getElementById('appAccNo').value.trim();
+      const ifsc = document.getElementById('appIfsc').value.trim().toUpperCase();
 
       db.applications.unshift({
         orderId,
@@ -555,12 +610,13 @@
         loanType: document.getElementById('appLoanType').value,
         amount, tenure, monthlyEmi,
         name: document.getElementById('appName').value.trim(),
-        dob: document.getElementById('appDob').value,
+        dob: document.getElementById('appDob').value.trim(),
         mobile: document.getElementById('appMobile').value.trim(),
         email: document.getElementById('appEmail').value.trim(),
         aadhaar: document.getElementById('appAadhaar').value.trim(),
         pan: document.getElementById('appPan').value.trim().toUpperCase(),
-        bank: bankCombined,
+        bankName, bankHolder, accNo, ifsc,
+        bank: `${bankName} | A/C: ${accNo} | IFSC: ${ifsc} (${bankHolder})`,
         processingFee: feeObj.baseFee,
         gstFee: feeObj.gst,
         totalFee: feeObj.total,
@@ -568,6 +624,8 @@
         remarkText: '',
         remarkDocType: '',
         insuranceOpted: false,
+        insuranceAmount: 0,
+        insuranceNote: '',
         nachLink: '',
         nachState: 'Not Sent',
         docs: { ...uploadedDocsTemp },
@@ -587,28 +645,61 @@
       if (val.trim().length >= 4) searchCustomerApplication();
     }
 
+    // MULTI-LOAN SEARCH & POPUP SELECTOR
     function searchCustomerApplication() {
       const q = document.getElementById('trackSearchInput').value.trim().toUpperCase();
       const container = document.getElementById('trackingResultContainer');
+      const selectorBar = document.getElementById('multiLoanSelectorBar');
       if (!q) return;
       const db = getCloudData();
-      const app = db.applications.find(a =>
+
+      const matchedApps = db.applications.filter(a =>
         a.orderId.toUpperCase() === q ||
         a.mobile === q ||
         a.aadhaar === q ||
         (q.length === 4 && (a.mobile.endsWith(q) || a.aadhaar.endsWith(q)))
       );
-      if (!app) {
+
+      if (matchedApps.length === 0) {
+        selectorBar.classList.add('hidden');
         container.innerHTML = `<div class="p-4 rounded-xl bg-white card-bg border text-center text-xs text-rose-600 font-bold">No record found. Enter valid Order ID or Last 4 Digits of Mobile/ID.</div>`;
         return;
       }
-      renderCustomerTrackingCard(app);
+
+      if (matchedApps.length > 1) {
+        selectorBar.classList.remove('hidden');
+        document.getElementById('multiLoanCountBadge').innerText = `${matchedApps.length} Loans Found`;
+        document.getElementById('multiLoanDropdown').innerHTML = matchedApps.map((a, idx) =>
+          `<option value="${a.orderId}">Loan #${idx + 1}: ${a.orderId} — ₹${a.amount} (${a.loanType}) [${a.status}] - ${a.createdAt}</option>`
+        ).join('');
+        document.getElementById('multiLoanSlidePills').innerHTML = matchedApps.map((a, idx) =>
+          `<button onclick="selectMatchedLoan('${a.orderId}')" class="shrink-0 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900 border-2 border-indigo-400 text-xs font-extrabold text-indigo-900 dark:text-indigo-200 hover:bg-indigo-600 hover:text-white transition">
+            #${idx + 1} ${a.orderId} (₹${a.amount} - ${a.status})
+          </button>`
+        ).join('');
+      } else {
+        selectorBar.classList.add('hidden');
+      }
+
+      renderCustomerTrackingCard(matchedApps[0]);
+    }
+
+    function selectMatchedLoan(orderId) {
+      const app = getCloudData().applications.find(a => a.orderId === orderId);
+      if (app) {
+        document.getElementById('multiLoanDropdown').value = orderId;
+        renderCustomerTrackingCard(app);
+      }
     }
 
     function renderCustomerTrackingCard(app) {
       const container = document.getElementById('trackingResultContainer');
       const totalPaid = app.emis.reduce((s, i) => s + Number(i.amount), 0);
       const rem = Math.max(0, (app.monthlyEmi * app.tenure) - totalPaid);
+      const procPlusGst = app.totalFee || (app.processingFee + app.gstFee);
+      const insAmt = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
+      const totalDeductible = procPlusGst + insAmt;
+      const netBankDisbursal = Math.max(0, app.amount - totalDeductible);
 
       let remarkHtml = app.remarkText ? `
         <div class="p-4 rounded-xl bg-rose-50 border-2 border-rose-300 text-rose-900 space-y-2 text-xs">
@@ -621,25 +712,40 @@
 
       let approvalHtml = (app.status === 'Approved' || app.status === 'Loan Closed') ? `
         <div class="p-4 rounded-xl bg-emerald-50 dark:bg-slate-800 border-2 border-emerald-500 space-y-3 text-xs">
-          <div class="flex justify-between font-extrabold text-emerald-800 dark:text-emerald-300">
-            <span>✅ LOAN APPROVED</span>
-            <span>Fee (Deductible from Loan): ₹${app.totalFee || (app.processingFee + app.gstFee)}</span>
+          <div class="flex flex-wrap justify-between gap-2 font-extrabold text-emerald-900 dark:text-emerald-300 border-b border-emerald-200 pb-2">
+            <span>✅ LOAN APPROVED (Order ID: ${app.orderId})</span>
+            <span>खाते में भेजी जाने वाली शुद्ध राशि (Net Disbursal): <u class="text-sm">₹${netBankDisbursal}</u></span>
           </div>
-          <label class="flex items-center gap-2 font-bold bg-white dark:bg-slate-900 p-2.5 rounded border cursor-pointer">
-            <input type="checkbox" ${app.insuranceOpted ? 'checked' : ''} onchange="toggleCustomerInsurance('${app.orderId}', this.checked)">
-            <span>Opt for Loan Protection Insurance (Optional)</span>
-          </label>
+
+          <!-- Insurance Tick + Owner Submitted Insurance Amount & Note -->
+          <div class="bg-white dark:bg-slate-900 p-3 rounded-xl border space-y-2">
+            <label class="flex items-center justify-between font-bold cursor-pointer">
+              <span class="flex items-center gap-2">
+                <input type="checkbox" ${app.insuranceOpted ? 'checked' : ''} onchange="toggleCustomerInsurance('${app.orderId}', this.checked)" class="w-4 h-4 accent-emerald-600">
+                <span>Loan Protection Insurance (इंश्योरेंस लेने के लिए टिक करें - यह ओनर पोर्टल पर अपडेट होगा)</span>
+              </span>
+              <span class="px-2 py-0.5 rounded ${app.insuranceOpted ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500'}">
+                ${app.insuranceOpted ? `✔ Active (₹${insAmt})` : 'Not Selected'}
+              </span>
+            </label>
+            ${app.insuranceOpted ? `
+              <div class="text-[11px] bg-emerald-50 dark:bg-slate-800 p-2 rounded border border-emerald-200 text-emerald-900 dark:text-emerald-200">
+                <div><strong>Insurance Charge:</strong> ₹${insAmt} (लोन राशि से प्रोसेसिंग फीस ₹${procPlusGst} + इंश्योरेंस ₹${insAmt} = कुल ₹${totalDeductible} कटकर खाते में ₹${netBankDisbursal} जाएगा)</div>
+                ${app.insuranceNote ? `<div class="mt-1"><strong>Owner Insurance Note:</strong> ${app.insuranceNote}</div>` : ''}
+              </div>
+            ` : ''}
+          </div>
+
           <div class="bg-white dark:bg-slate-900 p-3 rounded border flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div>
               <div class="font-extrabold">Step 1: NACH Auto-Debit Mandate</div>
               <div class="text-slate-500">Status: <strong class="text-emerald-700">${app.nachState}</strong></div>
             </div>
             ${app.nachLink ? `
-              <div class="flex gap-2">
-                <a href="${app.nachLink}" target="_blank" onclick="markNachProcessing('${app.orderId}')" class="px-4 py-2 rounded-lg bg-sky-700 text-white font-bold">Open NACH Form Link ↗</a>
-              </div>
+              <a href="${app.nachLink}" target="_blank" onclick="markNachProcessing('${app.orderId}')" class="px-4 py-2 rounded-lg bg-sky-700 text-white font-bold">Open NACH Form Link ↗</a>
             ` : `<span class="text-amber-600 font-bold">Awaiting NACH Link from Owner</span>`}
           </div>
+
           <div class="bg-white dark:bg-slate-900 p-3 rounded border flex items-center justify-between">
             <span class="font-extrabold">Step 2: Digital Loan Agreement & No-Dues</span>
             <div class="flex gap-2">
@@ -652,16 +758,21 @@
       container.innerHTML = `
         <div class="bg-white card-bg rounded-2xl shadow-sm border p-5 space-y-4 text-xs">
           <div class="flex justify-between items-center border-b pb-3">
-            <div><span class="bg-slate-900 text-white px-2.5 py-1 rounded font-bold">Order ID: ${app.orderId}</span><h4 class="text-base font-extrabold mt-1">${app.name} (${app.loanType})</h4></div>
+            <div>
+              <span class="bg-slate-900 text-white px-2.5 py-1 rounded font-bold">Order ID: ${app.orderId}</span>
+              <h4 class="text-base font-extrabold mt-1">${app.name} <span class="text-xs font-normal text-slate-500">(DOB: ${app.dob || '-'} | ${app.loanType})</span></h4>
+              <p class="text-[11px] text-slate-500">Bank: ${app.bankName || ''} | A/C: ${app.accNo || app.bank} | IFSC: ${app.ifsc || ''}</p>
+            </div>
             <span class="px-3 py-1 rounded-full font-extrabold bg-emerald-100 text-emerald-800">${app.status}</span>
           </div>
           ${remarkHtml}
-          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border">
+          <div class="grid grid-cols-2 sm:grid-cols-6 gap-2 bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border">
             <div><span class="text-slate-500 block">Loan Amount</span><strong class="text-sm">₹${app.amount}</strong></div>
-            <div><span class="text-slate-500 block">Monthly EMI</span><strong class="text-sm text-emerald-700">₹${app.monthlyEmi}</strong></div>
-            <div><span class="text-slate-500 block">Tenure</span><strong class="text-sm">${app.tenure} Months</strong></div>
-            <div><span class="text-slate-500 block">Fee (Deductible)</span><strong class="text-sm">₹${app.totalFee || (app.processingFee + app.gstFee)}</strong></div>
-            <div><span class="text-slate-500 block">Remaining Balance</span><strong class="text-sm text-rose-600">₹${rem}</strong></div>
+            <div><span class="text-slate-500 block">Proc. Fee + GST</span><strong class="text-sm">₹${procPlusGst}</strong></div>
+            <div><span class="text-slate-500 block">Insurance Fee</span><strong class="text-sm text-sky-700">₹${insAmt}</strong></div>
+            <div><span class="text-slate-500 block">Net in Account</span><strong class="text-sm text-emerald-700">₹${netBankDisbursal}</strong></div>
+            <div><span class="text-slate-500 block">Monthly EMI</span><strong class="text-sm">₹${app.monthlyEmi} (${app.tenure}M)</strong></div>
+            <div><span class="text-slate-500 block">Remaining Due</span><strong class="text-sm text-rose-600">₹${rem}</strong></div>
           </div>
           ${approvalHtml}
           <div>
@@ -713,7 +824,25 @@
     function toggleCustomerInsurance(orderId, checked) {
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
-      if (app) { app.insuranceOpted = checked; saveCloudData(db); renderCustomerTrackingCard(app); }
+      if (app) {
+        app.insuranceOpted = checked;
+        saveCloudData(db, checked ? 'Insurance Request Sent to Owner Portal!' : 'Insurance Removed');
+        renderCustomerTrackingCard(app);
+      }
+    }
+
+    function saveOwnerInsuranceDetails(orderId) {
+      const amt = parseFloat(document.getElementById('insAmt_' + orderId).value) || 0;
+      const note = document.getElementById('insNote_' + orderId).value.trim();
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (app) {
+        app.insuranceOpted = true;
+        app.insuranceAmount = amt;
+        app.insuranceNote = note;
+        saveCloudData(db, `Insurance ₹${amt} & Note Added to Bill!`);
+        renderOwnerApplications();
+      }
     }
 
     function dispatchNachLinkToCustomer() {
@@ -734,15 +863,30 @@
       const db = getCloudData();
       const listEl = document.getElementById('ownerApplicationsList');
       if (db.applications.length === 0) { listEl.innerHTML = `<div class="bg-white card-bg p-6 rounded-xl border text-center text-xs">No applications yet.</div>`; return; }
-      listEl.innerHTML = db.applications.map(app => `
+      listEl.innerHTML = db.applications.map(app => {
+        const procFee = app.totalFee || (app.processingFee + app.gstFee);
+        const insFee = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
+        const netDisb = Math.max(0, app.amount - procFee - insFee);
+        return `
         <div class="bg-white card-bg rounded-2xl shadow-sm border p-4 space-y-3 text-xs">
           <div class="flex flex-wrap justify-between gap-2 border-b pb-2">
             <div>
               <span class="bg-slate-900 text-white font-bold px-2 py-0.5 rounded">${app.orderId}</span>
-              <strong class="text-sm ml-1">${app.name}</strong> (DOB: ${app.dob || '-'} | Mob: ${app.mobile}) | Bank: ${app.bank} | Loan: <strong class="text-emerald-700">₹${app.amount}</strong>
-              <span class="ml-2 px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">NACH: ${app.nachState || 'Not Sent'}</span>
+              <strong class="text-sm ml-1">${app.name}</strong> (DOB: ${app.dob || '-'} | Mob: ${app.mobile})
+              <div class="text-[11px] text-slate-500 mt-0.5">
+                Bank: <strong>${app.bankName || '-'}</strong> | Holder: <strong>${app.bankHolder || '-'}</strong> | A/C: <strong>${app.accNo || app.bank}</strong> | IFSC: <strong>${app.ifsc || '-'}</strong>
+              </div>
+              <div class="mt-1 flex flex-wrap gap-2">
+                <span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold">Loan: ₹${app.amount}</span>
+                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-800 font-bold">Proc+GST: ₹${procFee}</span>
+                <span class="px-2 py-0.5 rounded ${app.insuranceOpted ? 'bg-sky-100 text-sky-900 font-extrabold border border-sky-400' : 'bg-slate-100 text-slate-500'}">
+                  🛡️ Insurance: ${app.insuranceOpted ? `YES (₹${insFee})` : 'No'}
+                </span>
+                <span class="px-2 py-0.5 rounded bg-emerald-700 text-white font-bold">Net Disbursal: ₹${netDisb}</span>
+                <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">NACH: ${app.nachState || 'Not Sent'}</span>
+              </div>
             </div>
-            <div class="flex gap-1.5 flex-wrap">
+            <div class="flex gap-1.5 flex-wrap self-start">
               <button onclick="setOwnerNachDecision('${app.orderId}','Approved')" class="px-2.5 py-1 rounded bg-emerald-600 text-white font-bold">✔ NACH Approved</button>
               <button onclick="setOwnerNachDecision('${app.orderId}','Not Approved')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold">✕ Not Approved</button>
               <button onclick="openAgreementModal('${app.orderId}')" class="px-2.5 py-1 rounded bg-indigo-700 text-white font-bold">👁️ Agreement</button>
@@ -769,27 +913,45 @@
               <button onclick="downloadAllCustomerDocsAsSinglePDF('${app.orderId}')" class="w-full py-2 rounded-xl bg-slate-900 text-white font-bold">📥 Download All Docs + Re-uploads as Single PDF</button>
             </div>
 
-            <div class="lg:col-span-3 space-y-2">
-              <label class="block font-bold">Application Status</label>
-              <select onchange="updateCustomerStatus('${app.orderId}', this.value)" class="w-full rounded border px-2 py-1.5 font-bold">
-                ${['Pending','Processing','Verification','Approved','Rejected','Loan Closed'].map(s => `<option value="${s}" ${app.status===s?'selected':''}>${s}</option>`).join('')}
-              </select>
-              <div class="flex gap-1">
-                <input type="number" id="feeInput_${app.orderId}" value="${app.totalFee || (app.processingFee+app.gstFee)}" class="w-full rounded border px-2 py-1 font-bold" placeholder="Total Fee">
-                <button onclick="updateCustomerProcessingFee('${app.orderId}')" class="px-3 py-1 rounded bg-emerald-700 text-white font-bold">Fee Save</button>
+            <!-- STATUS, FEE & INSURANCE AMOUNT + NOTE BOX -->
+            <div class="lg:col-span-4 space-y-2">
+              <div class="grid grid-cols-2 gap-1.5">
+                <div>
+                  <label class="block font-bold mb-0.5">Status</label>
+                  <select onchange="updateCustomerStatus('${app.orderId}', this.value)" class="w-full rounded border px-2 py-1.5 font-bold">
+                    ${['Pending','Processing','Verification','Approved','Rejected','Loan Closed'].map(s => `<option value="${s}" ${app.status===s?'selected':''}>${s}</option>`).join('')}
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-bold mb-0.5">Proc. Fee + GST (₹)</label>
+                  <div class="flex gap-1">
+                    <input type="number" id="feeInput_${app.orderId}" value="${procFee}" class="w-full rounded border px-2 py-1 font-bold">
+                    <button onclick="updateCustomerProcessingFee('${app.orderId}')" class="px-2 py-1 rounded bg-emerald-700 text-white font-bold">Save</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- INSURANCE AMOUNT & NOTE BOX -->
+              <div class="p-2.5 rounded-xl border-2 ${app.insuranceOpted ? 'border-sky-500 bg-sky-50/60 dark:bg-slate-800' : 'border-slate-200 bg-slate-50 dark:bg-slate-800'} space-y-1.5">
+                <div class="font-extrabold text-[11px] flex justify-between">
+                  <span>🛡️ Insurance Amount & Note (${app.insuranceOpted ? 'Customer Opted ✔' : 'Optional'})</span>
+                </div>
+                <div class="flex gap-1.5">
+                  <input type="number" id="insAmt_${app.orderId}" value="${app.insuranceAmount || ''}" placeholder="Ins. Amount ₹" class="w-1/3 rounded border px-2 py-1 font-bold">
+                  <input type="text" id="insNote_${app.orderId}" value="${app.insuranceNote || ''}" placeholder="Write Insurance Note..." class="w-2/3 rounded border px-2 py-1">
+                </div>
+                <button onclick="saveOwnerInsuranceDetails('${app.orderId}')" class="w-full py-1 rounded bg-sky-700 hover:bg-sky-800 text-white font-bold">Submit Insurance & Deduct from Loan</button>
               </div>
             </div>
 
-            <div class="lg:col-span-4 space-y-2">
+            <div class="lg:col-span-3 space-y-2">
               <label class="block font-bold">Send Remark for Re-upload</label>
-              <div class="flex gap-1">
-                <select id="remarkDoc_${app.orderId}" class="rounded border px-2 py-1.5"><option value="photo">Photo</option><option value="aadhaar">ID Card</option><option value="pan">PAN</option><option value="passbook">Passbook</option><option value="sign">Signature</option></select>
-                <input type="text" id="remarkInput_${app.orderId}" value="${app.remarkText}" placeholder="Remark message..." class="w-full rounded border px-2 py-1.5">
-              </div>
+              <select id="remarkDoc_${app.orderId}" class="w-full rounded border px-2 py-1.5"><option value="photo">Photo</option><option value="aadhaar">ID Card</option><option value="pan">PAN</option><option value="passbook">Passbook</option><option value="sign">Signature</option></select>
+              <input type="text" id="remarkInput_${app.orderId}" value="${app.remarkText}" placeholder="Remark message..." class="w-full rounded border px-2 py-1.5">
               <button onclick="sendRemarkToCustomer('${app.orderId}')" class="w-full py-1.5 rounded bg-teal-700 text-white font-bold">Send Remark</button>
             </div>
           </div>
-        </div>`).join('');
+        </div>`}).join('');
     }
 
     function setOwnerNachDecision(orderId, decision) {
@@ -832,7 +994,7 @@
       pdf.text(`RNS FINANCE - CUSTOMER KYC DOSSIER (${app.orderId})`, 14, 15);
       pdf.setFontSize(9);
       pdf.text(`Name: ${app.name} | DOB: ${app.dob || '-'} | Mobile: ${app.mobile} | Loan: Rs.${app.amount}`, 14, 22);
-      pdf.text(`Bank: ${app.bank}`, 14, 27);
+      pdf.text(`Bank: ${app.bankName || ''} | A/C: ${app.accNo || app.bank} | IFSC: ${app.ifsc || ''}`, 14, 27);
       const items = [
         { label: '1. PAN Card (First Attempt)', data: app.docs.pan },
         { label: '2. ID Card (First Attempt)', data: app.docs.aadhaar },
@@ -905,7 +1067,8 @@
       if (!app) return;
       const cfg = db.agreementSettings;
       const fee = app.totalFee || (app.processingFee + app.gstFee);
-      const netDisbursed = app.amount - fee;
+      const insAmt = app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0;
+      const netDisbursed = Math.max(0, app.amount - fee - insAmt);
       document.getElementById('modalTitle').innerText = `Loan Agreement - ${app.orderId}`;
       document.getElementById('modalPrintableArea').innerHTML = `
         <div class="agreement-paper text-xs space-y-3" id="pdfTargetContent" contenteditable="true">
@@ -916,8 +1079,8 @@
             <div class="flex justify-between font-bold mt-2 pt-1 border-t"><span>अनुबंध संख्याः ${app.orderId}</span><span>दिनांकः ${app.createdAt}</span></div>
           </div>
           <h3 class="text-center text-base font-extrabold underline">ऋण एवं फाइनेंस सेवा अनुबंध (LOAN AGREEMENT)</h3>
-          <p><strong>1. ऋण विवरण:</strong> यह अनुबंध RNS Finance और श्री/श्रीमती <strong>${app.name}</strong> (${app.mobile}) के मध्य निष्पादित है। स्वीकृत ऋण राशि <strong>₹${app.amount}</strong> है, जिस पर ब्याज दर <strong>${cfg.interestRate}</strong> लागू होगी। प्रोसेसिंग शुल्क <strong>₹${fee} (With 18% GST)</strong> ऋण राशि से डिडक्ट (माइनस) होकर ग्राहक को शुद्ध राशि <strong>₹${netDisbursed}</strong> प्रदान की जाएगी।</p>
-          <p><strong>2. जमा दस्तावेज (काटने या जोड़ने के लिए यहाँ क्लिक कर एडिट करें):</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर &nbsp; ☐ अन्य दस्तावेज: ________</p>
+          <p><strong>1. ऋण एवं कटौती विवरण:</strong> यह अनुबंध RNS Finance और श्री/श्रीमती <strong>${app.name}</strong> (जन्मतिथि: ${app.dob || '-'}, मोबाइल: ${app.mobile}) के मध्य निष्पादित है। स्वीकृत ऋण राशि <strong>₹${app.amount}</strong> है, जिस पर ब्याज दर <strong>${cfg.interestRate}</strong> लागू होगी। प्रोसेसिंग शुल्क <strong>₹${fee} (18% GST सहित)</strong> तथा बीमा (Insurance) शुल्क <strong>₹${insAmt}</strong> ${app.insuranceNote ? `(${app.insuranceNote})` : ''} ऋण राशि से कटकर (Deduct होकर) ग्राहक के बैंक खाते (${app.bankName || ''} A/C: ${app.accNo || app.bank}, IFSC: ${app.ifsc || ''}) में शुद्ध राशि <strong>₹${netDisbursed}</strong> भेजी जाएगी।</p>
+          <p><strong>2. जमा दस्तावेज (काटने या जोड़ने के लिए क्लिक कर एडिट करें):</strong> ☑ पहचान पत्र &nbsp; ☑ पैन कार्ड &nbsp; ☑ बैंक पासबुक &nbsp; ☑ फोटो एवं हस्ताक्षर &nbsp; ☐ अन्य: ________</p>
           <p><strong>3. पुनर्भुगतान शर्तें:</strong> मासिक किस्त (EMI): <strong>₹${app.monthlyEmi}</strong> प्रति माह की <strong>${cfg.emiDate}</strong> तारीख तक देय होगी। कुल अवधि: <strong>${app.tenure} माह</strong>। विलंब/बाउंस शुल्क: ${cfg.penaltyText}।</p>
           <div class="whitespace-pre-line"><strong>4. शर्तें:</strong>\n${cfg.customBody}</div>
           <div class="grid grid-cols-2 gap-6 pt-8 mt-4 border-t text-center">
@@ -967,7 +1130,6 @@
     }
     function deletePromo(i) { const db = getCloudData(); db.promos.splice(i, 1); saveCloudData(db); renderPromoCodes(); }
 
-    // CIBIL SCORE STRICTLY BETWEEN 500 AND 650
     function simulateFreeCibil() {
       const name = document.getElementById('cibilName').value.trim();
       const pan = document.getElementById('cibilPan').value.trim().toUpperCase();
@@ -977,10 +1139,10 @@
       }
       let sum = 0;
       for (let i = 0; i < pan.length; i++) sum += pan.charCodeAt(i) * (i + 3);
-      const score = 500 + (sum % 151); // Always 500 to 650
+      const score = 500 + (sum % 151);
       const box = document.getElementById('cibilResultBox');
       box.classList.remove('hidden');
-      box.innerHTML = `📊 श्री/श्रीमती <strong>${name}</strong> (PAN: ${pan}), आपका इन-हाउस सिबिल स्कोर <strong><span class="text-lg underline text-rose-700">${score}</span> (Fair / Moderate Range: 500-650)</strong> है। आप RNS Finance से लोन आवेदन के लिए पात्र हैं!`;
+      box.innerHTML = `📊 श्री/श्रीमती <strong>${name}</strong> (PAN: ${pan}), आपका इन-हाउस सिबिल स्कोर <strong><span class="text-lg underline text-rose-700">${score}</span> (Range: 500-650)</strong> है। आप RNS Finance से लोन आवेदन के लिए पात्र हैं!`;
     }
   </script>
 </body>
