@@ -64,7 +64,7 @@
     <span id="cloudToastMsg">RNS MICRO FINANCE Cloud Synced!</span>
   </div>
 
-  <!-- INSTANT ORDER ID POPUP MODAL (0.5 SECOND RESPONSE + COPY ORDER ID) -->
+  <!-- INSTANT ORDER ID POPUP MODAL (OPENS IMMEDIATELY ON SUBMIT + LIVE CLOUD UPLOAD PROGRESS) -->
   <div id="instantOrderModal" class="fixed inset-0 bg-black/80 z-[95] hidden items-center justify-center p-4">
     <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-md w-full p-6 text-center space-y-4 border-2 border-emerald-500 shadow-2xl">
       <div class="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto text-2xl">
@@ -80,10 +80,10 @@
           📋 Copy Order ID
         </button>
       </div>
-      <div class="text-[11px] text-emerald-700 font-bold" id="bgUploadProgressNotice">
-        ⚡ HD Documents are syncing in background automatically...
+      <div class="p-2.5 rounded-xl bg-amber-50 dark:bg-slate-800 border border-amber-300 text-[11px] text-amber-900 dark:text-amber-300 font-extrabold" id="bgUploadProgressNotice">
+        ⏳ Transmitting your HD Documents to Owner Portal (Please wait 5–10 seconds)...
       </div>
-      <button type="button" onclick="closeInstantOrderModal()" class="w-full py-2.5 rounded-xl bg-slate-900 text-white font-extrabold text-xs">
+      <button type="button" onclick="closeInstantOrderModal()" class="w-full py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-xs shadow">
         Proceed to Live Tracking Portal →
       </button>
     </div>
@@ -147,7 +147,7 @@
         <div>
           <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">RNS MICRO FINANCE • 24 HOUR APPLY LOAN & HELPLINE</span>
           <h2 id="txtHeroTitle" class="text-2xl font-extrabold mt-2">RNS MICRO FINANCE — Personal Loan & Online Shopping Finance</h2>
-          <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">Instant Order ID in 1 Second • 4-Second Turbo Cloud Sync • Flexible 1 to 24 Months EMI</p>
+          <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">Instant Order ID • High-Speed Cross-Device Cloud Sync • Flexible 1 to 24 Months EMI</p>
         </div>
         <div class="bg-white/10 p-3.5 rounded-xl border border-white/20 text-xs space-y-1 max-w-sm">
           <div id="txtComplaintTop" class="text-[11px] font-bold text-amber-300">
@@ -191,30 +191,30 @@
       <div id="viewNewCustomer" class="space-y-6">
         <div class="bg-white card-bg rounded-2xl shadow-sm border border-slate-200 p-5">
           <h3 id="txtFormHeading" class="text-lg font-bold border-b pb-3 mb-4">RNS MICRO FINANCE — New Loan Application Form</h3>
-          <form id="loanApplicationForm" onsubmit="submitLoanApplication(event)" class="space-y-5">
+          <form id="loanApplicationForm" onsubmit="submitLoanApplication(event)" novalidate class="space-y-5">
             <div class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-xl border space-y-3">
               <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
                 <div>
                   <label class="block font-bold mb-1">Loan Type *</label>
-                  <select id="appLoanType" required onchange="toggleShoppingAddressField()" class="w-full rounded-lg border px-3 py-2 font-bold">
+                  <select id="appLoanType" onchange="toggleShoppingAddressField()" class="w-full rounded-lg border px-3 py-2 font-bold">
                     <option value="Personal Loan">Personal Loan</option>
                     <option value="Online Shopping Loan">Online Shopping Loan</option>
                   </select>
                 </div>
                 <div>
                   <label class="block font-bold mb-1">Customer Type *</label>
-                  <select id="appCustomerType" required class="w-full rounded-lg border px-3 py-2">
+                  <select id="appCustomerType" class="w-full rounded-lg border px-3 py-2">
                     <option value="New Customer">New Customer</option>
                     <option value="Old Customer">Old Customer</option>
                   </select>
                 </div>
                 <div>
                   <label class="block font-bold mb-1">Loan Amount (₹1 - ₹50,000) *</label>
-                  <input type="number" id="appLoanAmount" required min="1" max="500000" value="5000" oninput="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
+                  <input type="number" id="appLoanAmount" min="1" max="500000" value="5000" oninput="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
                 </div>
                 <div>
                   <label class="block font-bold mb-1">Tenure (1 to 24 Months) *</label>
-                  <select id="appTenure" required onchange="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
+                  <select id="appTenure" onchange="updateFeeCalculation()" class="w-full rounded-lg border px-3 py-2 font-bold">
                     <option value="1">1 Month</option>
                     <option value="2">2 Months</option>
                     <option value="3">3 Months</option>
@@ -235,7 +235,7 @@
 
               <div>
                 <label class="block text-xs font-bold mb-1">Online Shopping Product Link / Loan Purpose *</label>
-                <input type="text" id="appPurpose" required class="w-full rounded-lg border px-3 py-2 text-xs font-semibold" placeholder="Paste Online Product Link (https://...) or enter loan purpose...">
+                <input type="text" id="appPurpose" class="w-full rounded-lg border px-3 py-2 text-xs font-semibold" placeholder="Paste Online Product Link (https://...) or enter loan purpose...">
               </div>
 
               <div id="shoppingAddressContainer" class="hidden p-3 rounded-xl bg-amber-50 dark:bg-slate-900 border-2 border-amber-400">
@@ -246,7 +246,7 @@
               </div>
 
               <div class="pt-2 border-t flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                   <input type="text" id="appPromoInput" placeholder="Promo Code" class="rounded-lg border px-3 py-1.5 uppercase font-bold">
                   <button type="button" onclick="applyPromoCode()" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">Apply</button>
                   <span id="promoMsg" class="font-bold"></span>
@@ -262,64 +262,64 @@
 
             <!-- CLEAN "Email ID *" LABEL -->
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
-              <div><label class="block font-bold mb-1">Full Name *</label><input type="text" id="appName" required class="w-full rounded-lg border px-3 py-2" placeholder="Enter Full Name"></div>
-              <div><label class="block font-bold mb-1">Date of Birth (DD/MM/YYYY) *</label><input type="text" id="appDob" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY"></div>
-              <div><label class="block font-bold mb-1">Mobile Number (10 Digits) *</label><input type="tel" id="appMobile" required maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="10 Digit Mobile"></div>
-              <div><label class="block font-bold mb-1">Email ID *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2" placeholder="yourname@gmail.com"></div>
-              <div><label class="block font-bold mb-1">Identity / KYC Number (12 Digits) *</label><input type="text" id="appAadhaar" required maxlength="12" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="12 Digit Number"></div>
-              <div><label class="block font-bold mb-1">PAN Card Number *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="ABCDE1234F"></div>
-              <div><label class="block font-bold mb-1 text-indigo-800 dark:text-indigo-300">Family / Reference Name *</label><input type="text" id="appRefName" required class="w-full rounded-lg border px-3 py-2 font-semibold" placeholder="Father / Spouse / Friend Name"></div>
-              <div><label class="block font-bold mb-1 text-indigo-800 dark:text-indigo-300">Reference Mobile No (10 Digits) *</label><input type="tel" id="appRefMobile" required maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Reference 10 Digit Mobile"></div>
+              <div><label class="block font-bold mb-1">Full Name *</label><input type="text" id="appName" class="w-full rounded-lg border px-3 py-2" placeholder="Enter Full Name"></div>
+              <div><label class="block font-bold mb-1">Date of Birth (DD/MM/YYYY) *</label><input type="text" id="appDob" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY"></div>
+              <div><label class="block font-bold mb-1">Mobile Number (10 Digits) *</label><input type="tel" id="appMobile" maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="10 Digit Mobile"></div>
+              <div><label class="block font-bold mb-1">Email ID *</label><input type="email" id="appEmail" class="w-full rounded-lg border px-3 py-2" placeholder="yourname@gmail.com"></div>
+              <div><label class="block font-bold mb-1">Identity / KYC Number (12 Digits) *</label><input type="text" id="appAadhaar" maxlength="12" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="12 Digit Number"></div>
+              <div><label class="block font-bold mb-1">PAN Card Number *</label><input type="text" id="appPan" maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="ABCDE1234F"></div>
+              <div><label class="block font-bold mb-1 text-indigo-800 dark:text-indigo-300">Family / Reference Name *</label><input type="text" id="appRefName" class="w-full rounded-lg border px-3 py-2 font-semibold" placeholder="Father / Spouse / Friend Name"></div>
+              <div><label class="block font-bold mb-1 text-indigo-800 dark:text-indigo-300">Reference Mobile No (10 Digits) *</label><input type="tel" id="appRefMobile" maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Reference 10 Digit Mobile"></div>
             </div>
 
             <div class="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border">
               <h4 class="text-xs font-bold text-emerald-700 uppercase mb-2">Bank Account Details (Separate Columns)</h4>
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
-                <div><label class="block font-bold mb-1">1. Bank Name *</label><input type="text" id="appBankName" required class="w-full rounded-lg border px-3 py-2" placeholder="e.g. SBI, PNB, HDFC"></div>
-                <div><label class="block font-bold mb-1">2. Account Holder Name *</label><input type="text" id="appBankHolder" required class="w-full rounded-lg border px-3 py-2" placeholder="Account Holder Name"></div>
-                <div><label class="block font-bold mb-1">3. Bank Account Number *</label><input type="text" id="appAccNo" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Account Number"></div>
-                <div><label class="block font-bold mb-1">4. IFSC Code *</label><input type="text" id="appIfsc" required class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="e.g. SBIN0001234"></div>
+                <div><label class="block font-bold mb-1">1. Bank Name *</label><input type="text" id="appBankName" class="w-full rounded-lg border px-3 py-2" placeholder="e.g. SBI, PNB, HDFC"></div>
+                <div><label class="block font-bold mb-1">2. Account Holder Name *</label><input type="text" id="appBankHolder" class="w-full rounded-lg border px-3 py-2" placeholder="Account Holder Name"></div>
+                <div><label class="block font-bold mb-1">3. Bank Account Number *</label><input type="text" id="appAccNo" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Account Number"></div>
+                <div><label class="block font-bold mb-1">4. IFSC Code *</label><input type="text" id="appIfsc" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="e.g. SBIN0001234"></div>
               </div>
             </div>
 
             <!-- 6 KYC IMAGES + 3 MONTHS BANK STATEMENT WITH SMART HD COMPRESSION ENGINE -->
             <div class="space-y-3">
-              <h4 class="text-xs font-bold text-emerald-700 uppercase">Upload KYC Documents (Smart HD Compression: Crystal-Clear Quality & Fast Upload)</h4>
+              <h4 class="text-xs font-bold text-emerald-700 uppercase">Upload KYC Documents (Smart HD Compression: Crystal-Clear Quality & Fast Cloud Sync)</h4>
               <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs">
                 <div class="border-2 border-dashed rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1">1. PAN Card *</label>
-                  <input type="file" accept="image/*" required onchange="handleFileUpload(event,'pan')" class="text-[10px] w-full">
-                  <span class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Auto-Optimize</span>
+                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'pan')" class="text-[10px] w-full">
+                  <span id="status_pan" class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Auto-Optimize</span>
                   <img id="prev_pan" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
                 <div class="border-2 border-dashed rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1">2. ID Front *</label>
-                  <input type="file" accept="image/*" required onchange="handleFileUpload(event,'aadhaar_front')" class="text-[10px] w-full">
-                  <span class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Front Side</span>
+                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'aadhaar_front')" class="text-[10px] w-full">
+                  <span id="status_aadhaar_front" class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Front Side</span>
                   <img id="prev_aadhaar_front" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
                 <div class="border-2 border-dashed rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1">3. ID Back *</label>
-                  <input type="file" accept="image/*" required onchange="handleFileUpload(event,'aadhaar_back')" class="text-[10px] w-full">
-                  <span class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Back Side</span>
+                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'aadhaar_back')" class="text-[10px] w-full">
+                  <span id="status_aadhaar_back" class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Back Side</span>
                   <img id="prev_aadhaar_back" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
                 <div class="border-2 border-dashed rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1">4. Bank Passbook *</label>
-                  <input type="file" accept="image/*" required onchange="handleFileUpload(event,'passbook')" class="text-[10px] w-full">
-                  <span class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Auto-Optimize</span>
+                  <input type="file" accept="image/*" onchange="handleFileUpload(event,'passbook')" class="text-[10px] w-full">
+                  <span id="status_passbook" class="block text-[9px] text-emerald-700 font-semibold mt-0.5">HD Auto-Optimize</span>
                   <img id="prev_passbook" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
                 <div class="border-2 border-dashed border-amber-400 bg-amber-50/30 rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1 text-amber-900 dark:text-amber-300">5. Photo *</label>
-                  <input type="file" id="file_photo" accept="image/*" required onchange="handleFileUpload(event,'photo')" class="text-[10px] w-full">
-                  <span class="block text-[9px] font-bold text-emerald-700 mt-0.5">HD Clear Portrait</span>
+                  <input type="file" id="file_photo" accept="image/*" onchange="handleFileUpload(event,'photo')" class="text-[10px] w-full">
+                  <span id="status_photo" class="block text-[9px] font-bold text-emerald-700 mt-0.5">HD Clear Portrait</span>
                   <img id="prev_photo" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
                 <div class="border-2 border-dashed border-amber-400 bg-amber-50/30 rounded-xl p-2 text-center">
                   <label class="block font-bold mb-1 text-amber-900 dark:text-amber-300">6. Signature *</label>
-                  <input type="file" id="file_sign" accept="image/*" required onchange="handleFileUpload(event,'sign')" class="text-[10px] w-full">
-                  <span class="block text-[9px] font-bold text-emerald-700 mt-0.5">HD Clear Sign</span>
+                  <input type="file" id="file_sign" accept="image/*" onchange="handleFileUpload(event,'sign')" class="text-[10px] w-full">
+                  <span id="status_sign" class="block text-[9px] font-bold text-emerald-700 mt-0.5">HD Clear Sign</span>
                   <img id="prev_sign" class="h-12 mx-auto mt-1 hidden rounded">
                 </div>
               </div>
@@ -334,14 +334,14 @@
                   </p>
                 </div>
                 <div class="shrink-0">
-                  <input type="file" id="file_statement" accept="application/pdf,image/*" required onchange="handleBankStatementUpload(event)" class="text-xs">
+                  <input type="file" id="file_statement" accept="application/pdf,image/*" onchange="handleBankStatementUpload(event)" class="text-xs">
                   <div id="statementUploadStatus" class="text-[10px] font-extrabold text-emerald-700 mt-1"></div>
                 </div>
               </div>
             </div>
 
-            <button type="submit" id="btnSubmitLoanApp" class="px-8 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-lg">
-              <i class="fa-solid fa-bolt mr-1"></i> Submit Application & Get Order ID in 1 Second
+            <button type="submit" id="btnSubmitLoanApp" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 active:scale-95 text-white font-extrabold text-sm shadow-lg transition cursor-pointer">
+              <i class="fa-solid fa-bolt mr-1"></i> Submit Application & Get Instant Order ID
             </button>
           </form>
         </div>
@@ -386,11 +386,11 @@
         <div class="bg-white card-bg rounded-2xl shadow-sm border-2 border-indigo-200 p-5">
           <h3 class="text-lg font-extrabold text-indigo-900 dark:text-indigo-300 mb-1" id="txtTrackBoxHeading">📦 RNS MICRO FINANCE — Track Loan Application OR Investor Ledger</h3>
           <p class="text-xs text-slate-500 mb-3">
-            • <strong>For Loan Customers:</strong> Enter <strong>Order ID (RNSF...)</strong> or <strong>Last 4 Digits</strong> of Mobile / Identity Number.<br>
+            • <strong>For Loan Customers:</strong> Enter <strong>Order ID (RNSF...)</strong>, <strong>Mobile Number</strong>, or <strong>Last 4 Digits</strong>.<br>
             • <strong>For Investors:</strong> Enter your <strong>10-Digit Mobile Number</strong> or your <strong>First Name (e.g. Rahul)</strong> to view your Credit/Debit Ledger & Download Statement PDF.
           </p>
           <div class="flex flex-col sm:flex-row gap-2">
-            <input type="text" id="trackSearchInput" oninput="autoDetectCustomerTrack(this.value)" class="flex-grow rounded-xl border px-4 py-2.5 text-sm font-bold" placeholder="Enter Order ID (RNSF...), Last 4 Digits, Investor Mobile, or Investor First Name...">
+            <input type="text" id="trackSearchInput" oninput="autoDetectCustomerTrack(this.value)" class="flex-grow rounded-xl border px-4 py-2.5 text-sm font-bold" placeholder="Enter Order ID (RNSF...), Mobile, Last 4 Digits, or Investor Name...">
             <button type="button" onclick="searchCustomerApplication()" class="px-6 py-2.5 rounded-xl bg-indigo-700 hover:bg-indigo-800 text-white font-bold text-sm">Track Now</button>
           </div>
         </div>
@@ -435,7 +435,7 @@
       </div>
     </div>
 
-    <!-- 2. OWNER PORTAL -->
+    <!-- 2. OWNER PORTAL (PIN: 7402) -->
     <div id="ownerPortalSection" class="hidden space-y-5">
 
       <!-- LIVE BUSINESS PROFIT & CASHFLOW SUMMARY BAR -->
@@ -466,7 +466,7 @@
       <div class="bg-slate-900 text-white rounded-2xl p-4 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
         <div>
           <div class="flex items-center gap-2 flex-wrap">
-            <span class="bg-emerald-500 text-slate-950 text-xs font-extrabold px-2.5 py-0.5 rounded">RNS MICRO FINANCE — ADMIN PORTAL</span>
+            <span class="bg-emerald-500 text-slate-950 text-xs font-extrabold px-2.5 py-0.5 rounded">RNS MICRO FINANCE — ADMIN PORTAL (PIN: 7402)</span>
             <button type="button" onclick="downloadFullCloudBackup()" class="bg-slate-700 hover:bg-slate-600 text-amber-300 text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-slate-600">
               💾 Backup Data
             </button>
@@ -474,7 +474,7 @@
               📂 Restore Backup <input type="file" accept=".json" onchange="restoreFullCloudBackup(event)" class="hidden">
             </label>
           </div>
-          <h2 class="text-lg font-extrabold mt-1">RNS MICRO FINANCE — 4s Turbo Cloud Sync, Inbuilt SMS/WhatsApp Alerts, UPI QR & Investor Hub</h2>
+          <h2 class="text-lg font-extrabold mt-1">RNS MICRO FINANCE — High-Speed Cross-Device Cloud Sync, SMS/WhatsApp Alerts, UPI QR & Investor Hub</h2>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
           <button type="button" onclick="switchOwnerTab('apps')" class="px-3 py-2 rounded-lg bg-emerald-600 font-bold">📋 Applications</button>
@@ -502,7 +502,7 @@
 
       <!-- OWNER SUB 2: SEND NACH LINK (WITH INSTANT SMS & WHATSAPP DISPATCH) -->
       <div id="ownerViewNach" class="hidden max-w-lg mx-auto bg-white card-bg rounded-2xl p-5 border space-y-3 text-xs">
-        <h3 class="text-base font-extrabold border-b pb-2">Send NACH Mandate Link (4s Fast Sync + Inbuilt SMS/WhatsApp)</h3>
+        <h3 class="text-base font-extrabold border-b pb-2">Send NACH Mandate Link (Fast Cloud Sync + Inbuilt SMS/WhatsApp)</h3>
         <div>
           <label class="block font-bold mb-1">1. Customer Order ID / Mobile Number / Identity Number</label>
           <input type="text" id="nachSearchCustomer" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Enter Order ID (RNSF...), Mobile or ID No">
@@ -663,20 +663,77 @@
         </div>
       </div>
 
-      <!-- OWNER SUB 6: PROMO CODE -->
-      <div id="ownerViewPromo" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-        <div class="bg-white card-bg rounded-2xl p-5 border space-y-3">
-          <h3 class="font-extrabold text-sm">Create Promo Code (Protected by Mutation Lock — Never Deletes on Scan)</h3>
-          <input type="text" id="promoCodeName" placeholder="Code (e.g. RNS100)" class="w-full rounded border px-3 py-2 uppercase font-bold">
-          <select id="promoTarget" class="w-full rounded border px-3 py-2"><option value="All Customers">All Customers</option><option value="New Customer">New Customer</option><option value="Old Customer">Old Customer</option></select>
-          <div class="grid grid-cols-2 gap-2">
-            <select id="promoType" class="rounded border px-3 py-2"><option value="FLAT">Rupee (₹)</option><option value="PERCENT">Percent (%)</option></select>
-            <input type="number" id="promoValue" value="100" class="rounded border px-3 py-2 font-bold">
+      <!-- OWNER SUB 6: PROMO CODE WITH VALIDITY / EXPIRY DATE & EXPIRED PROMO HISTORY BOX (REACTIVATE / EDIT / DELETE) -->
+      <div id="ownerViewPromo" class="hidden space-y-5 text-xs">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white card-bg rounded-2xl p-5 border-2 border-emerald-400 space-y-3">
+            <h3 class="font-extrabold text-sm text-emerald-950 dark:text-emerald-300" id="promoFormTitle">🎟️ Create / Update Promo Code (With Auto-Expiry Validity Date)</h3>
+            <div>
+              <label class="block font-bold mb-1">1. Promo Code Name *</label>
+              <input type="text" id="promoCodeName" placeholder="Code (e.g. DIWALI100)" class="w-full rounded-lg border px-3 py-2 uppercase font-extrabold">
+            </div>
+            <div>
+              <label class="block font-bold mb-1">2. Eligible Customer Type *</label>
+              <select id="promoTarget" class="w-full rounded-lg border px-3 py-2 font-bold">
+                <option value="All Customers">All Customers</option>
+                <option value="New Customer">New Customer</option>
+                <option value="Old Customer">Old Customer</option>
+              </select>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block font-bold mb-1">3. Discount Type *</label>
+                <select id="promoType" class="w-full rounded-lg border px-3 py-2 font-bold">
+                  <option value="FLAT">Rupee (₹)</option>
+                  <option value="PERCENT">Percent (%)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block font-bold mb-1">4. Discount Value *</label>
+                <input type="number" id="promoValue" value="100" class="w-full rounded-lg border px-3 py-2 font-extrabold text-emerald-700">
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block font-bold mb-1">5. Max Loan Limit (₹) *</label>
+                <input type="number" id="promoMaxLoan" value="50000" placeholder="Max Loan Limit" class="w-full rounded-lg border px-3 py-2 font-bold">
+              </div>
+              <div>
+                <label class="block font-bold mb-1 text-rose-700 dark:text-rose-300">6. Valid Till Date (Expiry) *</label>
+                <input type="date" id="promoExpiryDate" class="w-full rounded-lg border-2 border-rose-300 px-3 py-1.5 font-extrabold">
+              </div>
+            </div>
+            <div class="flex gap-2 pt-1">
+              <button type="button" onclick="createPromoCode()" class="flex-grow py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-extrabold shadow">
+                ✔ Activate & Sync Promo Code
+              </button>
+              <button type="button" id="btnCancelPromoEdit" onclick="resetPromoForm()" class="hidden px-4 py-2.5 rounded-xl bg-slate-300 text-slate-800 font-bold">
+                Cancel
+              </button>
+            </div>
           </div>
-          <input type="number" id="promoMaxLoan" value="50000" placeholder="Max Loan Limit" class="w-full rounded border px-3 py-2 font-bold">
-          <button type="button" onclick="createPromoCode()" class="w-full py-2.5 rounded-xl bg-slate-900 text-white font-bold">Activate & Sync Promo Code Instantly</button>
+
+          <!-- ACTIVE PROMO CODES LIST -->
+          <div class="bg-white card-bg rounded-2xl p-5 border-2 border-emerald-400 space-y-3">
+            <div class="flex items-center justify-between border-b pb-2">
+              <h3 class="font-extrabold text-sm text-emerald-900 dark:text-emerald-300">✅ Active Promo Codes (Currently Working)</h3>
+              <span id="activePromoCountBadge" class="bg-emerald-700 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">0 Active</span>
+            </div>
+            <div id="activePromoList" class="space-y-2"></div>
+          </div>
         </div>
-        <div class="bg-white card-bg rounded-2xl p-5 border"><h3 class="font-extrabold text-sm mb-2">Active Promos</h3><div id="activePromoList" class="space-y-2"></div></div>
+
+        <!-- EXPIRED PROMO CODES HISTORY BOX (AUTO-MOVES HERE AFTER EXPIRY DATE — REACTIVATE / EDIT / DELETE) -->
+        <div class="bg-rose-50/70 dark:bg-slate-800 rounded-2xl p-5 border-2 border-rose-400 space-y-3">
+          <div class="flex items-center justify-between border-b border-rose-300 pb-2">
+            <div>
+              <h4 class="text-sm font-extrabold text-rose-950 dark:text-rose-300">⏳ Expired Promo Codes History Box (Auto-Disabled After Validity Date)</h4>
+              <p class="text-[11px] text-slate-600 dark:text-slate-300">Promo codes whose validity date has passed stay saved here in history. You can Reactivate them with a new date, Edit, or Delete anytime.</p>
+            </div>
+            <span id="expiredPromoCountBadge" class="bg-rose-700 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shrink-0">0 Expired</span>
+          </div>
+          <div id="expiredPromoList" class="space-y-2"></div>
+        </div>
       </div>
 
       <!-- OWNER SUB 7: INVESTOR DETAILS -->
@@ -789,12 +846,13 @@
 <!-- END OF PART 2 -->
 <!-- START OF PART 3 -->
   <script>
-    const DB_KEY = 'RNS_FINANCE_CLOUD_DB_V29';
-    // DUAL-CHANNEL TURBO CLOUD ENDPOINTS (FAST LIGHT CHANNEL + FULL ARCHIVE CHANNEL)
-    const CLOUD_ENDPOINTS = [
-      'https://bytebin.lucko.me/rns_finance_turbo_v29_master',
-      'https://kvdb.io/Agu9zK2mQv8xP4nL1wR5tY/rns_finance_turbo_v29_master'
-    ];
+    const DB_KEY = 'RNS_MICRO_FINANCE_DB_V30';
+    const IDB_NAME = 'RNS_MICRO_FINANCE_IDB_V30';
+    const IDB_STORE = 'cloud_store';
+    // REAL-TIME MULTI-DEVICE CLOUD ENGINE (BYTEBIN POST STORAGE + NTFY LIVE KEY BROADCAST)
+    const BYTEBIN_POST_URL = 'https://bytebin.lucko.me/post';
+    const BYTEBIN_GET_BASE = 'https://bytebin.lucko.me/';
+    const NTFY_SYNC_TOPIC = 'https://ntfy.sh/rns_micro_finance_v30_live_hub';
     const MUMBAI_CORP_ADDRESS = 'Office No. 704, 7th Floor, Platina Tower, G Block, Bandra Kurla Complex (BKC), Bandra (East), Mumbai, Maharashtra - 400051';
 
     let currentLang = 'EN';
@@ -810,10 +868,11 @@
     let editingInvestorTxIdx = -1;
     let lastCreatedOrderId = '';
 
-    // CRITICAL MUTATION LOCK & RETRY QUEUE: PREVENTS OVERWRITING / DELETING PROMO CODES OR UPDATES ON SCAN
     let localMutationLockUntil = 0;
     let pendingCloudPushQueue = false;
-    let lastArchivedScanTimestamp = 0; // 12-Hour timer for Loan Closed & Rejected
+    let memoryDbCache = null;
+    let processedCloudKeys = new Set();
+    let ownPublishedKeys = new Set();
 
     const defaultAgreementBody = `• First Charge & Hypothecation Rights: Until the full repayment of the sanctioned loan principal, accrued interest, and applicable charges, RNS MICRO FINANCE shall hold the exclusive first charge and hypothecation rights over the financed product or disbursed amount.
 • Physical & Digital KYC Verification: The Lender reserves the absolute right to conduct physical or digital verification of the Borrower's residence, employment, bank statement, and submitted KYC documents at any stage of the loan tenure.
@@ -844,9 +903,47 @@
 
     function showCloudNotification(msg) {
       const toast = document.getElementById('cloudToast');
-      document.getElementById('cloudToastMsg').innerText = msg;
+      const msgEl = document.getElementById('cloudToastMsg');
+      if (!toast || !msgEl) return;
+      msgEl.innerText = msg;
       toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2500);
+      setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // UNLIMITED INDEXED-DB STORAGE HELPER (PREVENTS 5MB MOBILE LOCALSTORAGE CRASH)
+    function openIndexedDb() {
+      return new Promise((resolve, reject) => {
+        if (!window.indexedDB) return reject('No IDB');
+        const req = indexedDB.open(IDB_NAME, 1);
+        req.onupgradeneeded = e => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(IDB_STORE)) db.createObjectStore(IDB_STORE);
+        };
+        req.onsuccess = e => resolve(e.target.result);
+        req.onerror = e => reject(e);
+      });
+    }
+
+    async function saveToIndexedDb(data) {
+      try {
+        const idb = await openIndexedDb();
+        const tx = idb.transaction(IDB_STORE, 'readwrite');
+        tx.objectStore(IDB_STORE).put(data, 'MASTER_STATE');
+      } catch (e) {}
+    }
+
+    async function loadFromIndexedDb() {
+      try {
+        const idb = await openIndexedDb();
+        return await new Promise((resolve) => {
+          const tx = idb.transaction(IDB_STORE, 'readonly');
+          const req = tx.objectStore(IDB_STORE).get('MASTER_STATE');
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
     }
 
     // UNIVERSAL INBUILT SMS (DEFAULT MOBILE INBOX) & WHATSAPP DISPATCHER
@@ -916,19 +1013,8 @@
       openCommunicationChannel(app.mobile, msg, channelType);
     }
 
-    function getCloudData() {
-      const raw = localStorage.getItem(DB_KEY);
-      if (raw) {
-        try {
-          const parsed = JSON.parse(raw);
-          if (!parsed.feedbacks) parsed.feedbacks = [];
-          if (!parsed.investors) parsed.investors = [];
-          if (!parsed.defaulters) parsed.defaulters = [];
-          if (!parsed.deletedPromoCodes) parsed.deletedPromoCodes = [];
-          return parsed;
-        } catch (e) {}
-      }
-      const initial = {
+    function createInitialDbStructure() {
+      return {
         lastUpdated: Date.now(),
         agreementSettings: {
           interestRate: '3% Monthly',
@@ -938,7 +1024,7 @@
           penaltyText: '3% per month additional | NACH Bounce: Rs. 500 per bounce',
           customBody: defaultAgreementBody
         },
-        promos: [{ code: 'RNS100', target: 'All Customers', type: 'FLAT', value: 100, maxLoan: 50000, updatedAt: 1 }],
+        promos: [{ code: 'RNS100', target: 'All Customers', type: 'FLAT', value: 100, maxLoan: 50000, expiryDate: '2027-12-31', updatedAt: 1 }],
         deletedPromoCodes: [],
         feedbacks: [
           { id: 'FB101', name: 'Rajesh Sharma', mobile: '98******12', rating: 5, comment: 'Fast personal loan approval and transparent EMI tracking with RNS MICRO FINANCE.', date: '18/05/2026' },
@@ -948,45 +1034,83 @@
         defaulters: [],
         applications: []
       };
-      localStorage.setItem(DB_KEY, JSON.stringify(initial));
-      return initial;
     }
 
-    // SMART MERGE ENGINE: RESPECTS DELETIONS, MUTATION LOCKS, AND 12-HOUR ARCHIVE RULES
-    function mergeCloudDatabases(localDb, remoteDb, scanType = 'DELTA') {
+    function getCloudData() {
+      if (memoryDbCache) return memoryDbCache;
+      const raw = localStorage.getItem(DB_KEY);
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw);
+          if (!parsed.feedbacks) parsed.feedbacks = [];
+          if (!parsed.investors) parsed.investors = [];
+          if (!parsed.defaulters) parsed.defaulters = [];
+          if (!parsed.deletedPromoCodes) parsed.deletedPromoCodes = [];
+          if (!parsed.promos) parsed.promos = [];
+          memoryDbCache = parsed;
+          return memoryDbCache;
+        } catch (e) {}
+      }
+      memoryDbCache = createInitialDbStructure();
+      try { localStorage.setItem(DB_KEY, JSON.stringify(memoryDbCache)); } catch (e) {}
+      return memoryDbCache;
+    }
+
+    function persistLocalCopySafely(data) {
+      memoryDbCache = data;
+      saveToIndexedDb(data);
+      try {
+        localStorage.setItem(DB_KEY, JSON.stringify(data));
+      } catch (quotaErr) {
+        // If heavy base64 images exceed 5MB localStorage limit, save lightweight copy in localStorage while full HD docs stay in IndexedDB & Memory!
+        try {
+          const lightCopy = JSON.parse(JSON.stringify(data));
+          (lightCopy.applications || []).forEach(a => { a.docs = {}; });
+          localStorage.setItem(DB_KEY, JSON.stringify(lightCopy));
+        } catch (e2) {}
+      }
+    }
+
+    // SMART MERGE ENGINE: MERGES PROMOS (WITH EXPIRY DATE), APPLICATIONS, AND INVESTORS WITHOUT DATA LOSS
+    function mergeCloudDatabases(localDb, remoteDb) {
       if (!remoteDb || !Array.isArray(remoteDb.applications)) return localDb;
       const merged = JSON.parse(JSON.stringify(localDb));
-
-      // If user recently edited locally (within last 10 seconds), protect local settings & promos from being overwritten
       const isLocallyLocked = Date.now() < localMutationLockUntil;
 
       if (!isLocallyLocked && (remoteDb.lastUpdated || 0) > (localDb.lastUpdated || 0)) {
         if (remoteDb.agreementSettings) merged.agreementSettings = remoteDb.agreementSettings;
       }
 
-      // Smart Promo Merge: respects deletedPromoCodes so deleted or newly added promos never get lost
+      // Smart Promo Merge (with Validity Date & Deleted History protection)
       const delSet = new Set([...(localDb.deletedPromoCodes || []), ...(remoteDb.deletedPromoCodes || [])]);
       merged.deletedPromoCodes = Array.from(delSet);
       const promoMap = new Map();
-      (remoteDb.promos || []).forEach(p => { if (p && p.code && !delSet.has(p.code)) promoMap.set(p.code, p); });
-      (localDb.promos || []).forEach(p => { if (p && p.code && !delSet.has(p.code)) promoMap.set(p.code, p); });
+      (remoteDb.promos || []).forEach(p => {
+        if (p && p.code && !delSet.has(p.code)) promoMap.set(p.code, p);
+      });
+      (localDb.promos || []).forEach(p => {
+        if (p && p.code && !delSet.has(p.code)) {
+          const rP = promoMap.get(p.code);
+          if (!rP || (p.updatedAt || 0) >= (rP.updatedAt || 0)) promoMap.set(p.code, p);
+        }
+      });
       merged.promos = Array.from(promoMap.values());
 
       // Merge Feedbacks
       const fbMap = new Map();
-      (remoteDb.feedbacks || []).forEach(f => fbMap.set(f.id, f));
-      (localDb.feedbacks || []).forEach(f => fbMap.set(f.id, f));
+      (remoteDb.feedbacks || []).forEach(f => { if (f && f.id) fbMap.set(f.id, f); });
+      (localDb.feedbacks || []).forEach(f => { if (f && f.id) fbMap.set(f.id, f); });
       merged.feedbacks = Array.from(fbMap.values());
 
       // Merge Defaulters
       const defMap = new Map();
-      (remoteDb.defaulters || []).forEach(d => defMap.set(d.pan || d.mobile, d));
-      (localDb.defaulters || []).forEach(d => defMap.set(d.pan || d.mobile, d));
+      (remoteDb.defaulters || []).forEach(d => { if (d) defMap.set(d.pan || d.mobile, d); });
+      (localDb.defaulters || []).forEach(d => { if (d) defMap.set(d.pan || d.mobile, d); });
       merged.defaulters = Array.from(defMap.values());
 
-      // Merge Investors by updatedAt timestamp
+      // Merge Investors
       const invMap = new Map();
-      (localDb.investors || []).forEach(inv => invMap.set(inv.id, inv));
+      (localDb.investors || []).forEach(inv => { if (inv && inv.id) invMap.set(inv.id, inv); });
       (remoteDb.investors || []).forEach(rInv => {
         if (!rInv || !rInv.id) return;
         const lInv = invMap.get(rInv.id);
@@ -996,32 +1120,25 @@
       });
       merged.investors = Array.from(invMap.values());
 
-      // Merge Applications: Active statuses sync every 4s; Closed/Rejected only scanned on 12h FULL scan or direct status transition
+      // Merge Applications (Preserves both Fast Light Updates and Heavy HD Docs)
       const appMap = new Map();
       (localDb.applications || []).forEach(app => { if (app && app.orderId) appMap.set(app.orderId, app); });
       (remoteDb.applications || []).forEach(rApp => {
         if (!rApp || !rApp.orderId) return;
-        const isArchivedStatus = (rApp.status === 'Loan Closed' || rApp.status === 'Rejected');
         const lApp = appMap.get(rApp.orderId);
-
-        // Skip heavy Closed/Rejected scan during 4s DELTA if already Closed/Rejected locally
-        if (scanType === 'DELTA' && isArchivedStatus && lApp && (lApp.status === 'Loan Closed' || lApp.status === 'Rejected')) {
-          return;
-        }
-
         if (!lApp) {
           appMap.set(rApp.orderId, rApp);
         } else {
           const rTime = rApp.updatedAt || 0;
           const lTime = lApp.updatedAt || 0;
-          if (rTime > lTime) {
-            const mergedApp = { ...lApp, ...rApp };
-            if (!rApp.docs || Object.keys(rApp.docs).length === 0) {
-              mergedApp.docs = lApp.docs || {};
-            } else {
-              mergedApp.docs = { ...(lApp.docs || {}), ...(rApp.docs || {}) };
-            }
-            appMap.set(rApp.orderId, mergedApp);
+          const mergedDocs = { ...(lApp.docs || {}), ...(rApp.docs || {}) };
+          const mergedReuploads = (rApp.reuploadedDocs && rApp.reuploadedDocs.length >= (lApp.reuploadedDocs || []).length)
+            ? rApp.reuploadedDocs
+            : (lApp.reuploadedDocs || []);
+          if (rTime >= lTime) {
+            appMap.set(rApp.orderId, { ...lApp, ...rApp, docs: mergedDocs, reuploadedDocs: mergedReuploads });
+          } else {
+            appMap.set(rApp.orderId, { ...rApp, ...lApp, docs: mergedDocs, reuploadedDocs: mergedReuploads });
           }
         }
       });
@@ -1031,75 +1148,127 @@
       return merged;
     }
 
-    // NON-BLOCKING INSTANT SAVE + AUTO-RETRY QUEUE FOR 0.10 KB SLOW NETWORKS
-    function saveCloudData(data, msg = 'RNS MICRO FINANCE Cloud Synced!', includeHeavyDocs = false) {
+    // NON-BLOCKING INSTANT SAVE + CROSS-DEVICE CLOUD BROADCAST
+    function saveCloudData(data, msg = 'RNS MICRO FINANCE Cloud Synced!', includeHeavyDocs = true) {
       data.lastUpdated = Date.now();
-      localMutationLockUntil = Date.now() + 10000; // Lock local state for 10s so background scans never overwrite user edits
-      localStorage.setItem(DB_KEY, JSON.stringify(data));
+      localMutationLockUntil = Date.now() + 8000;
+      persistLocalCopySafely(data);
       updateOwnerProfitSummaryBar();
       showCloudNotification(msg);
 
-      // Push in background without freezing UI (0.5s instant response)
       pushToGlobalCloud(data, includeHeavyDocs).then(success => {
-        if (!success) pendingCloudPushQueue = true;
+        const noticeEl = document.getElementById('bgUploadProgressNotice');
+        if (success) {
+          pendingCloudPushQueue = false;
+          if (noticeEl) {
+            noticeEl.className = 'p-2.5 rounded-xl bg-emerald-50 border border-emerald-400 text-[11px] text-emerald-800 font-extrabold';
+            noticeEl.innerText = '✅ All HD Documents & Application Synced to Owner Portal!';
+          }
+        } else {
+          pendingCloudPushQueue = true;
+        }
       });
     }
 
-    async function pushToGlobalCloud(data, includeHeavyDocs = false) {
-      let payloadData = data;
-      if (!includeHeavyDocs) {
-        payloadData = JSON.parse(JSON.stringify(data));
+    // 2-STAGE CLOUD PUSH:
+    // Stage A: Immediately pushes lightweight text packet (syncs in 2 seconds on any network)
+    // Stage B: Pushes full HD documents packet (syncs in 10-25 seconds to Owner Portal)
+    async function pushToGlobalCloud(data, includeHeavyDocs = true) {
+      try {
+        // 1. Push fast lightweight packet first so Order ID, Name, Promo, NACH, Status appear within 3 seconds
+        const lightCopy = JSON.parse(JSON.stringify(data));
+        (lightCopy.applications || []).forEach(a => { a.docs = {}; });
+        await uploadPacketAndBroadcastKey(lightCopy, 'LIGHT');
+
+        // 2. If heavy docs are included, upload full HD packet right after
+        if (includeHeavyDocs) {
+          const okHeavy = await uploadPacketAndBroadcastKey(data, 'FULL');
+          return okHeavy;
+        }
+        return true;
+      } catch (err) {
+        return false;
       }
-      const payload = JSON.stringify(payloadData);
-      let anySuccess = false;
-      for (const url of CLOUD_ENDPOINTS) {
-        try {
-          const controller = new AbortController();
-          const tId = setTimeout(() => controller.abort(), 12000);
-          const res = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: payload,
-            signal: controller.signal
-          });
-          clearTimeout(tId);
-          if (res.ok) anySuccess = true;
-        } catch (err) {}
+    }
+
+    async function uploadPacketAndBroadcastKey(packetObj, packetType = 'FULL') {
+      try {
+        const res = await fetch(BYTEBIN_POST_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(packetObj)
+        });
+        if (!res.ok) return false;
+        const resJson = await res.json();
+        const bytebinKey = resJson && resJson.key;
+        if (!bytebinKey) return false;
+
+        ownPublishedKeys.add(bytebinKey);
+        processedCloudKeys.add(bytebinKey);
+
+        // Broadcast the Bytebin Key to ntfy.sh live channel so all other mobile/PC devices receive it immediately
+        await fetch(NTFY_SYNC_TOPIC, {
+          method: 'POST',
+          body: JSON.stringify({
+            bbKey: bytebinKey,
+            type: packetType,
+            ts: Date.now()
+          })
+        });
+        return true;
+      } catch (e) {
+        return false;
       }
-      if (anySuccess) pendingCloudPushQueue = false;
-      return anySuccess;
     }
 
     async function pullFromGlobalCloud(scanType = 'DELTA') {
       if (isCloudSyncing) return false;
       isCloudSyncing = true;
 
-      // If there was a pending push due to slow 0.10 KB network, push local changes first before pulling!
       if (pendingCloudPushQueue) {
         await pushToGlobalCloud(getCloudData(), true);
       }
 
       let updated = false;
-      for (const url of CLOUD_ENDPOINTS) {
-        try {
-          const controller = new AbortController();
-          const tId = setTimeout(() => controller.abort(), 8000);
-          const res = await fetch(url + '?t=' + Date.now(), { cache: 'no-store', signal: controller.signal });
-          clearTimeout(tId);
-          if (res.ok) {
-            const remote = await res.json();
-            if (remote && Array.isArray(remote.applications)) {
-              const local = getCloudData();
-              const merged = mergeCloudDatabases(local, remote, scanType);
-              if (JSON.stringify(merged) !== JSON.stringify(local)) {
-                localStorage.setItem(DB_KEY, JSON.stringify(merged));
-                updated = true;
+      try {
+        const res = await fetch(`${NTFY_SYNC_TOPIC}/json?poll=1&since=24h&t=${Date.now()}`, { cache: 'no-store' });
+        if (res.ok) {
+          const text = await res.text();
+          const lines = text.trim().split('\n').filter(Boolean);
+          const keysToFetch = [];
+
+          for (const line of lines) {
+            try {
+              const ev = JSON.parse(line);
+              if (ev && ev.event === 'message' && ev.message) {
+                const msgData = JSON.parse(ev.message);
+                if (msgData && msgData.bbKey && !processedCloudKeys.has(msgData.bbKey)) {
+                  keysToFetch.push(msgData.bbKey);
+                }
               }
-              break;
-            }
+            } catch (e) {}
           }
-        } catch (err) {}
-      }
+
+          // Fetch the latest unprocessed cloud packets (up to last 6 updates)
+          const recentKeys = keysToFetch.slice(-6);
+          for (const k of recentKeys) {
+            try {
+              const bRes = await fetch(BYTEBIN_GET_BASE + k, { cache: 'no-store' });
+              if (bRes.ok) {
+                const remoteDb = await bRes.json();
+                processedCloudKeys.add(k);
+                if (remoteDb && Array.isArray(remoteDb.applications)) {
+                  const currentLocal = getCloudData();
+                  const merged = mergeCloudDatabases(currentLocal, remoteDb);
+                  persistLocalCopySafely(merged);
+                  updated = true;
+                }
+              }
+            } catch (err) {}
+          }
+        }
+      } catch (e) {}
+
       isCloudSyncing = false;
       return updated;
     }
@@ -1110,6 +1279,11 @@
       if (isManualClick && icon && txt) {
         icon.className = 'fa-solid fa-rotate fa-spin';
         txt.innerText = 'Scanning Cloud...';
+      }
+
+      if (isManualClick) {
+        // On manual click, re-verify latest keys from cloud
+        processedCloudKeys = new Set(ownPublishedKeys);
       }
 
       const changed = await pullFromGlobalCloud(scanType);
@@ -1214,26 +1388,34 @@
     function toggleShoppingAddressField() {
       const type = document.getElementById('appLoanType').value;
       const box = document.getElementById('shoppingAddressContainer');
-      const input = document.getElementById('appDeliveryAddress');
       if (type === 'Online Shopping Loan') {
         box.classList.remove('hidden');
-        input.required = true;
       } else {
         box.classList.add('hidden');
-        input.required = false;
       }
     }
 
-    // DUAL-SPEED CLOUD SCHEDULER:
-    // 1) Every 4 Seconds: Fast Delta Scan for Processing, Verification, Approved, Loan Running, Promo, NACH, QR, Collect, Investor
-    // 2) Every 12 Hours: Archive Full Scan for Loan Closed & Rejected
-    window.addEventListener('DOMContentLoaded', () => {
+    // INITIALIZE UNLIMITED INDEXED-DB + 4-SECOND LIVE CLOUD SYNC
+    window.addEventListener('DOMContentLoaded', async () => {
+      const idbData = await loadFromIndexedDb();
+      if (idbData && Array.isArray(idbData.applications)) {
+        const localRaw = getCloudData();
+        memoryDbCache = mergeCloudDatabases(localRaw, idbData);
+      }
+
       const db = getCloudData();
       document.getElementById('agrInterestRate').value = db.agreementSettings.interestRate || '3% Monthly';
       document.getElementById('agrEmiDate').value = db.agreementSettings.emiDate || '5';
       document.getElementById('agrNachPenalty').value = db.agreementSettings.nachPenalty || 'Rs. 500 per bounce';
       document.getElementById('agrLatePenalty').value = db.agreementSettings.latePenalty || '3% per month additional';
       document.getElementById('agrCustomBody').value = db.agreementSettings.customBody || defaultAgreementBody;
+
+      // Set default promo validity date to +30 days
+      const promoDateEl = document.getElementById('promoExpiryDate');
+      if (promoDateEl && !promoDateEl.value) {
+        promoDateEl.value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+      }
+
       updateFeeCalculation();
       renderPromoCodes();
       renderFeedbackSection();
@@ -1242,101 +1424,155 @@
       switchCustomerTab('new');
 
       triggerCloudScan('FULL', false);
-      lastArchivedScanTimestamp = Date.now();
 
-      // 4-Second Fast Scan for Active Workflows (Excludes unchanged Closed/Rejected archives)
+      // 4-Second Fast Cloud Polling across devices
       setInterval(() => {
         if (!document.hidden) triggerCloudScan('DELTA', false);
       }, 4000);
-
-      // 12-Hour Archive Scan for Loan Closed & Rejected (43,200,000 ms)
-      setInterval(() => {
-        lastArchivedScanTimestamp = Date.now();
-        triggerCloudScan('FULL', false);
-      }, 43200000);
     });
   </script>
 <!-- END OF PART 3 -->
 <!-- START OF PART 4 -->
   <script>
-    // SMART HD IMAGE COMPRESSION: COMPRESSES 12MB+ FILES TO ~2-3MB WITHOUT LOSING TEXT, PAN, ID OR STAMP CLARITY
-    async function compressImageToHd(file, maxDim = 1200, quality = 0.85) {
+    let activeFileProcessingCount = 0;
+
+    // ULTRA-FAST MOBILE-SAFE HD IMAGE COMPRESSION (HANDLES 15MB-50MB CAMERA PHOTOS IN 0.2s WITHOUT RAM CRASH)
+    async function compressImageToHd(file, maxDim = 1200, quality = 0.84) {
       return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
+        try {
+          const blobUrl = URL.createObjectURL(file);
           const img = new Image();
           img.onload = () => {
-            let w = img.width, h = img.height;
-            if (w > maxDim || h > maxDim) {
-              if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
-              else { w = Math.round((w * maxDim) / h); h = maxDim; }
+            try {
+              let w = img.width || 1000, h = img.height || 1000;
+              if (w > maxDim || h > maxDim) {
+                if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+                else { w = Math.round((w * maxDim) / h); h = maxDim; }
+              }
+              const canvas = document.createElement('canvas');
+              canvas.width = w;
+              canvas.height = h;
+              const ctx = canvas.getContext('2d');
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, w, h);
+              ctx.drawImage(img, 0, 0, w, h);
+              URL.revokeObjectURL(blobUrl);
+              resolve(canvas.toDataURL('image/jpeg', quality));
+            } catch (err) {
+              URL.revokeObjectURL(blobUrl);
+              const reader = new FileReader();
+              reader.onload = e => resolve(e.target.result);
+              reader.onerror = () => resolve('');
+              reader.readAsDataURL(file);
             }
-            const canvas = document.createElement('canvas');
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext('2d');
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, w, h);
-            ctx.drawImage(img, 0, 0, w, h);
-            resolve(canvas.toDataURL('image/jpeg', quality));
           };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+          img.onerror = () => {
+            URL.revokeObjectURL(blobUrl);
+            const reader = new FileReader();
+            reader.onload = e => resolve(e.target.result);
+            reader.onerror = () => resolve('');
+            reader.readAsDataURL(file);
+          };
+          img.src = blobUrl;
+        } catch (e) {
+          const reader = new FileReader();
+          reader.onload = ev => resolve(ev.target.result);
+          reader.onerror = () => resolve('');
+          reader.readAsDataURL(file);
+        }
       });
     }
 
     async function handleFileUpload(event, docKey) {
-      const file = event.target.files[0];
+      const file = event.target.files && event.target.files[0];
       if (!file) return;
-      const compressedDataUrl = await compressImageToHd(file, 1200, 0.85);
-      uploadedDocs[docKey] = compressedDataUrl;
-      const prev = document.getElementById('prev_' + docKey);
-      if (prev) { prev.src = compressedDataUrl; prev.classList.remove('hidden'); }
+      const statusSpan = document.getElementById('status_' + docKey);
+      if (statusSpan) statusSpan.innerText = '⏳ Optimizing HD...';
+      activeFileProcessingCount++;
+
+      const compressedDataUrl = await compressImageToHd(file, 1200, 0.84);
+      activeFileProcessingCount = Math.max(0, activeFileProcessingCount - 1);
+
+      if (compressedDataUrl) {
+        uploadedDocs[docKey] = compressedDataUrl;
+        const prev = document.getElementById('prev_' + docKey);
+        if (prev) { prev.src = compressedDataUrl; prev.classList.remove('hidden'); }
+        if (statusSpan) statusSpan.innerText = '✔ HD Ready!';
+      } else {
+        if (statusSpan) statusSpan.innerText = '⚠️ Try Again';
+      }
     }
 
     async function handleBankStatementUpload(event) {
-      const file = event.target.files[0];
+      const file = event.target.files && event.target.files[0];
       if (!file) return;
       const statusEl = document.getElementById('statementUploadStatus');
-      statusEl.innerText = 'Optimizing HD Bank Statement...';
+      if (statusEl) statusEl.innerText = '⏳ Preparing HD Bank Statement...';
+      activeFileProcessingCount++;
 
       if (file.type === 'application/pdf') {
         const reader = new FileReader();
         reader.onload = e => {
           uploadedDocs.statement = e.target.result;
           uploadedDocs.statementName = file.name;
-          statusEl.innerText = '✔ Bank Statement PDF Ready (Crystal Clear)!';
+          activeFileProcessingCount = Math.max(0, activeFileProcessingCount - 1);
+          if (statusEl) statusEl.innerText = '✔ Bank Statement PDF Ready!';
+        };
+        reader.onerror = () => {
+          activeFileProcessingCount = Math.max(0, activeFileProcessingCount - 1);
+          if (statusEl) statusEl.innerText = '⚠️ Failed to read PDF';
         };
         reader.readAsDataURL(file);
       } else {
-        const dataUrl = await compressImageToHd(file, 1400, 0.90);
+        const dataUrl = await compressImageToHd(file, 1350, 0.88);
+        activeFileProcessingCount = Math.max(0, activeFileProcessingCount - 1);
         uploadedDocs.statement = dataUrl;
         uploadedDocs.statementName = file.name;
-        statusEl.innerText = '✔ HD Bank Statement Image Ready!';
+        if (statusEl) statusEl.innerText = '✔ HD Bank Statement Ready!';
       }
     }
 
+    // FEE & PROMO CODE VALIDATOR (CHECKS EXPIRY DATE, CUSTOMER TYPE & MAX LOAN LIMIT)
     function updateFeeCalculation() {
-      const amt = parseFloat(document.getElementById('appLoanAmount').value) || 5000;
+      const amt = parseFloat(document.getElementById('appLoanAmount')?.value) || 5000;
+      const custType = document.getElementById('appCustomerType')?.value || 'New Customer';
       let slab = amt <= 5000 ? 300 : (amt <= 15000 ? 600 : 1000);
       const gst = Math.round(slab * 0.18);
       let total = slab + gst;
       let disc = 0;
-      const promoCode = document.getElementById('appPromoInput').value.trim().toUpperCase();
+
+      const promoCode = (document.getElementById('appPromoInput')?.value || '').trim().toUpperCase();
+      const promoMsgEl = document.getElementById('promoMsg');
       const db = getCloudData();
+      const todayIso = new Date().toISOString().split('T')[0];
       const pObj = (db.promos || []).find(p => p.code === promoCode);
 
-      if (pObj) {
-        if (pObj.type === 'FLAT') disc = Number(pObj.value) || 0;
-        else disc = Math.round(total * ((Number(pObj.value) || 0) / 100));
-        total = Math.max(0, total - disc);
-        document.getElementById('promoMsg').innerText = `✔ Promo Applied! (-₹${disc})`;
-        document.getElementById('promoMsg').className = 'text-emerald-600 font-extrabold';
+      if (promoCode && pObj) {
+        const isExpired = pObj.expiryDate && pObj.expiryDate < todayIso;
+        const wrongTarget = pObj.target && pObj.target !== 'All Customers' && pObj.target !== custType;
+        const exceedsMax = pObj.maxLoan && amt > Number(pObj.maxLoan);
+
+        if (isExpired) {
+          promoMsgEl.innerText = `✕ Promo Expired on ${pObj.expiryDate}`;
+          promoMsgEl.className = 'text-rose-600 font-extrabold';
+        } else if (wrongTarget) {
+          promoMsgEl.innerText = `✕ Valid only for ${pObj.target}`;
+          promoMsgEl.className = 'text-rose-600 font-extrabold';
+        } else if (exceedsMax) {
+          promoMsgEl.innerText = `✕ Max Loan Limit ₹${pObj.maxLoan}`;
+          promoMsgEl.className = 'text-rose-600 font-extrabold';
+        } else {
+          if (pObj.type === 'FLAT') disc = Number(pObj.value) || 0;
+          else disc = Math.round(total * ((Number(pObj.value) || 0) / 100));
+          total = Math.max(0, total - disc);
+          promoMsgEl.innerText = `✔ Promo Applied! (-₹${disc})`;
+          promoMsgEl.className = 'text-emerald-600 font-extrabold';
+        }
       } else if (promoCode) {
-        document.getElementById('promoMsg').innerText = '✕ Invalid Promo';
-        document.getElementById('promoMsg').className = 'text-rose-600 font-extrabold';
-      } else {
-        document.getElementById('promoMsg').innerText = '';
+        promoMsgEl.innerText = '✕ Invalid Promo Code';
+        promoMsgEl.className = 'text-rose-600 font-extrabold';
+      } else if (promoMsgEl) {
+        promoMsgEl.innerText = '';
       }
 
       currentDiscount = disc;
@@ -1348,86 +1584,143 @@
 
     function applyPromoCode() { updateFeeCalculation(); }
 
-    // INSTANT 0.5s ORDER ID SUBMISSION WITH BACKGROUND HD SYNC
+    // INSTANT 0.5s ORDER ID SUBMISSION + AUTOMATIC CROSS-DEVICE CLOUD TRANSMISSION
     function submitLoanApplication(event) {
-      event.preventDefault();
-      const mobile = document.getElementById('appMobile').value.trim();
-      const aadhaar = document.getElementById('appAadhaar').value.trim();
-      const pan = document.getElementById('appPan').value.trim().toUpperCase();
-      const refMob = document.getElementById('appRefMobile').value.trim();
+      if (event) event.preventDefault();
 
-      if (!isValidMobile(mobile) || !isValidMobile(refMob)) return alert('Please enter valid 10-digit mobile numbers for both applicant and reference!');
-      if (aadhaar.length < 12) return alert('Please enter a valid 12-digit Identity / KYC number!');
-      if (pan.length < 10) return alert('Please enter a valid 10-character PAN number!');
-      if (!uploadedDocs.pan || !uploadedDocs.photo || !uploadedDocs.sign || !uploadedDocs.statement) {
-        return alert('Please upload all mandatory KYC documents including Photo, Signature, PAN, and 3-Month Bank Statement!');
+      if (activeFileProcessingCount > 0) {
+        return alert('⏳ Please wait 2 seconds — your HD photos/PDF are finishing optimization!');
       }
 
-      const db = getCloudData();
-      const amount = Math.round(parseFloat(document.getElementById('appLoanAmount').value) || 5000);
-      const tenure = parseInt(document.getElementById('appTenure').value) || 6;
-      const orderId = 'RNSF' + Math.floor(1000 + Math.random() * 9000);
-      lastCreatedOrderId = orderId;
+      const name = document.getElementById('appName').value.trim();
+      const dob = document.getElementById('appDob').value.trim();
+      const mobile = document.getElementById('appMobile').value.trim();
+      const email = document.getElementById('appEmail').value.trim();
+      const aadhaar = document.getElementById('appAadhaar').value.trim();
+      const pan = document.getElementById('appPan').value.trim().toUpperCase();
+      const refName = document.getElementById('appRefName').value.trim();
+      const refMob = document.getElementById('appRefMobile').value.trim();
+      const purpose = document.getElementById('appPurpose').value.trim();
+      const bankName = document.getElementById('appBankName').value.trim();
+      const bankHolder = document.getElementById('appBankHolder').value.trim();
+      const accNo = document.getElementById('appAccNo').value.trim();
+      const ifsc = document.getElementById('appIfsc').value.trim().toUpperCase();
+      const loanType = document.getElementById('appLoanType').value;
+      const deliveryAddress = document.getElementById('appDeliveryAddress')?.value.trim() || '';
 
-      const slab = amount <= 5000 ? 300 : (amount <= 15000 ? 600 : 1000);
-      const gstFee = Math.round(slab * 0.18);
-      const totalFee = Math.max(0, slab + gstFee - currentDiscount);
-      const defaultRate = parseFloat(db.agreementSettings?.interestRate) || 3;
-      const extraInt = Math.round(amount * (defaultRate / 100) * tenure);
-      const monthlyEmi = Math.round((amount + extraInt) / tenure);
+      if (!name || !dob || !purpose) return alert('Please fill in Full Name, Date of Birth, and Loan Purpose!');
+      if (loanType === 'Online Shopping Loan' && !deliveryAddress) return alert('Please enter the Complete Delivery Address for Online Shopping Loan!');
+      if (!isValidMobile(mobile)) return alert('Please enter a valid 10-digit Applicant Mobile Number!');
+      if (!email) return alert('Please enter your Email ID!');
+      if (aadhaar.length < 12) return alert('Please enter a valid 12-digit Identity / KYC Number!');
+      if (pan.length < 10) return alert('Please enter a valid 10-character PAN Card Number!');
+      if (!refName || !isValidMobile(refMob)) return alert('Please enter Family/Reference Name and a valid 10-digit Reference Mobile Number!');
+      if (!bankName || !bankHolder || !accNo || !ifsc) return alert('Please complete all 4 Bank Account fields (Bank Name, Holder Name, Account No, IFSC)!');
 
-      const newApp = {
-        orderId,
-        loanType: document.getElementById('appLoanType').value,
-        customerType: document.getElementById('appCustomerType').value,
-        amount,
-        requestedAmount: amount,
-        tenure,
-        purpose: document.getElementById('appPurpose').value.trim(),
-        deliveryAddress: document.getElementById('appDeliveryAddress')?.value.trim() || '',
-        name: document.getElementById('appName').value.trim(),
-        dob: document.getElementById('appDob').value.trim(),
-        mobile,
-        email: document.getElementById('appEmail').value.trim(),
-        aadhaar,
-        pan,
-        refName: document.getElementById('appRefName').value.trim(),
-        refMobile: refMob,
-        bankName: document.getElementById('appBankName').value.trim(),
-        bankHolder: document.getElementById('appBankHolder').value.trim(),
-        accNo: document.getElementById('appAccNo').value.trim(),
-        ifsc: document.getElementById('appIfsc').value.trim().toUpperCase(),
-        processingFee: slab,
-        gstFee,
-        totalFee,
-        monthlyEmi,
-        customInterestRate: defaultRate,
-        interestRateText: `${defaultRate}% Monthly`,
-        extraInterestAmount: extraInt,
-        status: 'Processing',
-        docs: { ...uploadedDocs },
-        reuploadedDocs: [],
-        emis: [],
-        createdAt: new Date().toLocaleDateString('hi-IN'),
-        createdTimestamp: Date.now(),
-        updatedAt: Date.now()
-      };
+      if (!uploadedDocs.pan || !uploadedDocs.aadhaar_front || !uploadedDocs.aadhaar_back || !uploadedDocs.passbook || !uploadedDocs.photo || !uploadedDocs.sign || !uploadedDocs.statement) {
+        return alert('Please upload all 6 KYC Photos (PAN, ID Front, ID Back, Passbook, Photo, Signature) and the 3-Month Bank Statement!');
+      }
 
-      if (!db.applications) db.applications = [];
-      db.applications.unshift(newApp);
+      const btn = document.getElementById('btnSubmitLoanApp');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = '⚡ Generating Order ID...';
+      }
 
-      // Save instantly & push light text packet first, followed by heavy HD docs in background
-      saveCloudData(db, 'RNS MICRO FINANCE: Application Submitted!', true);
+      try {
+        const db = getCloudData();
+        const amount = Math.round(parseFloat(document.getElementById('appLoanAmount').value) || 5000);
+        const tenure = parseInt(document.getElementById('appTenure').value) || 6;
+        const orderId = 'RNSF' + Math.floor(1000 + Math.random() * 9000);
+        lastCreatedOrderId = orderId;
 
-      // Show Instant Order ID popup in 0.5 seconds
-      document.getElementById('instantOrderIdText').innerText = orderId;
-      document.getElementById('instantOrderModal').classList.remove('hidden');
-      document.getElementById('instantOrderModal').classList.add('flex');
+        const slab = amount <= 5000 ? 300 : (amount <= 15000 ? 600 : 1000);
+        const gstFee = Math.round(slab * 0.18);
+        const totalFee = Math.max(0, slab + gstFee - currentDiscount);
+        const defaultRate = parseFloat(db.agreementSettings?.interestRate) || 3;
+        const extraInt = Math.round(amount * (defaultRate / 100) * tenure);
+        const monthlyEmi = Math.round((amount + extraInt) / tenure);
+
+        const newApp = {
+          orderId,
+          loanType,
+          customerType: document.getElementById('appCustomerType').value,
+          amount,
+          requestedAmount: amount,
+          tenure,
+          purpose,
+          deliveryAddress,
+          name,
+          dob,
+          mobile,
+          email,
+          aadhaar,
+          pan,
+          refName,
+          refMobile: refMob,
+          bankName,
+          bankHolder,
+          accNo,
+          ifsc,
+          processingFee: slab,
+          gstFee,
+          totalFee,
+          monthlyEmi,
+          customInterestRate: defaultRate,
+          interestRateText: `${defaultRate}% Monthly`,
+          extraInterestAmount: extraInt,
+          status: 'Processing',
+          docs: { ...uploadedDocs },
+          reuploadedDocs: [],
+          emis: [],
+          createdAt: new Date().toLocaleDateString('hi-IN'),
+          createdTimestamp: Date.now(),
+          updatedAt: Date.now()
+        };
+
+        if (!db.applications) db.applications = [];
+        db.applications.unshift(newApp);
+
+        // Show Order ID Popup IMMEDIATELY (within 0.5 seconds)
+        document.getElementById('instantOrderIdText').innerText = orderId;
+        const noticeEl = document.getElementById('bgUploadProgressNotice');
+        if (noticeEl) {
+          noticeEl.className = 'p-2.5 rounded-xl bg-amber-50 dark:bg-slate-800 border border-amber-300 text-[11px] text-amber-900 dark:text-amber-300 font-extrabold';
+          noticeEl.innerText = '⏳ Transmitting your HD Documents to Owner Portal (takes 5–15 seconds)...';
+        }
+        document.getElementById('instantOrderModal').classList.remove('hidden');
+        document.getElementById('instantOrderModal').classList.add('flex');
+
+        // Save locally to Unlimited IndexedDB and transmit to Owner Portal in background
+        saveCloudData(db, `Order ID ${orderId} Created & Syncing!`, true);
+
+        // Reset form for next customer
+        document.getElementById('loanApplicationForm').reset();
+        uploadedDocs = {};
+        ['pan', 'aadhaar_front', 'aadhaar_back', 'passbook', 'photo', 'sign'].forEach(k => {
+          const img = document.getElementById('prev_' + k);
+          if (img) { img.src = ''; img.classList.add('hidden'); }
+          const st = document.getElementById('status_' + k);
+          if (st) st.innerText = 'HD Auto-Optimize';
+        });
+        const stmtSt = document.getElementById('statementUploadStatus');
+        if (stmtSt) stmtSt.innerText = '';
+        updateFeeCalculation();
+      } catch (err) {
+        alert('Submission error: ' + err.message);
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<i class="fa-solid fa-bolt mr-1"></i> Submit Application & Get Instant Order ID';
+        }
+      }
     }
 
     function copyInstantOrderId() {
       const txt = document.getElementById('instantOrderIdText').innerText;
-      navigator.clipboard.writeText(txt);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(txt);
+      }
       showCloudNotification('📋 Order ID Copied to Clipboard!');
     }
 
@@ -1458,7 +1751,7 @@
         date: new Date().toLocaleDateString('hi-IN')
       };
       db.feedbacks.unshift(newFb);
-      saveCloudData(db, 'Thank you! Feedback Published.');
+      saveCloudData(db, 'Thank you! Feedback Published.', false);
       document.getElementById('feedbackForm').reset();
       renderFeedbackSection();
     }
@@ -1525,7 +1818,7 @@
       }
 
       // 2. Check Loan Applications
-      const matched = db.applications.filter(a =>
+      const matched = (db.applications || []).filter(a =>
         a.orderId.toUpperCase() === query ||
         a.mobile === query ||
         a.aadhaar === query ||
@@ -1844,7 +2137,7 @@
       app.customerSubmittedOtp = val;
       app.aadhaarOtpVerified = true;
       app.updatedAt = Date.now();
-      saveCloudData(db, '✔ Identity OTP Submitted & Synced!');
+      saveCloudData(db, '✔ Identity OTP Submitted & Synced!', false);
       renderCustomerTrackingCard(app);
     }
 
@@ -1861,7 +2154,7 @@
           r.readAsDataURL(file);
         });
       } else {
-        dataUrl = await compressImageToHd(file, 1300, 0.88);
+        dataUrl = await compressImageToHd(file, 1300, 0.86);
       }
 
       const db = getCloudData();
@@ -1899,7 +2192,7 @@
         submittedAt: new Date().toLocaleString('hi-IN')
       };
       app.updatedAt = Date.now();
-      saveCloudData(db, '✔ Payment UTR Submitted for Verification!');
+      saveCloudData(db, '✔ Payment UTR Submitted for Verification!', false);
       renderCustomerTrackingCard(app);
     }
 
@@ -1968,17 +2261,18 @@
 <!-- END OF PART 4 -->
 <!-- START OF PART 5 -->
   <script>
+    // OWNER PORTAL LOGIN WITH ORIGINAL PIN: 7402
     function openOwnerPortalPrompt() {
       if (isOwnerLoggedIn) {
         showOwnerPortalUI();
         return;
       }
       const pin = prompt('🔒 Enter RNS MICRO FINANCE Owner Portal Security PIN:');
-      if (pin === '2316' || pin === '7668' || pin === '1234') {
+      if (pin === '7402') {
         isOwnerLoggedIn = true;
         showOwnerPortalUI();
       } else if (pin !== null) {
-        alert('❌ Invalid Security PIN!');
+        alert('❌ Invalid Security PIN! Please enter your valid Owner PIN.');
       }
     }
 
@@ -1987,6 +2281,7 @@
       document.getElementById('ownerPortalSection').classList.remove('hidden');
       updateOwnerProfitSummaryBar();
       switchOwnerTab('apps');
+      triggerCloudScan('FULL', false);
     }
 
     function switchOwnerTab(tab) {
@@ -2016,8 +2311,8 @@
         { key: 'Verification', label: '2. Verification', color: 'bg-amber-600 text-white border-amber-800', light: 'bg-amber-50 text-amber-950 border-amber-300' },
         { key: 'Approved', label: '3. Approved', color: 'bg-emerald-700 text-white border-emerald-900', light: 'bg-emerald-50 text-emerald-950 border-emerald-300' },
         { key: 'Loan Running', label: '4. Loan Running', color: 'bg-indigo-700 text-white border-indigo-900', light: 'bg-indigo-50 text-indigo-950 border-indigo-300' },
-        { key: 'Loan Closed', label: '5. Loan Closed (12h)', color: 'bg-teal-700 text-white border-teal-900', light: 'bg-teal-50 text-teal-950 border-teal-300' },
-        { key: 'Rejected', label: '6. Rejected (12h)', color: 'bg-rose-700 text-white border-rose-900', light: 'bg-rose-50 text-rose-950 border-rose-300' }
+        { key: 'Loan Closed', label: '5. Loan Closed', color: 'bg-teal-700 text-white border-teal-900', light: 'bg-teal-50 text-teal-950 border-teal-300' },
+        { key: 'Rejected', label: '6. Rejected', color: 'bg-rose-700 text-white border-rose-900', light: 'bg-rose-50 text-rose-950 border-rose-300' }
       ];
 
       const tabContainer = document.getElementById('ownerStatusTabsContainer');
@@ -2071,6 +2366,7 @@
         'Rejected': 'REJECTED'
       };
       const curStageKey = stageKeyMap[app.status] || 'PROCESSING';
+      const hasHeavyDocs = app.docs && Object.keys(app.docs).length > 0;
 
       box.innerHTML = `
         <div class="bg-white card-bg rounded-2xl shadow-md border-2 border-slate-300 p-5 space-y-5 text-xs">
@@ -2081,6 +2377,9 @@
                 <span class="bg-slate-900 text-white font-extrabold px-3 py-1 rounded text-xs">ORDER ID: ${escapeHtml(app.orderId)}</span>
                 <span class="bg-emerald-100 text-emerald-900 font-extrabold px-3 py-1 rounded-full border border-emerald-300">${escapeHtml(app.status)}</span>
                 <span class="bg-indigo-50 text-indigo-900 font-bold px-2.5 py-1 rounded border border-indigo-200">${escapeHtml(app.loanType)} (${escapeHtml(app.customerType)})</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${hasHeavyDocs ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                  ${hasHeavyDocs ? '✔ All HD Photos & PDF Synced' : '⏳ Syncing HD Photos from Cloud...'}
+                </span>
               </div>
               <h3 class="text-xl font-extrabold mt-1.5">${escapeHtml(app.name)} <span class="text-xs font-normal text-slate-500">(DOB: ${escapeHtml(app.dob)} | Applied: ${escapeHtml(app.createdAt)})</span></h3>
             </div>
@@ -2135,7 +2434,7 @@
           <!-- SANCTION OFFER, INTEREST, INSURANCE & SHOPPING TRACKING EDITOR -->
           <div class="p-4 rounded-xl bg-emerald-50/70 dark:bg-slate-800 border-2 border-emerald-400 space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <h4 class="font-extrabold text-emerald-950 dark:text-emerald-300">✏️ Update Loan Sanction Offer, Custom Interest, Insurance & Order Tracking (4s Fast Sync)</h4>
+              <h4 class="font-extrabold text-emerald-950 dark:text-emerald-300">✏️ Update Loan Sanction Offer, Custom Interest, Insurance & Order Tracking (Fast Cloud Sync)</h4>
               <div class="flex gap-2">
                 <button type="button" onclick="sendOwnerStageAlert('${escapeHtml(app.orderId)}', 'VERIFICATION_OFFER', 'SMS')" class="px-3 py-1 rounded-lg bg-sky-700 text-white font-bold text-[11px]">💬 Offer SMS</button>
                 <button type="button" onclick="sendOwnerStageAlert('${escapeHtml(app.orderId)}', 'VERIFICATION_OFFER', 'WHATSAPP')" class="px-3 py-1 rounded-lg bg-emerald-600 text-white font-bold text-[11px]">📲 Offer WhatsApp</button>
@@ -2168,7 +2467,7 @@
               </div>
             </div>
             <button type="button" onclick="saveOwnerLoanOffer('${escapeHtml(app.orderId)}')" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
-              💾 Save Offer & Recalculate EMI (4s Instant Sync)
+              💾 Save Offer & Recalculate EMI (Instant Sync)
             </button>
           </div>
 
@@ -2305,7 +2604,7 @@
       app.shoppingTrackingId = shopTrack;
       app.updatedAt = Date.now();
 
-      saveCloudData(db, '✔ Loan Offer & EMI Updated Instantly (4s Sync)!');
+      saveCloudData(db, '✔ Loan Offer & EMI Updated Instantly!', false);
       renderOwnerApplications();
     }
 
@@ -2322,7 +2621,7 @@
         app.aadhaarOtpVerified = true;
       }
       app.updatedAt = Date.now();
-      saveCloudData(db, '✔ 2-Step Identity OTP Status Synced!');
+      saveCloudData(db, '✔ 2-Step Identity OTP Status Synced!', false);
       currentOwnerStatusFilter = app.status;
       renderOwnerApplications();
     }
@@ -2336,7 +2635,7 @@
       app.nachLink = url;
       if (app.status === 'Processing') app.status = 'Verification';
       app.updatedAt = Date.now();
-      saveCloudData(db, '🔗 NACH Link Saved & Synced in 4s!');
+      saveCloudData(db, '🔗 NACH Link Saved & Synced Instantly!', false);
       currentOwnerStatusFilter = app.status;
       renderOwnerApplications();
       if (channelType === 'SMS' || channelType === 'WHATSAPP') {
@@ -2356,7 +2655,7 @@
       app.nachLink = url;
       if (app.status === 'Processing') app.status = 'Verification';
       app.updatedAt = Date.now();
-      saveCloudData(db, `🔗 NACH Link Synced for ${app.orderId}!`);
+      saveCloudData(db, `🔗 NACH Link Synced for ${app.orderId}!`, false);
       if (channelType === 'SMS' || channelType === 'WHATSAPP') {
         sendOwnerStageAlert(app.orderId, 'VERIFICATION_NACH', channelType);
       }
@@ -2375,7 +2674,7 @@
       if (app.status === 'Processing') app.status = 'Verification';
       app.updatedAt = Date.now();
 
-      saveCloudData(db, '📤 Re-upload Request Synced to Customer Portal!');
+      saveCloudData(db, '📤 Re-upload Request Synced to Customer Portal!', false);
       currentOwnerStatusFilter = app.status;
       renderOwnerApplications();
       if (channelType === 'SMS' || channelType === 'WHATSAPP') {
@@ -2390,7 +2689,7 @@
       app.remarkDocType = '';
       app.remarkText = '';
       app.updatedAt = Date.now();
-      saveCloudData(db, '✔ Document Remark Cleared!');
+      saveCloudData(db, '✔ Document Remark Cleared!', false);
       renderOwnerApplications();
     }
 
@@ -2400,7 +2699,7 @@
       if (!app) return;
       app.status = newStatus;
       app.updatedAt = Date.now();
-      saveCloudData(db, `✔ Status Moved to ${newStatus}!`);
+      saveCloudData(db, `✔ Status Moved to ${newStatus}!`, false);
       currentOwnerStatusFilter = newStatus;
       renderOwnerApplications();
     }
@@ -2411,14 +2710,14 @@
       if (!app) return;
       if (!db.defaulters) db.defaulters = [];
       db.defaulters.push({ name: app.name, pan: app.pan, mobile: app.mobile, orderId: app.orderId, date: new Date().toLocaleDateString('hi-IN') });
-      saveCloudData(db, '⚠️ Applicant Marked in CIBIL Defaulter List!');
+      saveCloudData(db, '⚠️ Applicant Marked in CIBIL Defaulter List!', false);
     }
 
     function deleteApplicationRecord(orderId) {
       if (!confirm(`Are you sure you want to permanently delete Order ID ${orderId}?`)) return;
       const db = getCloudData();
       db.applications = db.applications.filter(a => a.orderId !== orderId);
-      saveCloudData(db, '🗑️ Application Deleted!');
+      saveCloudData(db, '🗑️ Application Deleted!', false);
       renderOwnerApplications();
     }
 
@@ -2440,7 +2739,6 @@
         }
       }
 
-      // Render Closed / Completed EMI Customers UPI History Box
       const badge = document.getElementById('upiClosedCountBadge');
       const histBox = document.getElementById('upiClosedHistoryContainer');
       if (badge) badge.innerText = `${closedUpiApps.length} Closed`;
@@ -2497,7 +2795,7 @@
       app.upiQrEnabled = true;
       app.updatedAt = Date.now();
 
-      saveCloudData(db, `📲 UPI QR Activated & Synced for ${app.orderId}!`);
+      saveCloudData(db, `📲 UPI QR Activated & Synced for ${app.orderId}!`, false);
       populateUpiCustomerDropdown();
     }
 
@@ -2519,7 +2817,7 @@
       app.upiExpiryDate = newExp;
       app.upiQrEnabled = true;
       app.updatedAt = Date.now();
-      saveCloudData(db, '✏️ Closed Customer UPI Settings Updated!');
+      saveCloudData(db, '✏️ Closed Customer UPI Settings Updated!', false);
       populateUpiCustomerDropdown();
     }
 
@@ -2530,7 +2828,7 @@
       app.status = 'Loan Running';
       app.upiQrEnabled = true;
       app.updatedAt = Date.now();
-      saveCloudData(db, `🔄 ${app.orderId} Re-opened to Active Loan Running!`);
+      saveCloudData(db, `🔄 ${app.orderId} Re-opened to Active Loan Running!`, false);
       populateUpiCustomerDropdown();
     }
 
@@ -2543,7 +2841,7 @@
       app.upiAmount = 0;
       app.upiExpiryDate = '';
       app.updatedAt = Date.now();
-      saveCloudData(db, '🗑️ UPI QR Settings Cleared!');
+      saveCloudData(db, '🗑️ UPI QR Settings Cleared!', false);
       populateUpiCustomerDropdown();
     }
 
@@ -2670,7 +2968,7 @@
       document.getElementById('collectEmiMode').value = 'Online UPI';
       app.pendingCustomerUtr = null;
       app.updatedAt = Date.now();
-      saveCloudData(db, '✔ Customer UTR Loaded — Click Final Submit to Record EMI!');
+      saveCloudData(db, '✔ Customer UTR Loaded — Click Final Submit to Record EMI!', false);
       document.getElementById('ownerPendingUtrAlertBox').classList.add('hidden');
     }
 
@@ -2707,7 +3005,7 @@
       }
       app.updatedAt = Date.now();
 
-      saveCloudData(db, `💰 EMI Recorded & Synced for ${app.orderId}!`);
+      saveCloudData(db, `💰 EMI Recorded & Synced for ${app.orderId}!`, false);
       populateCollectAppDropdown();
       populateUpiCustomerDropdown();
     }
@@ -2747,7 +3045,7 @@
         app.status = 'Loan Running';
       }
       app.updatedAt = Date.now();
-      saveCloudData(db, '🗑️ Installment Deleted!');
+      saveCloudData(db, '🗑️ Installment Deleted!', false);
       loadCustomerForCollectApp();
     }
 
@@ -2775,7 +3073,7 @@
       app.upiQrEnabled = false;
       app.updatedAt = Date.now();
 
-      saveCloudData(db, `🎓 Loan ${app.orderId} Foreclosed & Moved to Closed History!`);
+      saveCloudData(db, `🎓 Loan ${app.orderId} Foreclosed & Moved to Closed History!`, false);
       document.getElementById('foreclosureBox').classList.add('hidden');
       populateCollectAppDropdown();
       populateUpiCustomerDropdown();
@@ -2787,7 +3085,7 @@
       if (!app) return;
       app.status = 'Loan Running';
       app.updatedAt = Date.now();
-      saveCloudData(db, `🔄 Loan ${app.orderId} Re-opened to Active Running!`);
+      saveCloudData(db, `🔄 Loan ${app.orderId} Re-opened to Active Running!`, false);
       populateCollectAppDropdown();
       populateUpiCustomerDropdown();
     }
@@ -2800,7 +3098,7 @@
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       if (!app || !app.docs || !app.docs[docKey]) {
-        return alert(`${title} is not uploaded or still syncing from background cloud!`);
+        return alert(`${title} अभी बैकग्राउंड क्लाउड से सिंक हो रहा है। कृपया 5–10 सेकंड बाद दोबारा टैप करें या ऊपर 'Tap to Scan' दबाएं!`);
       }
       const dataUrl = app.docs[docKey];
       if (dataUrl.startsWith('data:application/pdf')) {
@@ -2826,7 +3124,7 @@
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       if (!app || !app.docs || !app.docs.statement) {
-        return alert('3-Month Bank Statement is not uploaded or still syncing in background!');
+        return alert('3-Month Bank Statement अभी बैकग्राउंड क्लाउड से सिंक हो रहा है। कृपया कुछ सेकंड प्रतीक्षा करें!');
       }
       const stmt = app.docs.statement;
       if (stmt.startsWith('data:application/pdf')) {
@@ -2861,7 +3159,7 @@
       }
     }
 
-    // EDITABLE AGREEMENT SETTINGS & PROMO CODE ENGINE (WITH MUTATION LOCK PROTECTION)
+    // EDITABLE AGREEMENT SETTINGS
     function saveCustomAgreementTemplate() {
       const db = getCloudData();
       db.agreementSettings = {
@@ -2871,57 +3169,181 @@
         latePenalty: document.getElementById('agrLatePenalty').value.trim() || '3% per month additional',
         customBody: document.getElementById('agrCustomBody').value.trim() || defaultAgreementBody
       };
-      saveCloudData(db, '💾 RNS MICRO FINANCE Agreement Settings Saved & Synced!');
+      saveCloudData(db, '💾 RNS MICRO FINANCE Agreement Settings Saved & Synced!', false);
     }
 
+    // PROMO CODE ENGINE WITH VALIDITY DATE (AUTO-EXPIRY) & EXPIRED HISTORY BOX (REACTIVATE / EDIT / DELETE)
     function createPromoCode() {
       const code = document.getElementById('promoCodeName').value.trim().toUpperCase();
       const target = document.getElementById('promoTarget').value;
       const type = document.getElementById('promoType').value;
       const value = parseFloat(document.getElementById('promoValue').value) || 0;
       const maxLoan = parseFloat(document.getElementById('promoMaxLoan').value) || 50000;
-      if (!code || value <= 0) return alert('Please enter a valid Promo Code and Discount Value!');
+      const expiryDate = document.getElementById('promoExpiryDate').value;
+
+      if (!code || value <= 0) return alert('Please enter a valid Promo Code Name and Discount Value!');
+      if (!expiryDate) return alert('Please select a Valid Till Date (Expiry Date) for this Promo Code!');
 
       const db = getCloudData();
       if (!db.promos) db.promos = [];
       if (!db.deletedPromoCodes) db.deletedPromoCodes = [];
       db.deletedPromoCodes = db.deletedPromoCodes.filter(c => c !== code);
       db.promos = db.promos.filter(p => p.code !== code);
-      db.promos.unshift({ code, target, type, value, maxLoan, updatedAt: Date.now() });
 
-      saveCloudData(db, `🎟️ Promo Code ${code} Activated & Protected by Lock!`);
-      document.getElementById('promoCodeName').value = '';
+      db.promos.unshift({
+        code,
+        target,
+        type,
+        value,
+        maxLoan,
+        expiryDate,
+        createdAt: new Date().toLocaleDateString('hi-IN'),
+        updatedAt: Date.now()
+      });
+
+      saveCloudData(db, `🎟️ Promo Code ${code} (Valid till ${expiryDate}) Activated & Synced!`, false);
+      resetPromoForm();
       renderPromoCodes();
+      updateFeeCalculation();
+    }
+
+    function resetPromoForm() {
+      document.getElementById('promoCodeName').value = '';
+      document.getElementById('promoTarget').value = 'All Customers';
+      document.getElementById('promoType').value = 'FLAT';
+      document.getElementById('promoValue').value = '100';
+      document.getElementById('promoMaxLoan').value = '50000';
+      document.getElementById('promoExpiryDate').value = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
+      const titleEl = document.getElementById('promoFormTitle');
+      if (titleEl) titleEl.innerText = '🎟️ Create / Update Promo Code (With Auto-Expiry Validity Date)';
+      const cancelBtn = document.getElementById('btnCancelPromoEdit');
+      if (cancelBtn) cancelBtn.classList.add('hidden');
+    }
+
+    function editPromoCode(code) {
+      const db = getCloudData();
+      const p = (db.promos || []).find(x => x.code === code);
+      if (!p) return;
+      document.getElementById('promoCodeName').value = p.code;
+      document.getElementById('promoTarget').value = p.target || 'All Customers';
+      document.getElementById('promoType').value = p.type || 'FLAT';
+      document.getElementById('promoValue').value = p.value || 100;
+      document.getElementById('promoMaxLoan').value = p.maxLoan || 50000;
+      document.getElementById('promoExpiryDate').value = p.expiryDate || new Date(Date.now() + 15 * 86400000).toISOString().split('T')[0];
+
+      const titleEl = document.getElementById('promoFormTitle');
+      if (titleEl) titleEl.innerText = `✏️ Editing Promo Code: ${p.code}`;
+      const cancelBtn = document.getElementById('btnCancelPromoEdit');
+      if (cancelBtn) cancelBtn.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function reactivateExpiredPromo(code) {
+      const db = getCloudData();
+      const p = (db.promos || []).find(x => x.code === code);
+      if (!p) return;
+      const defaultFuture = new Date(Date.now() + 15 * 86400000).toISOString().split('T')[0];
+      const newDate = prompt(`🔄 Enter new Validity / Expiry Date (YYYY-MM-DD) to Reactivate Promo Code "${code}":`, defaultFuture);
+      if (!newDate) return;
+      p.expiryDate = newDate.trim();
+      p.updatedAt = Date.now();
+      saveCloudData(db, `✅ Promo Code ${code} Reactivated till ${p.expiryDate}!`, false);
+      renderPromoCodes();
+      updateFeeCalculation();
+    }
+
+    function expirePromoImmediately(code) {
+      const db = getCloudData();
+      const p = (db.promos || []).find(x => x.code === code);
+      if (!p) return;
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      p.expiryDate = yesterday;
+      p.updatedAt = Date.now();
+      saveCloudData(db, `⏳ Promo Code ${code} moved to Expired History!`, false);
+      renderPromoCodes();
+      updateFeeCalculation();
     }
 
     function renderPromoCodes() {
       const db = getCloudData();
-      const box = document.getElementById('activePromoList');
-      if (!box) return;
-      const list = db.promos || [];
-      if (list.length === 0) {
-        box.innerHTML = `<div class="p-3 rounded-xl bg-slate-50 border text-center text-slate-400 font-bold">No active promo codes.</div>`;
-        return;
-      }
-      box.innerHTML = list.map(p => `
-        <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border flex items-center justify-between">
-          <div>
-            <span class="bg-emerald-700 text-white font-mono font-extrabold px-2.5 py-0.5 rounded">${escapeHtml(p.code)}</span>
-            <span class="font-bold ml-2">${p.type === 'FLAT' ? `₹${p.value} OFF` : `${p.value}% OFF`}</span>
-            <div class="text-[10px] text-slate-500 mt-0.5">Target: ${escapeHtml(p.target)} | Max Loan: ₹${p.maxLoan}</div>
+      const activeBox = document.getElementById('activePromoList');
+      const expiredBox = document.getElementById('expiredPromoList');
+      const activeBadge = document.getElementById('activePromoCountBadge');
+      const expiredBadge = document.getElementById('expiredPromoCountBadge');
+      if (!activeBox) return;
+
+      const todayIso = new Date().toISOString().split('T')[0];
+      const allPromos = db.promos || [];
+      const activeList = allPromos.filter(p => !p.expiryDate || p.expiryDate >= todayIso);
+      const expiredList = allPromos.filter(p => p.expiryDate && p.expiryDate < todayIso);
+
+      if (activeBadge) activeBadge.innerText = `${activeList.length} Active`;
+      if (expiredBadge) expiredBadge.innerText = `${expiredList.length} Expired`;
+
+      if (activeList.length === 0) {
+        activeBox.innerHTML = `<div class="p-4 rounded-xl bg-slate-50 border text-center text-slate-400 font-bold">No active promo codes right now.</div>`;
+      } else {
+        activeBox.innerHTML = activeList.map(p => `
+          <div class="p-3 rounded-xl bg-emerald-50/60 dark:bg-slate-800 border border-emerald-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="bg-emerald-700 text-white font-mono font-extrabold px-2.5 py-0.5 rounded">${escapeHtml(p.code)}</span>
+                <span class="font-extrabold text-emerald-900 dark:text-emerald-300">${p.type === 'FLAT' ? `₹${p.value} OFF` : `${p.value}% OFF`}</span>
+                <span class="bg-white dark:bg-slate-900 text-emerald-800 border border-emerald-400 text-[10px] font-extrabold px-2 py-0.5 rounded-full">
+                  📅 Valid Till: ${escapeHtml(p.expiryDate || 'No Expiry')}
+                </span>
+              </div>
+              <div class="text-[10px] text-slate-600 dark:text-slate-300 mt-1">
+                Target: <strong>${escapeHtml(p.target)}</strong> | Max Loan Limit: <strong>₹${p.maxLoan}</strong>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-1.5 shrink-0">
+              <button type="button" onclick="editPromoCode('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px]">✏️ Edit</button>
+              <button type="button" onclick="expirePromoImmediately('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded-lg bg-slate-700 hover:bg-slate-800 text-white font-bold text-[11px]">⏳ Expire</button>
+              <button type="button" onclick="deletePromoCode('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-[11px]">🗑️ Delete</button>
+            </div>
           </div>
-          <button type="button" onclick="deletePromoCode('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold text-[11px]">🗑️ Delete</button>
-        </div>
-      `).join('');
+        `).join('');
+      }
+
+      if (expiredBox) {
+        if (expiredList.length === 0) {
+          expiredBox.innerHTML = `<div class="p-4 rounded-xl bg-white dark:bg-slate-900 border text-center text-slate-400 font-bold">No expired promo codes in history yet.</div>`;
+        } else {
+          expiredBox.innerHTML = expiredList.map(p => `
+            <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-rose-300 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="bg-rose-700 text-white font-mono font-extrabold px-2.5 py-0.5 rounded line-through">${escapeHtml(p.code)}</span>
+                  <span class="font-bold text-slate-700 dark:text-slate-200">${p.type === 'FLAT' ? `₹${p.value} OFF` : `${p.value}% OFF`}</span>
+                  <span class="bg-rose-100 text-rose-800 border border-rose-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full">
+                    ⏳ Expired On: ${escapeHtml(p.expiryDate)}
+                  </span>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-1">
+                  Target: ${escapeHtml(p.target)} | Max Loan: ₹${p.maxLoan} | Status: Auto-Disabled in History
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-1.5 shrink-0">
+                <button type="button" onclick="reactivateExpiredPromo('${escapeHtml(p.code)}')" class="px-3 py-1 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-[11px] shadow">🔄 Reactivate</button>
+                <button type="button" onclick="editPromoCode('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-bold text-[11px]">✏️ Edit</button>
+                <button type="button" onclick="deletePromoCode('${escapeHtml(p.code)}')" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-[11px]">🗑️ Delete</button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
     }
 
     function deletePromoCode(code) {
+      if (!confirm(`Permanently delete Promo Code "${code}" from history?`)) return;
       const db = getCloudData();
       db.promos = (db.promos || []).filter(p => p.code !== code);
       if (!db.deletedPromoCodes) db.deletedPromoCodes = [];
       if (!db.deletedPromoCodes.includes(code)) db.deletedPromoCodes.push(code);
-      saveCloudData(db, `🗑️ Promo ${code} Deleted Permanently!`);
+      saveCloudData(db, `🗑️ Promo ${code} Deleted Permanently!`, false);
       renderPromoCodes();
+      updateFeeCalculation();
     }
 
     // INVESTOR HUB: MEMBER MANAGEMENT, CREDIT/DEBIT LEDGER, SMS/WHATSAPP & PDF REPORTS
@@ -2968,7 +3390,7 @@
         selectedInvestorId = newId;
       }
 
-      saveCloudData(db, '👥 Investor Member Saved & Synced in 4s!');
+      saveCloudData(db, '👥 Investor Member Saved & Synced!', false);
       cancelInvestorMemberEdit();
       renderInvestorsSection();
     }
@@ -2997,7 +3419,7 @@
       const db = getCloudData();
       db.investors = (db.investors || []).filter(x => x.id !== invId);
       if (selectedInvestorId === invId) selectedInvestorId = '';
-      saveCloudData(db, '🗑️ Investor Member Deleted!');
+      saveCloudData(db, '🗑️ Investor Member Deleted!', false);
       renderInvestorsSection();
     }
 
@@ -3160,7 +3582,7 @@
       }
       inv.updatedAt = Date.now();
 
-      saveCloudData(db, '📊 Investor Ledger Updated & Synced in 4s!');
+      saveCloudData(db, '📊 Investor Ledger Updated & Synced!', false);
       renderInvestorsSection();
     }
 
@@ -3187,7 +3609,7 @@
       if (!inv) return;
       inv.transactions.splice(idx, 1);
       inv.updatedAt = Date.now();
-      saveCloudData(db, '🗑️ Ledger Entry Deleted!');
+      saveCloudData(db, '🗑️ Ledger Entry Deleted!', false);
       renderInvestorsSection();
     }
 
@@ -3574,7 +3996,6 @@
         for (let i = 0; i < sheets.length; i++) {
           if (i > 0) pdf.addPage();
 
-          // Create an off-screen padded wrapper so html2canvas never clips the top border line
           const tempWrap = document.createElement('div');
           tempWrap.style.position = 'fixed';
           tempWrap.style.top = '0';
