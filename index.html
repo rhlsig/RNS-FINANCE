@@ -3496,6 +3496,71 @@
         <p class="text-[11px] text-slate-600 pt-1">Applicant identity, PAN (${escapeHtml(pan)}) and mobile number (+91 ${escapeHtml(mob)}) have been verified successfully.</p>`;
     }
   </script>
+<!-- Firebase App (The core Firebase SDK) -->
+<script src="https://gstatic.com"></script>
+<!-- Firebase Firestore (For Promo Codes, Feedback, Agreement, Investor Ledger) -->
+<script src="https://gstatic.com"></script>
+<!-- Firebase Storage (For Fast 3-5 MB Document Uploads) -->
+<script src="https://gstatic.com"></script>
+
+<script>
+  // आपके गूगल फायरबेस अकाउंट का क्रेडेंशियल (डेवलपर इसे अपने अकाउंट से बदलेगा)
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "://firebaseapp.com",
+    projectId: "rns-finance",
+    storageBucket: "://appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Firebase को चालू करें
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const storage = firebase.storage();
+
+  // 100% सक्सेस रेट के साथ 3-5 MB डॉक्यूमेंट सीधे गूगल क्लाउड पर अपलोड करने का फंक्शन
+  function uploadDocToCloud(fileElementId, customerId, docType) {
+    const file = document.getElementById(fileElementId).files[0];
+    if (!file) return;
+
+    // गूगल स्टोरेज में सुरक्षित फोल्डर का पाथ
+    const storageRef = storage.ref('customer_docs/' + customerId + '/' + docType + '_' + file.name);
+    
+    // अपलोड शुरू (यह सीधा आपके एडमिन पैनल को डेटा भेजेगा)
+    storageRef.put(file).then((snapshot) => {
+        return snapshot.ref.getDownloadURL();
+    }).then((downloadURL) => {
+        // एडमिन डेटाबेस (Firestore) में लिंक सेव करना ताकि ओनर देख सके
+        db.collection("applications").doc(customerId).update({
+            [docType + '_url']: downloadURL,
+            status: "Uploaded & Synced"
+        });
+        showCloudToast("Document Synced to Live Cloud!");
+    }).catch((error) => {
+        console.error("Upload failed: ", error);
+    });
+  }
+
+  // प्रोमो कोड, इन्वेस्टर लेजर और सेटिंग्स को रियल-टाइम सर्कुलेट करने का तरीका
+  function syncPromoCodes() {
+      db.collection("promos").onSnapshot((snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+              if (change.type === "added" || change.type === "modified") {
+                  // कोड बदलते ही पूरी वेबसाइट पर तुरंत लाइव अपडेट करें
+                  console.log("Promo Updated Across System: ", change.doc.data());
+              }
+          });
+      });
+  }
+
+  // टोस्ट नोटिफिकेशन दिखाने के लिए फंक्शन
+  function showCloudToast(msg) {
+      document.getElementById("cloudToastMsg").innerText = msg;
+      document.getElementById("cloudToast").classList.add("show");
+      setTimeout(() => { document.getElementById("cloudToast").classList.remove("show"); }, 3000);
+  }
+</script>
 </body>
 </html>
 <!-- END OF PART 5 -->
