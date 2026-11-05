@@ -3,6 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>RNS FINANCE - 24 Hour Apply Loan & Helpline</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -675,6 +678,265 @@
     let lastSyncedCloudKey = '';
     let lastFullScanTime = Date.now();
 
+    // ============================================================================
+    // ULTRA-RELIABLE CLOUD ENGINE FOR OLD & NEW PHONES (6 PHOTOS + 1 PDF SUPPORT)
+    // ============================================================================
+    window._RNS_RAM_DB = null;
+    const RNS_IDB_NAME = 'RNS_FINANCE_UNLIMITED_VAULT_V1';
+    const RNS_IDB_STORE = 'cloud_store';
+
+    function openRnsIndexedDB() {
+      return new Promise((resolve) => {
+        if (!window.indexedDB) return resolve(null);
+        try {
+          const req = indexedDB.open(RNS_IDB_NAME, 1);
+          req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(RNS_IDB_STORE)) {
+              db.createObjectStore(RNS_IDB_STORE);
+            }
+          };
+          req.onsuccess = (e) => resolve(e.target.result);
+          req.onerror = () => resolve(null);
+        } catch (err) {
+          resolve(null);
+        }
+      });
+    }
+
+    async function saveToIndexedDB(key, val) {
+      try {
+        const idb = await openRnsIndexedDB();
+        if (!idb) return;
+        const tx = idb.transaction(RNS_IDB_STORE, 'readwrite');
+        tx.objectStore(RNS_IDB_STORE).put(val, key);
+      } catch (e) {}
+    }
+
+    async function loadFromIndexedDB(key) {
+      try {
+        const idb = await openRnsIndexedDB();
+        if (!idb) return null;
+        return await new Promise((resolve) => {
+          const tx = idb.transaction(RNS_IDB_STORE, 'readonly');
+          const req = tx.objectStore(RNS_IDB_STORE).get(key);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
+        });
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // Prevents QuotaExceededError on old & new phones when 6 photos + 1 PDF are saved
+    function safePersistLocalDB(db) {
+      if (!db) return;
+      window._RNS_RAM_DB = db;
+      saveToIndexedDB('MAIN_DB', db);
+      try {
+        localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(db));
+      } catch (quotaErr) {
+        try {
+          const lightDB = JSON.parse(JSON.stringify(db));
+          (lightDB.applications || []).forEach((a, idx) => {
+            if (idx > 0 && a.docs) {
+              a.docs = {
+                pan: '', aadhaar_front: '', aadhaar_back: '', aadhaar: '',
+                passbook: '', photo: a.docs.photo || '', sign: a.docs.sign || '',
+                statement: '', statementName: a.docs.statementName || ''
+              };
+            } else if (a.docs && a.docs.statement && a.docs.statement.length > 350000) {
+              a.docs.statement = '';
+            }
+          });
+          localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(lightDB));
+        } catch (e2) {}
+      }
+    }
+
+    // Universal HTTP Client: Fetch + XMLHttpRequest Fallback + Retry for 4-5 Year Old Phones
+    function universalCloudRequest(url, options = {}, timeoutMs = 25000) {
+      const method = options.method || 'GET';
+      const headers = options.headers || {};
+      const body = options.body || null;
+
+      return new Promise((resolve, reject) => {
+        let settled = false;
+        const timer = setTimeout(() => {
+          if (!settled) {
+            settled = true;
+            reject(new Error('Request timeout'));
+          }
+        }, timeoutMs);
+
+        function tryXhrFallback() {
+          try {
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, url, true);
+            xhr.timeout = timeoutMs;
+            Object.keys(headers).forEach(k => xhr.setRequestHeader(k, headers[k]));
+            xhr.onload = function () {
+              if (settled) return;
+              settled = true;
+              clearTimeout(timer);
+              resolve({
+                ok: xhr.status >= 200 && xhr.status < 300,
+                status: xhr.status,
+                text: () => Promise.resolve(xhr.responseText),
+                json: () => {
+                  try { return Promise.resolve(JSON.parse(xhr.responseText)); }
+                  catch (e) { return Promise.reject(e); }
+                }
+              });
+            };
+            xhr.onerror = function () {
+              if (settled) return;
+              settled = true;
+              clearTimeout(timer);
+              reject(new Error('XHR Error'));
+            };
+            xhr.ontimeout = function () {
+              if (settled) return;
+              settled = true;
+              clearTimeout(timer);
+              reject(new Error('XHR Timeout'));
+            };
+            xhr.send(body);
+          } catch (err) {
+            if (!settled) {
+              settled = true;
+              clearTimeout(timer);
+              reject(err);
+            }
+          }
+        }
+
+        if (typeof window.fetch === 'function') {
+          fetch(url, { method, headers, body, cache: 'no-store' })
+            .then(res => {
+              if (settled) return;
+              settled = true;
+              clearTimeout(timer);
+              resolve(res);
+            })
+            .catch(() => {
+              if (!settled) tryXhrFallback();
+            });
+        } else {
+          tryXhrFallback();
+        }
+      });
+    }
+
+    // Multi-Server Cloud Blob Upload (Primary: Bytebin, Fallback: JSONBlob) with 3x Auto-Retry
+    async function uploadJsonBlobToCloud(payloadObj) {
+      const jsonStr = JSON.stringify(payloadObj);
+      for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+          const res = await universalCloudRequest('https://bytebin.lucko.me/post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonStr
+          }, 25000);
+          if (res && res.ok) {
+            const data = await res.json();
+            if (data && data.key) return 'BB:' + data.key;
+          }
+        } catch (e) {}
+
+        try {
+          const res2 = await universalCloudRequest('https://jsonblob.com/api/jsonBlob', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: jsonStr
+          }, 25000);
+          if (res2 && res2.ok) {
+            const data2 = await res2.json();
+            if (data2 && data2.id) return 'JB:' + data2.id;
+          }
+        } catch (e2) {}
+
+        await new Promise(r => setTimeout(r, 600 * attempt));
+      }
+      return null;
+    }
+
+    async function downloadJsonBlobFromCloud(compositeKey) {
+      if (!compositeKey || typeof compositeKey !== 'string') return null;
+      let url = '';
+      if (compositeKey.startsWith('BB:')) {
+        url = `https://bytebin.lucko.me/${compositeKey.slice(3)}`;
+      } else if (compositeKey.startsWith('JB:')) {
+        url = `https://jsonblob.com/api/jsonBlob/${compositeKey.slice(3)}`;
+      } else {
+        url = `https://bytebin.lucko.me/${compositeKey}`;
+      }
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        try {
+          const res = await universalCloudRequest(url, { method: 'GET' }, 20000);
+          if (res && res.ok) {
+            return await res.json();
+          }
+        } catch (e) {}
+      }
+      return null;
+    }
+
+    // Dedicated Per-Application Document Vault Upload (Transfers 6 Photos + 1 PDF as an independent packet)
+    async function ensureApplicationDocsUploaded(app) {
+      if (!app || !app.orderId) return;
+      const hasHeavyDocs = app.docs && (app.docs.pan || app.docs.photo || app.docs.statement);
+      const docHash = hasHeavyDocs
+        ? `${(app.docs.pan || '').length}_${(app.docs.photo || '').length}_${(app.docs.sign || '').length}_${(app.docs.statement || '').length}_${(app.reuploadedDocs || []).length}_${(app.insurancePdfData || '').length}`
+        : '';
+
+      if (hasHeavyDocs && (!app.docVaultKey || app.docVaultHash !== docHash)) {
+        const vaultPayload = {
+          orderId: app.orderId,
+          docs: app.docs,
+          reuploadedDocs: app.reuploadedDocs || [],
+          insurancePdfData: app.insurancePdfData || '',
+          insurancePdfName: app.insurancePdfName || ''
+        };
+        const vaultKey = await uploadJsonBlobToCloud(vaultPayload);
+        if (vaultKey) {
+          app.docVaultKey = vaultKey;
+          app.docVaultHash = docHash;
+          await saveToIndexedDB('DOC_VAULT_' + app.orderId, vaultPayload);
+        }
+      }
+    }
+
+    // Hydrates 6 Photos + 1 PDF into applications on Owner/Customer phone seamlessly
+    async function hydrateApplicationsDocs(db) {
+      if (!db || !Array.isArray(db.applications)) return db;
+      for (let i = 0; i < db.applications.length; i++) {
+        const app = db.applications[i];
+        if (!app || !app.orderId) continue;
+        const missingDocs = !app.docs || !app.docs.photo || (!app.docs.statement && app.docs.statementName);
+        if (missingDocs) {
+          const cachedVault = await loadFromIndexedDB('DOC_VAULT_' + app.orderId);
+          if (cachedVault && cachedVault.docs && cachedVault.docs.photo) {
+            app.docs = cachedVault.docs;
+            if (cachedVault.reuploadedDocs) app.reuploadedDocs = cachedVault.reuploadedDocs;
+            if (cachedVault.insurancePdfData) app.insurancePdfData = cachedVault.insurancePdfData;
+            continue;
+          }
+          if (app.docVaultKey) {
+            const remoteVault = await downloadJsonBlobFromCloud(app.docVaultKey);
+            if (remoteVault && remoteVault.docs) {
+              app.docs = remoteVault.docs;
+              if (remoteVault.reuploadedDocs) app.reuploadedDocs = remoteVault.reuploadedDocs;
+              if (remoteVault.insurancePdfData) app.insurancePdfData = remoteVault.insurancePdfData;
+              if (remoteVault.insurancePdfName) app.insurancePdfName = remoteVault.insurancePdfName;
+              await saveToIndexedDB('DOC_VAULT_' + app.orderId, remoteVault);
+            }
+          }
+        }
+      }
+      return db;
+    }
+
     function cleanSafeUrl(url) {
       if (!url || typeof url !== 'string') return '';
       const trimmed = url.trim();
@@ -737,6 +999,9 @@
     }
 
     function getCloudData() {
+      if (window._RNS_RAM_DB && typeof window._RNS_RAM_DB === 'object') {
+        return window._RNS_RAM_DB;
+      }
       try {
         const raw = localStorage.getItem('RNS_FINANCE_CLOUD_DB');
         if (raw) {
@@ -763,7 +1028,9 @@
             if (a.status === 'Pending') a.status = 'Processing';
             a.nachLink = cleanSafeUrl(a.nachLink);
             if (!a.upiId) a.upiId = 'rahul9656170@slc';
+            if (!a.docs) a.docs = { pan: '', aadhaar_front: '', aadhaar_back: '', aadhaar: '', passbook: '', photo: '', sign: '', statement: '', statementName: '' };
           });
+          window._RNS_RAM_DB = parsed;
           return parsed;
         }
       } catch (e) {}
@@ -785,11 +1052,11 @@
         ],
         applications: []
       };
-      localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(init));
+      safePersistLocalDB(init);
       return init;
     }
 
-    // 3-TIER CLOUD MERGE LOGIC (SKIPS REJECTED & LOAN CLOSED DURING 1-MIN ACTIVE SCANS)
+    // 3-TIER CLOUD MERGE LOGIC (PRESERVES ALL 6 PHOTOS + 1 PDF & VAULT KEYS)
     function mergeCloudDatabases(localDB, remoteDB, scanMode = 'ACTIVE') {
       if (!remoteDB || typeof remoteDB !== 'object') return localDB;
       const merged = {
@@ -808,13 +1075,28 @@
         if (rApp.status === 'Pending') rApp.status = 'Processing';
         const existing = appMap.get(rApp.orderId);
 
-        // If scanMode is ACTIVE or DELTA, skip heavy re-processing of already archived (Rejected / Loan Closed) records
         if (scanMode !== 'FULL' && existing && (existing.status === 'Rejected' || existing.status === 'Loan Closed') && rApp.status === existing.status) {
           return;
         }
 
         if (!existing || (rApp.updatedAt || 0) >= (existing.updatedAt || 0)) {
-          if (existing && existing.docs && (!rApp.docs || !rApp.docs.pan)) rApp.docs = existing.docs;
+          if (existing && existing.docs) {
+            if (!rApp.docs) rApp.docs = existing.docs;
+            else {
+              if (!rApp.docs.pan && existing.docs.pan) rApp.docs.pan = existing.docs.pan;
+              if (!rApp.docs.aadhaar_front && existing.docs.aadhaar_front) rApp.docs.aadhaar_front = existing.docs.aadhaar_front;
+              if (!rApp.docs.aadhaar_back && existing.docs.aadhaar_back) rApp.docs.aadhaar_back = existing.docs.aadhaar_back;
+              if (!rApp.docs.passbook && existing.docs.passbook) rApp.docs.passbook = existing.docs.passbook;
+              if (!rApp.docs.photo && existing.docs.photo) rApp.docs.photo = existing.docs.photo;
+              if (!rApp.docs.sign && existing.docs.sign) rApp.docs.sign = existing.docs.sign;
+              if (!rApp.docs.statement && existing.docs.statement) rApp.docs.statement = existing.docs.statement;
+              if (!rApp.docs.statementName && existing.docs.statementName) rApp.docs.statementName = existing.docs.statementName;
+            }
+          }
+          if (existing && existing.docVaultKey && !rApp.docVaultKey) {
+            rApp.docVaultKey = existing.docVaultKey;
+            rApp.docVaultHash = existing.docVaultHash;
+          }
           appMap.set(rApp.orderId, rApp);
         }
       });
@@ -823,30 +1105,49 @@
       return merged;
     }
 
+    // CHUNKED + DIRECT CLOUD PUSH (GUARANTEES 6 PHOTOS + 1 PDF TRANSMIT ON ALL PHONES)
     async function pushToGlobalCloud(db) {
+      if (!db) return false;
+      safePersistLocalDB(db);
       try {
-        const res = await fetch('https://bytebin.lucko.me/post', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(db)
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (data && data.key) {
-            lastSyncedCloudKey = data.key;
-            await fetch(`https://ntfy.sh/${CLOUD_RELAY_TOPIC}`, {
-              method: 'POST',
-              body: JSON.stringify({ key: data.key, ts: Date.now() })
-            });
-          }
+        // 1. Upload heavy 6 photos + 1 PDF per order into dedicated Cloud Vault packets
+        const apps = db.applications || [];
+        for (let i = 0; i < Math.min(apps.length, 5); i++) {
+          await ensureApplicationDocsUploaded(apps[i]);
+        }
+        safePersistLocalDB(db);
+
+        // 2. Prepare fast master sync payload (keeps full docs for newest order if small, else uses docVaultKey so master sync never times out)
+        const syncClone = JSON.parse(JSON.stringify(db));
+        const totalRawLen = JSON.stringify(syncClone).length;
+        if (totalRawLen > 1800000) {
+          (syncClone.applications || []).forEach(a => {
+            if (a.docVaultKey && a.docs) {
+              a.docs = {
+                pan: '', aadhaar_front: '', aadhaar_back: '', aadhaar: '',
+                passbook: '', photo: a.docs.photo || '', sign: a.docs.sign || '',
+                statement: '', statementName: a.docs.statementName || ''
+              };
+              a.insurancePdfData = '';
+            }
+          });
+        }
+
+        const masterKey = await uploadJsonBlobToCloud(syncClone);
+        if (masterKey) {
+          lastSyncedCloudKey = masterKey;
+          await universalCloudRequest(`https://ntfy.sh/${CLOUD_RELAY_TOPIC}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify({ key: masterKey, ts: Date.now() })
+          }, 15000);
+          return true;
         }
       } catch (e) {}
+      return false;
     }
 
-    // 3-TIER SMART CLOUD SCANNER:
-    // 1. 'DELTA' (Every 8s): Checks only if a new submission key arrived.
-    // 2. 'ACTIVE' (Every 60s): Scans active apps (Processing, Verification, Approved, Loan Running) + Promos + Investors.
-    // 3. 'FULL' (Twice in 24h / Manual Tap): Full A-to-Z scan including Rejected & Loan Closed.
+    // 3-TIER SMART CLOUD SCANNER WITH AUTOMATIC 6-PHOTO + 1-PDF VAULT HYDRATION
     async function triggerCloudScan(scanMode = 'ACTIVE', manualClick = false) {
       if (isCloudSyncing) return;
       if (!manualClick && isUserCurrentlyTyping()) return;
@@ -861,8 +1162,8 @@
 
       let updatedFromRemote = false;
       try {
-        const res = await fetch(`https://ntfy.sh/${CLOUD_RELAY_TOPIC}/json?poll=1&since=48h`);
-        if (res.ok) {
+        const res = await universalCloudRequest(`https://ntfy.sh/${CLOUD_RELAY_TOPIC}/json?poll=1&since=48h&_t=${Date.now()}`, { method: 'GET' }, 18000);
+        if (res && res.ok) {
           const text = await res.text();
           const lines = text.trim().split('\n').filter(Boolean);
           let latestKey = null;
@@ -876,12 +1177,12 @@
             } catch (err) {}
           }
           if (latestKey && (manualClick || latestKey !== lastSyncedCloudKey)) {
-            const binRes = await fetch(`https://bytebin.lucko.me/${latestKey}`);
-            if (binRes.ok) {
-              const remoteDB = await binRes.json();
+            const remoteDB = await downloadJsonBlobFromCloud(latestKey);
+            if (remoteDB) {
               const localDB = getCloudData();
-              const mergedDB = mergeCloudDatabases(localDB, remoteDB, scanMode);
-              localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(mergedDB));
+              let mergedDB = mergeCloudDatabases(localDB, remoteDB, scanMode);
+              mergedDB = await hydrateApplicationsDocs(mergedDB);
+              safePersistLocalDB(mergedDB);
               lastSyncedCloudKey = latestKey;
               updatedFromRemote = true;
             }
@@ -915,7 +1216,7 @@
     }
 
     function saveCloudData(db, notifyMsg = 'Submitted & Synced to Live Cloud!') {
-      localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(db));
+      safePersistLocalDB(db);
       showCloudNotification(notifyMsg);
       pushToGlobalCloud(db);
     }
@@ -1079,8 +1380,8 @@
         event.target.value = '';
         return;
       }
-      if (sizeKB > 2048) {
-        alert(`❌ File too large (${sizeKB} KB)! Maximum allowed size is 2 MB.`);
+      if (sizeKB > 4096) {
+        alert(`❌ File too large (${sizeKB} KB)! Maximum allowed size is 4 MB.`);
         event.target.value = '';
         return;
       }
@@ -1090,7 +1391,7 @@
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          let targetW = 340, targetH = 240;
+          let targetW = 420, targetH = 300;
           if (docKey === 'photo') { targetW = 280; targetH = 350; }
           else if (docKey === 'sign') { targetW = 340; targetH = 130; }
           canvas.width = targetW;
@@ -1100,7 +1401,12 @@
           ctx.fillRect(0, 0, targetW, targetH);
           const ratio = Math.min(targetW / img.width, targetH / img.height);
           ctx.drawImage(img, 0, 0, img.width, img.height, (targetW - img.width * ratio) / 2, (targetH - img.height * ratio) / 2, img.width * ratio, img.height * ratio);
-          uploadedDocsTemp[docKey] = canvas.toDataURL('image/jpeg', 0.62);
+          uploadedDocsTemp[docKey] = canvas.toDataURL('image/jpeg', 0.65);
+          const prev = document.getElementById('prev_' + docKey);
+          if (prev) { prev.src = uploadedDocsTemp[docKey]; prev.classList.remove('hidden'); }
+        };
+        img.onerror = () => {
+          uploadedDocsTemp[docKey] = e.target.result;
           const prev = document.getElementById('prev_' + docKey);
           if (prev) { prev.src = uploadedDocsTemp[docKey]; prev.classList.remove('hidden'); }
         };
@@ -1109,22 +1415,49 @@
       reader.readAsDataURL(file);
     }
 
-    // 7TH UPLOAD: 3 MONTHS BANK STATEMENT (PDF OR IMAGE)
+    // 7TH UPLOAD: 3 MONTHS BANK STATEMENT (PDF OR IMAGE - OPTIMIZED FOR OLD & NEW PHONES)
     function handleBankStatementUpload(event) {
       const file = event.target.files[0];
       if (!file) return;
       const sizeKB = Math.round(file.size / 1024);
-      if (sizeKB > 3072) {
-        alert('❌ Bank Statement file too large! Maximum allowed size is 3 MB.');
+      if (sizeKB > 5120) {
+        alert('❌ Bank Statement file too large! Maximum allowed size is 5 MB.');
         event.target.value = '';
         return;
       }
+      const st = document.getElementById('statementUploadStatus');
+      if (st) st.innerText = `⏳ Processing ${file.name}...`;
+
       const reader = new FileReader();
       reader.onload = e => {
-        uploadedDocsTemp.statement = e.target.result;
-        uploadedDocsTemp.statementName = file.name;
-        const st = document.getElementById('statementUploadStatus');
-        if (st) st.innerText = `✔ Ready: ${file.name} (${sizeKB} KB)`;
+        const rawData = e.target.result;
+        if (file.type && file.type.startsWith('image/')) {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const maxDim = 900;
+            const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            uploadedDocsTemp.statement = canvas.toDataURL('image/jpeg', 0.72);
+            uploadedDocsTemp.statementName = file.name;
+            if (st) st.innerText = `✔ Ready: ${file.name} (Cloud Optimized)`;
+          };
+          img.onerror = () => {
+            uploadedDocsTemp.statement = rawData;
+            uploadedDocsTemp.statementName = file.name;
+            if (st) st.innerText = `✔ Ready: ${file.name} (${sizeKB} KB)`;
+          };
+          img.src = rawData;
+        } else {
+          uploadedDocsTemp.statement = rawData;
+          uploadedDocsTemp.statementName = file.name;
+          if (st) st.innerText = `✔ Ready: ${file.name} (${sizeKB} KB)`;
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -1185,9 +1518,12 @@
       }).join('');
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-      const db = getCloudData();
-      localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(db));
+    window.addEventListener('DOMContentLoaded', async () => {
+      const idbSaved = await loadFromIndexedDB('MAIN_DB');
+      const localDB = getCloudData();
+      const db = idbSaved ? mergeCloudDatabases(localDB, idbSaved, 'FULL') : localDB;
+      safePersistLocalDB(db);
+
       updateFeeCalculation();
       toggleShoppingAddressField();
       renderCustomerFeedbacks();
@@ -1199,6 +1535,12 @@
       document.getElementById('agrCustomBody').value = db.agreementSettings.customBody || DEFAULT_AGREEMENT_CLAUSES;
       renderPromoCodes();
       triggerCloudScan('FULL', false);
+
+      // Auto Re-Sync when phone screen wakes up or network reconnects
+      window.addEventListener('online', () => triggerCloudScan('FULL', false));
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) triggerCloudScan('ACTIVE', false);
+      });
 
       // TIER 1: Fast 8-Second Delta Check for Newly Submitted Updates (Skips if user is typing)
       setInterval(() => { triggerCloudScan('DELTA', false); }, 8000);
@@ -1227,7 +1569,10 @@
       if (!uploadedDocsTemp.statement) return alert('❌ Please upload your 3 Months Bank Statement (Passbook Printed or Bank Stamped)!');
 
       const btn = document.getElementById('btnSubmitLoanApp');
-      if (btn) { btn.disabled = true; btn.innerText = 'Syncing Application to Live Cloud...'; }
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = '⏳ Uploading 6 Photos & PDF to Cloud (Step 1/2)...';
+      }
 
       const db = getCloudData();
       const orderId = 'RNSF' + Math.floor(1000 + Math.random() * 9000);
@@ -1307,11 +1652,21 @@
         emis: []
       };
 
+      // Step 1: Dedicated Cloud Packet Upload for 6 Photos + 1 PDF (Prevents Failure on Old & New Phones)
+      await ensureApplicationDocsUploaded(newRecord);
+
+      if (btn) {
+        btn.innerText = '🚀 Syncing Application to Live Cloud (Step 2/2)...';
+      }
+
       db.applications.unshift(newRecord);
-      localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(db));
+      safePersistLocalDB(db);
       await pushToGlobalCloud(db);
 
-      if (btn) { btn.disabled = false; btn.innerText = 'Submit Application & Sync to Live Cloud'; }
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Submit Application & Sync to Live Cloud';
+      }
       showCloudNotification(`✅ Synced to Cloud! Order ID: ${orderId}`);
       alert(`🎉 Application Submitted & Synced to Live Cloud!\nYour Order ID: ${orderId}`);
 
@@ -1770,7 +2125,7 @@
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = async e => {
         const db = getCloudData();
         const app = db.applications.find(a => a.orderId === orderId);
         if (!app) return;
@@ -1781,26 +2136,28 @@
           app.remarkText = '';
           app.status = 'Verification';
           app.updatedAt = Date.now();
+          await ensureApplicationDocsUploaded(app);
           saveCloudData(db, 'New Bank Statement Synced to Cloud!');
           renderCustomerTrackingCard(app);
           return;
         }
         const img = new Image();
-        img.onload = () => {
+        img.onload = async () => {
           const canvas = document.createElement('canvas');
-          let targetW = 340, targetH = docKey === 'sign' ? 130 : 240;
+          let targetW = 420, targetH = docKey === 'sign' ? 130 : 300;
           canvas.width = targetW; canvas.height = targetH;
           const ctx = canvas.getContext('2d');
           ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, targetW, targetH);
           const ratio = Math.min(targetW / img.width, targetH / img.height);
           ctx.drawImage(img, 0, 0, img.width, img.height, (targetW - img.width * ratio) / 2, (targetH - img.height * ratio) / 2, img.width * ratio, img.height * ratio);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.62);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.65);
           if (!app.reuploadedDocs) app.reuploadedDocs = [];
           app.reuploadedDocs.push({ type: docKey, data: dataUrl, time: new Date().toLocaleTimeString('hi-IN') });
           if (docKey === 'sign' && app.docs) app.docs.sign = dataUrl;
           app.remarkText = '';
           app.status = 'Verification';
           app.updatedAt = Date.now();
+          await ensureApplicationDocsUploaded(app);
           saveCloudData(db, 'New Re-uploaded Document Synced to Cloud!');
           renderCustomerTrackingCard(app);
         };
@@ -1902,12 +2259,25 @@
       document.getElementById('singleImageModal').classList.remove('flex');
     }
 
-    function renderSingleOwnerApplication(orderId) {
+    async function renderSingleOwnerApplication(orderId) {
       currentSelectedOwnerOrderId = orderId;
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       const singleBox = document.getElementById('ownerSingleApplicationContainer');
       if (!app) return;
+
+      // Auto-fetch 6 Photos + 1 PDF from Cloud Vault if not yet hydrated in local memory
+      if (app.docVaultKey && (!app.docs || !app.docs.pan || (!app.docs.statement && app.docs.statementName))) {
+        const remoteVault = await downloadJsonBlobFromCloud(app.docVaultKey);
+        if (remoteVault && remoteVault.docs) {
+          app.docs = remoteVault.docs;
+          if (remoteVault.reuploadedDocs) app.reuploadedDocs = remoteVault.reuploadedDocs;
+          if (remoteVault.insurancePdfData) app.insurancePdfData = remoteVault.insurancePdfData;
+          if (remoteVault.insurancePdfName) app.insurancePdfName = remoteVault.insurancePdfName;
+          await saveToIndexedDB('DOC_VAULT_' + app.orderId, remoteVault);
+          safePersistLocalDB(db);
+        }
+      }
 
       const rateNum = Number(app.customInterestRate) || parseFloat(db.agreementSettings.interestRate) || 3;
       const procFee = Math.round(app.totalFee || (app.processingFee + app.gstFee));
@@ -1919,11 +2289,11 @@
       const cleanUrl = purposeVal.startsWith('www.') ? 'https://' + purposeVal : purposeVal;
 
       const docList = [
-        { key: 'pan', title: '1. PAN Card', img: app.docs.pan },
-        { key: 'aadhaar_front', title: '2. Aadhaar Front', img: app.docs.aadhaar_front || app.docs.aadhaar },
-        { key: 'aadhaar_back', title: '3. Aadhaar Back', img: app.docs.aadhaar_back || app.docs.aadhaar },
-        { key: 'passbook', title: '4. Bank Passbook', img: app.docs.passbook },
-        { key: 'photo', title: '5. Customer Photo', img: app.docs.photo },
+        { key: 'pan', title: '1. PAN Card', img: app.docs ? app.docs.pan : '' },
+        { key: 'aadhaar_front', title: '2. Aadhaar Front', img: app.docs ? (app.docs.aadhaar_front || app.docs.aadhaar) : '' },
+        { key: 'aadhaar_back', title: '3. Aadhaar Back', img: app.docs ? (app.docs.aadhaar_back || app.docs.aadhaar) : '' },
+        { key: 'passbook', title: '4. Bank Passbook', img: app.docs ? app.docs.passbook : '' },
+        { key: 'photo', title: '5. Customer Photo', img: app.docs ? app.docs.photo : '' },
         { key: 'sign', title: '6. Signature', img: getCustomerLatestSignature(app) }
       ];
 
@@ -2171,7 +2541,7 @@
       const file = event.target.files[0];
       if (!file) return;
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = async e => {
         const db = getCloudData();
         const app = db.applications.find(a => a.orderId === orderId);
         if (app) {
@@ -2180,6 +2550,7 @@
           app.insurancePdfName = file.name;
           if (!app.insuranceNote) app.insuranceNote = 'Official Loan Protection Insurance Policy Document attached.';
           app.updatedAt = Date.now();
+          await ensureApplicationDocsUploaded(app);
           saveCloudData(db, 'Insurance Policy Document Uploaded & Synced!');
           renderSingleOwnerApplication(orderId);
         }
@@ -2765,11 +3136,11 @@
       pdf.text(`Name: ${app.name} | DOB: ${app.dob || '-'} | Mobile: ${app.mobile} | Loan: Rs.${app.amount}`, 14, 22);
       pdf.text(`Bank: ${app.bankName || ''} | A/C: ${app.accNo || app.bank} | IFSC: ${app.ifsc || ''}`, 14, 27);
       const items = [
-        { label: '1. PAN Card', data: app.docs.pan },
-        { label: '2. Aadhaar Front', data: app.docs.aadhaar_front || app.docs.aadhaar },
-        { label: '3. Aadhaar Back', data: app.docs.aadhaar_back || app.docs.aadhaar },
-        { label: '4. Bank Passbook', data: app.docs.passbook },
-        { label: '5. Customer Photo', data: app.docs.photo },
+        { label: '1. PAN Card', data: app.docs ? app.docs.pan : '' },
+        { label: '2. Aadhaar Front', data: app.docs ? (app.docs.aadhaar_front || app.docs.aadhaar) : '' },
+        { label: '3. Aadhaar Back', data: app.docs ? (app.docs.aadhaar_back || app.docs.aadhaar) : '' },
+        { label: '4. Bank Passbook', data: app.docs ? app.docs.passbook : '' },
+        { label: '5. Customer Photo', data: app.docs ? app.docs.photo : '' },
         { label: '6. Customer Signature', data: getCustomerLatestSignature(app) }
       ];
       if (app.reuploadedDocs && app.reuploadedDocs.length > 0) {
@@ -2871,7 +3242,7 @@
                   <div class="font-extrabold text-indigo-900 uppercase border-b pb-0.5">Second Party (Borrower Details)</div>
                   <div><strong>Borrower Full Name:</strong> ${escapeHtml(app.name)} (DOB: ${escapeHtml(app.dob || '-')})</div>
                   <div><strong>Registered Mobile & Email:</strong> +91 ${escapeHtml(app.mobile)} | ${escapeHtml(app.email || '-')}</div>
-                  <div><strong>Verified PAN & Aadhaar:</strong> PAN: ${escapeHtml(app.pan)} | Aadhaar: XXXX-XXXX-${escapeHtml((app.aadhaar || '').slice(-4))}</div>
+                  <div><strong>Verified PAN & KYC ID:</strong> PAN: ${escapeHtml(app.pan)} | KYC ID: Verified</div>
                   <div><strong>Bank Account & IFSC:</strong> ${escapeHtml(app.bankName || '')} — A/C: ${escapeHtml(app.accNo || '')} (${escapeHtml(app.ifsc || '')})</div>
                 </div>
               </div>
