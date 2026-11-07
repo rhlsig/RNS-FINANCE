@@ -11,6 +11,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <!-- GOOGLE FIREBASE OFFICIAL CDN SCRIPTS (FIRESTORE, REALTIME DB & STORAGE) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+  <!-- TESSERACT.JS AUTO-OCR ENGINE CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <!-- PDF.JS CDN FOR >2MB PDF CANVAS COMPRESSION -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap');
     body { font-family: 'Inter', 'Noto Sans Devanagari', sans-serif; transition: background-color 0.25s, color 0.25s; }
@@ -67,7 +75,7 @@
   <!-- CLOUD NOTIFICATION POPUP -->
   <div id="cloudToast" class="fixed top-4 right-4 z-[100] bg-slate-900 text-white px-4 py-3 rounded-xl shadow-2xl border border-emerald-500 flex items-center gap-3 text-xs font-bold">
     <i class="fa-solid fa-bell text-emerald-400 text-base"></i>
-    <span id="cloudToastMsg">Cloud Synced Successfully!</span>
+    <span id="cloudToastMsg">Firebase Live Cloud Synced!</span>
   </div>
 
   <!-- TOP HEADER -->
@@ -92,8 +100,8 @@
           </a>
           <button type="button" onclick="triggerCloudScan('FULL', true)" class="bg-emerald-50 hover:bg-emerald-100 active:scale-95 text-emerald-800 border border-emerald-300 text-xs font-bold px-3.5 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm transition cursor-pointer">
             <span class="w-2 h-2 rounded-full bg-emerald-600 pulse-dot"></span>
-            <i id="cloudScanIcon" class="fa-solid fa-bolt"></i>
-            <span id="cloudStatusText">Turbo Cloud Active (Tap to Sync)</span>
+            <i id="cloudScanIcon" class="fa-solid fa-fire-flame-curved text-amber-500"></i>
+            <span id="cloudStatusText">Firebase Real-Time Sync Active</span>
           </button>
         </div>
 
@@ -128,7 +136,7 @@
         <div>
           <span class="bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">24 HOUR APPLY LOAN & HELPLINE</span>
           <h2 id="txtHeroTitle" class="text-2xl font-extrabold mt-2">Personal Loan & Online Shopping Finance Services</h2>
-          <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">Minimal Documentation • Instant 1-Sec Cloud Order ID • Flexible 1 to 24 Months EMI</p>
+          <p id="txtHeroSub" class="text-slate-300 text-xs mt-1">Minimal Documentation • Firebase Real-Time Sync • Auto-OCR Verification • 1 to 24 Months EMI</p>
         </div>
         <div class="bg-white/10 p-3.5 rounded-xl border border-white/20 text-xs space-y-1 max-w-sm">
           <div id="txtComplaintTop" class="text-[11px] font-bold text-amber-300">
@@ -248,7 +256,7 @@
               <div><label class="block font-bold mb-1">Date of Birth (DD/MM/YYYY) *</label><input type="text" id="appDob" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY (e.g. 15/08/1995)"></div>
               <div><label class="block font-bold mb-1">Mobile Number (10 Digits) *</label><input type="tel" id="appMobile" required maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Valid 10 Digit Mobile"></div>
               <div><label class="block font-bold mb-1">Genuine Email ID *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2" placeholder="yourname@gmail.com"></div>
-              <div><label class="block font-bold mb-1">Aadhaar Card Number (12 Digits) *</label><input type="text" id="appAadhaar" required maxlength="12" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="12 Digit Aadhaar Number"></div>
+              <div><label class="block font-bold mb-1">KYC 12-Digit ID Number *</label><input type="text" id="appAadhaar" required maxlength="12" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Enter 12 Digit ID Number"></div>
               <div><label class="block font-bold mb-1">PAN Card Number *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="ABCDE1234F"></div>
               <div class="bg-amber-50/70 dark:bg-slate-800 p-1.5 rounded-lg border border-amber-300">
                 <label class="block font-extrabold text-amber-900 dark:text-amber-300 mb-1">👪 Reference / Family Member Name *</label>
@@ -270,35 +278,38 @@
               </div>
             </div>
 
-            <!-- STREAMLINED 3 KYC IMAGES (MAX 1 MB EACH) + 3 MONTHS BANK STATEMENT PDF/IMAGE (MAX 2 MB) -->
+            <!-- 3 KYC IMAGES (<500KB DIRECT, >500KB CANVAS COMPRESSED + TESSERACT AUTO-OCR) + 3 MONTHS BANK STATEMENT (<2MB DIRECT, >2MB CANVAS) -->
             <div class="space-y-3">
-              <h4 class="text-xs font-bold text-emerald-700 uppercase">Upload Fast KYC Documents (PAN Card, Photo & Signature — Max 1 MB Each)</h4>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h4 class="text-xs font-bold text-emerald-700 uppercase">Upload Fast KYC Documents (PAN Card, Photo & Signature — Max 1 MB Each)</h4>
+                <span id="ocrLiveStatusBadge" class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200">🤖 Tesseract Auto-OCR Ready</span>
+              </div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div class="border-2 border-dashed border-emerald-400 bg-emerald-50/20 rounded-xl p-3 text-center">
-                  <label class="block font-extrabold mb-1 text-emerald-950 dark:text-emerald-300">1. PAN Card Photo *</label>
+                  <label class="block font-extrabold mb-1 text-emerald-950 dark:text-emerald-300">1. PAN Card Photo (Auto-OCR) *</label>
                   <input type="file" id="file_pan" accept="image/*" required onchange="handleFileUpload(event,'pan')" class="text-xs w-full">
-                  <span class="block text-[10px] font-bold text-slate-500 mt-1">Max Size: Up to 1 MB</span>
+                  <span class="block text-[10px] font-bold text-slate-500 mt-1">&lt;500 KB Original | &gt;500 KB Auto-Canvas</span>
                   <img id="prev_pan" class="h-14 mx-auto mt-1.5 hidden rounded border bg-white p-0.5">
                 </div>
                 <div class="border-2 border-dashed border-amber-400 bg-amber-50/30 rounded-xl p-3 text-center">
                   <label class="block font-extrabold mb-1 text-amber-900 dark:text-amber-300">2. Customer Live Photo *</label>
                   <input type="file" id="file_photo" accept="image/*" required onchange="handleFileUpload(event,'photo')" class="text-xs w-full">
-                  <span class="block text-[10px] font-bold text-rose-600 mt-1">Max Size: Up to 1 MB</span>
+                  <span class="block text-[10px] font-bold text-rose-600 mt-1">&lt;500 KB Original | &gt;500 KB Auto-Canvas</span>
                   <img id="prev_photo" class="h-14 mx-auto mt-1.5 hidden rounded border bg-white p-0.5">
                 </div>
                 <div class="border-2 border-dashed border-amber-400 bg-amber-50/30 rounded-xl p-3 text-center">
                   <label class="block font-extrabold mb-1 text-amber-900 dark:text-amber-300">3. Customer Signature *</label>
                   <input type="file" id="file_sign" accept="image/*" required onchange="handleFileUpload(event,'sign')" class="text-xs w-full">
-                  <span class="block text-[10px] font-bold text-rose-600 mt-1">Max Size: Up to 1 MB</span>
+                  <span class="block text-[10px] font-bold text-rose-600 mt-1">&lt;500 KB Original | &gt;500 KB Auto-Canvas</span>
                   <img id="prev_sign" class="h-14 mx-auto mt-1.5 hidden rounded border bg-white p-0.5">
                 </div>
               </div>
 
-              <!-- 4. THREE MONTHS BANK STATEMENT (PDF / PRINTED PASSBOOK - MAX 2 MB) -->
+              <!-- 4. THREE MONTHS BANK STATEMENT (PDF / PRINTED PASSBOOK - <2MB DIRECT, >2MB CANVAS COMPRESSED) -->
               <div class="p-3.5 rounded-xl border-2 border-dashed border-indigo-400 bg-indigo-50/40 dark:bg-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
                 <div>
                   <label class="font-extrabold text-indigo-950 dark:text-indigo-300 block">
-                    📄 4. Upload 3 Months Bank Statement (PDF or Clear Image — Max 2 MB) *
+                    📄 4. Upload 3 Months Bank Statement (PDF or Clear Image — Up to 2 MB Direct / &gt;2 MB Canvas Optimized) *
                   </label>
                   <p class="text-[11px] font-semibold text-slate-600 dark:text-slate-300 mt-0.5">
                     Note: Only a Passbook Printed Statement or a Bank Authorized Stamped Statement uploaded here will be valid and accepted.
@@ -312,7 +323,7 @@
             </div>
 
             <button type="submit" id="btnSubmitLoanApp" class="px-8 py-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow-lg">
-              <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Submit Application & Get Instant Order ID
+              <i class="fa-solid fa-cloud-arrow-up mr-1"></i> Submit Application & Sync via Firebase Cloud
             </button>
           </form>
         </div>
@@ -322,7 +333,7 @@
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
             <div>
               <h4 class="text-sm font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
-                <i class="fa-solid fa-star text-amber-500"></i> Customer Feedback & Reviews (Live Multi-Phone Cloud Synced)
+                <i class="fa-solid fa-star text-amber-500"></i> Customer Feedback & Reviews (Real-Time Firebase Synced)
               </h4>
               <p class="text-[11px] text-slate-500">Share your experience with RNS Finance services</p>
             </div>
@@ -453,7 +464,7 @@
               📂 Restore Backup <input type="file" accept=".json" onchange="restoreFullJsonBackup(event)" class="hidden">
             </label>
           </div>
-          <h2 class="text-lg font-extrabold mt-1">Turbo Cloud Loan Management, Verification, UPI QR & Investor Hub</h2>
+          <h2 class="text-lg font-extrabold mt-1">Firebase Live Cloud Management, Auto-OCR, UPI QR & Investor Hub</h2>
         </div>
         <div class="flex flex-wrap gap-2 text-xs">
           <button type="button" onclick="switchOwnerTab('apps')" class="px-3 py-2 rounded-lg bg-emerald-600 font-bold">📋 Applications</button>
@@ -479,20 +490,28 @@
         <div id="ownerSingleApplicationContainer"></div>
       </div>
 
-      <!-- OWNER SUB 2: SEND NACH LINK -->
-      <div id="ownerViewNach" class="hidden max-w-lg mx-auto bg-white card-bg rounded-2xl p-5 border space-y-3 text-xs">
-        <h3 class="text-base font-extrabold border-b pb-2">Send NACH Mandate Link (Moves to Verification)</h3>
+      <!-- OWNER SUB 2: SEND NACH LINK (WITH INSTANT WHATSAPP & SMS BUTTONS) -->
+      <div id="ownerViewNach" class="hidden max-w-lg mx-auto bg-white card-bg rounded-2xl p-5 border-2 border-sky-400 space-y-3.5 text-xs">
+        <h3 class="text-base font-extrabold border-b pb-2 text-sky-900 dark:text-sky-300">🔗 Send NACH Mandate Link (Moves to Verification + WA/SMS)</h3>
         <div>
           <label class="block font-bold mb-1">1. Customer Order ID / Mobile Number / KYC ID</label>
-          <input type="text" id="nachSearchCustomer" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Enter Order ID (RNSF...), Mobile or KYC ID">
+          <input type="text" id="nachSearchCustomer" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Enter Order ID (RNSF...), Mobile or Last 4 Digits">
         </div>
         <div>
-          <label class="block font-bold mb-1">2. Paste NACH Link</label>
+          <label class="block font-bold mb-1">2. Paste NACH Mandate Link *</label>
           <input type="url" id="nachPasteUrl" class="w-full rounded-lg border px-3 py-2" placeholder="https://...">
         </div>
-        <button type="button" onclick="dispatchNachLinkToCustomer()" class="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow">
-          Send NACH LINK
-        </button>
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button type="button" onclick="dispatchNachLinkToCustomer()" class="flex-grow py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-sm shadow">
+            💾 Send & Save NACH Link
+          </button>
+          <button type="button" onclick="sendNachLinkNotification('wa')" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow flex items-center gap-1.5">
+            <i class="fa-brands fa-whatsapp text-base"></i> WhatsApp Link
+          </button>
+          <button type="button" onclick="sendNachLinkNotification('sms')" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold shadow flex items-center gap-1.5">
+            <i class="fa-solid fa-comment-sms text-base"></i> Send SMS
+          </button>
+        </div>
       </div>
 
       <!-- OWNER SUB 3: UPI QR SETUP (ACTIVE LOANS POPUP + WHATSAPP/SMS + CLOSED LOANS UPI HISTORY BOX) -->
@@ -542,10 +561,10 @@
 
       <!-- OWNER SUB 4: COLLECT AMOUNT + CUSTOMER UTR SCREENSHOT APPROVAL + FORECLOSURE + CLOSED HISTORY -->
       <div id="ownerViewCollect" class="hidden max-w-4xl mx-auto space-y-5 text-xs">
-        <!-- PENDING CUSTOMER UTR & PAYMENT SCREENSHOT VERIFICATION QUEUE -->
+        <!-- PENDING CUSTOMER UTR & OPTIONAL SCREENSHOT VERIFICATION QUEUE -->
         <div class="bg-amber-50/90 dark:bg-slate-800 rounded-2xl p-4 border-2 border-amber-500 space-y-2.5">
           <div class="flex items-center justify-between border-b border-amber-300 pb-1.5">
-            <h4 class="text-sm font-extrabold text-amber-950 dark:text-amber-300">📸 Customer Submitted EMI Payment Proofs (UTR & Screenshot Queue)</h4>
+            <h4 class="text-sm font-extrabold text-amber-950 dark:text-amber-300">📸 Customer Submitted EMI Payment Proofs (UTR / Ref No & Optional Screenshot Queue)</h4>
             <span id="pendingUtrCountBadge" class="bg-amber-700 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">0 Pending</span>
           </div>
           <div id="pendingUtrApprovalsContainer" class="space-y-2"></div>
@@ -607,34 +626,34 @@
           </div>
 
           <div class="pt-3 border-t space-y-2">
-            <h4 class="font-extrabold text-slate-700 dark:text-slate-200 uppercase">📋 Submitted Installments for Selected Customer (Edit / Delete + WA/SMS)</h4>
+            <h4 class="font-extrabold text-slate-700 dark:text-slate-200 uppercase">📋 Submitted Installments for Selected Customer (Edit / Delete)</h4>
             <div id="ownerCustomerEmiListContainer"></div>
           </div>
         </div>
 
         <div class="bg-teal-50/70 dark:bg-slate-800 rounded-2xl p-5 border-2 border-teal-500 space-y-3">
           <div class="flex items-center justify-between border-b border-teal-300 pb-2">
-            <h4 class="text-sm font-extrabold text-teal-950 dark:text-teal-300">🎓 Completed & Closed Loans History Box (All Installments Paid)</h4>
+            <h4 class="text-sm font-extrabold text-teal-950 dark:text-teal-300">🎓 Completed & Closed Loans History Box (All Installments Paid — WA & SMS Enabled)</h4>
             <span id="closedHistoryCountBadge" class="bg-teal-700 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">0 Closed</span>
           </div>
           <div id="closedLoansHistoryContainer" class="space-y-2"></div>
         </div>
       </div>
 
-      <!-- OWNER SUB 5: EDITABLE AGREEMENT (WITH ORDER ID SELECTOR + CUSTOM AGREEMENT HISTORY BOX) -->
+      <!-- OWNER SUB 5: EDITABLE AGREEMENT (AUTO-MOVES TO HISTORY BOX WHEN SAVED + RE-OPEN/EDIT/DELETE) -->
       <div id="ownerViewAgreement" class="hidden max-w-4xl mx-auto space-y-4 text-xs">
         <div class="bg-white card-bg rounded-2xl p-5 border-2 border-emerald-500 space-y-3.5">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2">
             <div>
-              <h3 class="text-base font-extrabold">📝 Editable Agreement Settings (Order-Wise or Global Template)</h3>
-              <p class="text-[11px] text-slate-500">Select a specific Customer Order ID below or edit the Global Master Template.</p>
+              <h3 class="text-base font-extrabold">📝 Editable Agreement Settings (Pending Order Selector or Global Template)</h3>
+              <p class="text-[11px] text-slate-500">Once you save an agreement for a customer below, they automatically move into the Configured History Box.</p>
             </div>
-            <button type="button" onclick="saveCustomAgreementTemplate()" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">💾 Save & Sync Agreement</button>
+            <button type="button" onclick="saveCustomAgreementTemplate()" class="px-5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">💾 Save & Move to History</button>
           </div>
 
-          <!-- ORDER ID SELECTOR FOR AGREEMENT -->
+          <!-- ORDER ID SELECTOR FOR AGREEMENT (ONLY SHOWS UNCONFIGURED ORDERS OR CURRENTLY EDITING ORDER) -->
           <div class="bg-emerald-50 dark:bg-slate-800 p-3 rounded-xl border border-emerald-300">
-            <label class="block font-extrabold text-emerald-950 dark:text-emerald-300 mb-1">🎯 Select Target Application (Order ID) for This Agreement Setup:</label>
+            <label class="block font-extrabold text-emerald-950 dark:text-emerald-300 mb-1">🎯 Select Unconfigured Application (Order ID) or Global Master Template:</label>
             <select id="agrTargetOrderIdSelect" onchange="loadTargetOrderAgreementSettings()" class="w-full rounded-lg border-2 border-emerald-400 px-3 py-2 font-extrabold bg-white dark:bg-slate-900 cursor-pointer"></select>
           </div>
 
@@ -650,10 +669,10 @@
           </div>
         </div>
 
-        <!-- SAVED ORDER-SPECIFIC AGREEMENTS HISTORY BOX -->
+        <!-- SAVED ORDER-SPECIFIC AGREEMENTS HISTORY BOX (EDIT / RE-OPEN / DELETE) -->
         <div class="bg-slate-100 dark:bg-slate-800 rounded-2xl p-5 border-2 border-slate-300 space-y-3">
           <div class="flex items-center justify-between border-b pb-2">
-            <h4 class="text-sm font-extrabold text-slate-900 dark:text-white">🗂️ Configured Customer Agreements History Box (Edit / View / Reset)</h4>
+            <h4 class="text-sm font-extrabold text-slate-900 dark:text-white">🗂️ Configured Customer Agreements History Box (Edit / Re-open / Delete)</h4>
             <span id="customAgrHistoryCount" class="bg-slate-800 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full">0 Configured</span>
           </div>
           <div id="customAgreementHistoryContainer" class="space-y-2"></div>
@@ -664,7 +683,7 @@
       <div id="ownerViewPromo" class="hidden space-y-5 text-xs">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
           <div class="lg:col-span-5 bg-white card-bg rounded-2xl p-5 border-2 border-indigo-400 space-y-3">
-            <h3 class="font-extrabold text-sm text-indigo-950 dark:text-indigo-200 border-b pb-2">🎟️ Create / Edit Promo Code (Live Cloud Synced)</h3>
+            <h3 class="font-extrabold text-sm text-indigo-950 dark:text-indigo-200 border-b pb-2">🎟️ Create / Edit Promo Code (Live Firebase Synced)</h3>
             <input type="hidden" id="editPromoIndex" value="-1">
             <div>
               <label class="block font-bold mb-1">1. Promo Code Name *</label>
@@ -855,485 +874,1298 @@
     </footer>
   </div>
 <!-- END OF PART 2 -->
-<!-- ============================================================================ -->
-<!-- 🟢 PART 3 START: SUPABASE LIVE CLOUD SYSTEM, BUG FIXES & 1GB STORAGE METER   -->
-<!-- निर्देश: अपने 6 पार्ट वाले कोड में केवल पुराने PART 3 की जगह इसे पेस्ट करें        -->
-<!-- ============================================================================ -->
+<!-- START OF PART 3 -->
+  <!-- SUPABASE OFFICIAL LIVE CLOUD SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const MUMBAI_CORP_ADDRESS = `Office No. 704, 7th Floor, Platina Tower, G Block, Bandra Kurla Complex (BKC), Bandra (East), Mumbai, Maharashtra - 400051`;
+    const CLOUD_RELAY_TOPIC = 'rns_finance_supabase_live_sync_7402';
 
-<!-- Supabase Official JS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    // FULL PROFESSIONAL ENGLISH LEGAL CLAUSES (EXACT MATTER PRESERVED)
+    const DEFAULT_AGREEMENT_CLAUSES = `• First Charge & Hypothecation Rights: Until the full repayment of the sanctioned loan principal, accrued interest, and applicable charges, RNS FINANCE shall hold the exclusive first charge and hypothecation rights over the financed product or disbursed amount.\n• Physical & Digital KYC Verification: The Lender reserves the absolute right to conduct physical or digital verification of the Borrower's residence, employment, bank statement, and submitted KYC documents at any stage of the loan tenure.\n• Event of Default & Legal Recovery: In the event of non-payment of two consecutive monthly installments (EMIs) or NACH mandate dishonor, RNS FINANCE reserves the right to initiate legal recovery, arbitration, and prosecution under Section 138 of the Negotiable Instruments Act, 1881 and Section 25 of the Payment and Settlement Systems Act, 2007.\n• Credit Bureau (CIBIL) Reporting: The Borrower expressly authorizes RNS FINANCE to report repayment track records, on-time payments, or defaults to Credit Information Companies (CIBIL, Experian, Equifax, CRIF High Mark), which directly impacts the Borrower's credit score.\n• Foreclosure & Pre-Closure Terms: The Borrower may foreclose the loan account prior to the completion of tenure by paying the outstanding principal along with applicable foreclosure charges to obtain the official No-Dues Certificate.\n• Mandatory Intimation of Changes: The Borrower must notify RNS FINANCE within 7 days of any change in mobile number, residential address, or primary bank account details.\n• Exclusive Jurisdiction: Any dispute or legal proceeding arising out of this Loan Agreement shall be subject exclusively to the jurisdiction of the competent courts in Mumbai, Maharashtra.`;
 
-<script>
-(function() {
-    "use strict";
+    let uploadedDocsTemp = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
+    let ocrTempResult = { scannedPan: '', rawText: '', status: 'Idle' };
+    let tempCustomerUtrScreenshot = '';
+    let appliedPromoDiscount = 0;
+    let currentLang = 'en';
+    let currentOwnerStatusFilter = 'Processing';
+    let currentSelectedOwnerOrderId = '';
+    let currentEditingAgreementOrderId = '';
+    let selectedInvestorId = '';
+    let editingInvestorTxIdx = -1;
+    let showAllFeedbacks = false;
+    let isCloudSyncing = false;
+    let lastSyncedCloudKey = '';
+    let liveSseConnection = null;
+    let firebaseFirestoreDocRef = null;
 
-    // 1. SUPABASE LIVE CREDENTIALS (Connected to your project: zyggfuitmnvfsbtjcglz)
+    // ============================================================================
+    // 1. SUPABASE LIVE CLOUD ENGINE (NO TIMEOUT RESTRICTIONS + 1GB STORAGE METER)
+    // ============================================================================
     const SUPABASE_URL = "https://zyggfuitmnvfsbtjcglz.supabase.co";
     const SUPABASE_KEY = "sb_publishable_Y25nMPZk-NXT7iVYOFeF6A_kbfHipM2";
-    const CLOUD_TABLE  = "rns_cloud_store";
-    const STORAGE_BUCKET = "prescriptions";
-    const MAX_STORAGE_BYTES = 1024 * 1024 * 1024; // 1 GB (1024 MB)
+    const SUPABASE_TABLE = "rns_cloud_store";
+    const MASTER_ROW_ID = "RNS_FINANCE_MAIN_DB";
+    const MAX_CLOUD_BYTES = 1024 * 1024 * 1024; // 1 GB (1024 MB)
 
-    // Initialize Supabase Client safely
-    const supabaseClient = window.supabase 
-        ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) 
-        : null;
+    let supabaseClient = null;
+    let isPushingCloud = false;
+    let pendingPushRequested = false;
+    let lastLocalSaveTs = 0;
+    let totalCloudBytesUsed = 0;
+    let totalCloudVaultFiles = 0;
 
-    // 2. STABILITY & ANTI-DATA-LOSS LOCKS (Fixes Data Disappearing Bug)
-    window.CLOUD_STATE = {
-        isPushing: false,
-        isPulling: false,
-        lastLocalEditTime: Number(localStorage.getItem("rns_last_edit_ts") || 0),
-        lastCloudSyncTime: 0,
-        usedStorageBytes: 0,
-        fileCount: 0,
-        cloudStatus: "connecting"
-    };
+    window._RNS_RAM_DB = null;
+    const RNS_IDB_NAME = 'RNS_FINANCE_FIREBASE_VAULT_V7';
+    const RNS_IDB_STORE = 'cloud_store';
 
-    // Helper: Mark whenever owner/customer adds Inventory, Promo, Order, or Review
-    window.markLocalDataChanged = function() {
-        const now = Date.now();
-        window.CLOUD_STATE.lastLocalEditTime = now;
-        localStorage.setItem("rns_last_edit_ts", String(now));
-    };
-
-    // 3. SMART DEEP MERGE ENGINE (Prevents Orders, Inventory, or Promos from getting wiped)
-    function smartMergeArrays(localArr, cloudArr, idKey = "id") {
-        if (!Array.isArray(localArr)) localArr = [];
-        if (!Array.isArray(cloudArr)) cloudArr = [];
-        if (cloudArr.length === 0 && localArr.length > 0) return localArr;
-
-        const map = new Map();
-        // Put cloud items first
-        cloudArr.forEach(item => {
-            if (item && typeof item === "object") {
-                const key = item[idKey] || item.orderId || item.code || item.mobile || JSON.stringify(item);
-                map.set(String(key), item);
-            }
+    function getSupabase() {
+      if (!supabaseClient && window.supabase && typeof window.supabase.createClient === 'function') {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+          auth: { persistSession: false, autoRefreshToken: false }
         });
-        // Merge local items (if local item is newer or missing in cloud, keep local!)
-        localArr.forEach(item => {
-            if (item && typeof item === "object") {
-                const key = String(item[idKey] || item.orderId || item.code || item.mobile || JSON.stringify(item));
-                const existing = map.get(key);
-                if (!existing) {
-                    map.set(key, item);
-                } else {
-                    const localTime = Number(item.updatedAt || item.timestamp || 0);
-                    const cloudTime = Number(existing.updatedAt || existing.timestamp || 0);
-                    // Preserve UTR verification status or newer edit
-                    if (localTime >= cloudTime || item.utrStatus === "Verified" || item.verified === true) {
-                        map.set(key, { ...existing, ...item });
-                    }
-                }
-            }
-        });
-        return Array.from(map.values());
+      }
+      return supabaseClient;
     }
 
-    // Collect all dynamic keys stored by the app in localStorage
-    function getLocalAppSnapshot() {
-        const snapshot = {};
-        const keysToSync = [
-            "products", "inventory", "medicines", "orders", "rns_orders",
-            "promoCodes", "promos", "rns_promos", "reviews", "feedback",
-            "customers", "users", "settings", "storeConfig", "broadcasts"
-        ];
-
-        // Also auto-detect any existing RNS/Shorya keys in localStorage
-        for (let i = 0; i < localStorage.length; i++) {
-            const k = localStorage.key(i);
-            if (k && !k.startsWith("sb-") && k !== "rns_last_edit_ts") {
-                keysToSync.push(k);
-            }
+    // Initialize Supabase Realtime Channel for Instant 0-Second Multi-Device Sync
+    function initFirebaseOnSnapshotEngine() {
+      try {
+        const sb = getSupabase();
+        if (!sb || !sb.channel) return;
+        if (liveSseConnection) {
+          try { sb.removeChannel(liveSseConnection); } catch (e) {}
         }
-
-        const uniqueKeys = [...new Set(keysToSync)];
-        uniqueKeys.forEach(k => {
-            const raw = localStorage.getItem(k);
-            if (raw !== null) {
-                try {
-                    snapshot[k] = JSON.parse(raw);
-                } catch (e) {
-                    snapshot[k] = raw;
+        liveSseConnection = sb
+          .channel('rns_finance_realtime_channel')
+          .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: SUPABASE_TABLE },
+            async (payload) => {
+              if (isPushingCloud) return;
+              const rec = payload.new;
+              if (rec && rec.id === MASTER_ROW_ID && rec.payload) {
+                const remoteTs = Number(rec.payload.lastModifiedTs || 0);
+                if (remoteTs > lastLocalSaveTs) {
+                  const localDB = getCloudData();
+                  const mergedDB = mergeCloudDatabases(localDB, rec.payload);
+                  safePersistLocalDB(mergedDB, false);
+                  lastSyncedCloudKey = String(remoteTs);
+                  if (!isUserCurrentlyTyping()) {
+                    refreshAllActivePortalViews();
+                  }
+                  update1GBCloudStorageMeter();
                 }
+              }
             }
-        });
-
-        snapshot.__meta = {
-            updatedAt: window.CLOUD_STATE.lastLocalEditTime || Date.now(),
-            device: navigator.userAgent.slice(0, 40)
-        };
-        return snapshot;
+          )
+          .subscribe();
+      } catch (e) {
+        console.warn('Supabase Realtime Init Warning:', e);
+      }
     }
 
-    // Safely apply merged cloud data without losing local changes
-    function applyCloudSnapshotSafely(cloudPayload) {
-        if (!cloudPayload || typeof cloudPayload !== "object") return false;
-
-        const cloudUpdatedAt = Number(cloudPayload.__meta?.updatedAt || 0);
-        const localUpdatedAt = Number(window.CLOUD_STATE.lastLocalEditTime || 0);
-
-        let anyChanged = false;
-
-        Object.keys(cloudPayload).forEach(key => {
-            if (key === "__meta") return;
-            const cloudVal = cloudPayload[key];
-            if (cloudVal === undefined || cloudVal === null) return;
-
-            const localRaw = localStorage.getItem(key);
-            let localVal = null;
-            try { localVal = localRaw ? JSON.parse(localRaw) : null; } catch (e) { localVal = localRaw; }
-
-            if (Array.isArray(cloudVal)) {
-                // Smart merge arrays (Orders, Inventory, Promo Codes, Reviews) so NOTHING disappears
-                const merged = smartMergeArrays(Array.isArray(localVal) ? localVal : [], cloudVal);
-                const mergedStr = JSON.stringify(merged);
-                if (mergedStr !== localRaw) {
-                    localStorage.setItem(key, mergedStr);
-                    if (window[key] && Array.isArray(window[key])) window[key] = merged;
-                    anyChanged = true;
-                }
-            } else if (typeof cloudVal === "object") {
-                // Merge object settings safely
-                const mergedObj = (cloudUpdatedAt >= localUpdatedAt)
-                    ? { ...(localVal || {}), ...cloudVal }
-                    : { ...cloudVal, ...(localVal || {}) };
-                const mergedStr = JSON.stringify(mergedObj);
-                if (mergedStr !== localRaw) {
-                    localStorage.setItem(key, mergedStr);
-                    if (window[key] && typeof window[key] === "object") window[key] = mergedObj;
-                    anyChanged = true;
-                }
-            } else if (cloudUpdatedAt > localUpdatedAt && String(cloudVal) !== String(localRaw)) {
-                localStorage.setItem(key, typeof cloudVal === "string" ? cloudVal : JSON.stringify(cloudVal));
-                anyChanged = true;
-            }
-        });
-
-        return anyChanged;
-    }
-
-    // 4. SUPABASE PUSH & PULL FUNCTIONS (Ultra-Low Bandwidth 4-10 Sec Sync)
-    window.pushToCloud = async function(force = false) {
-        if (!supabaseClient || window.CLOUD_STATE.isPushing) return false;
-        window.CLOUD_STATE.isPushing = true;
-        updateCloudStatusBadge("syncing");
-
+    function openRnsIndexedDB() {
+      return new Promise((resolve) => {
+        if (!window.indexedDB) return resolve(null);
         try {
-            if (force) window.markLocalDataChanged();
-            const payload = getLocalAppSnapshot();
-
-            const { error } = await supabaseClient
-                .from(CLOUD_TABLE)
-                .upsert({
-                    id: "main_store_data",
-                    payload: payload,
-                    updated_at: new Date().toISOString()
-                }, { onConflict: "id" });
-
-            if (error) throw error;
-
-            window.CLOUD_STATE.lastCloudSyncTime = Date.now();
-            window.CLOUD_STATE.cloudStatus = "online";
-            updateCloudStatusBadge("online");
-            calculate1GBStorageUsage(payload);
-            return true;
+          const req = indexedDB.open(RNS_IDB_NAME, 1);
+          req.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(RNS_IDB_STORE)) {
+              db.createObjectStore(RNS_IDB_STORE);
+            }
+          };
+          req.onsuccess = (e) => resolve(e.target.result);
+          req.onerror = () => resolve(null);
         } catch (err) {
-            console.warn("Supabase Push Warning (Local Data Safe):", err.message || err);
-            updateCloudStatusBadge("offline");
-            calculate1GBStorageUsage(getLocalAppSnapshot());
-            return false;
-        } finally {
-            setTimeout(() => { window.CLOUD_STATE.isPushing = false; }, 1200);
+          resolve(null);
         }
-    };
+      });
+    }
 
-    window.pullFromCloud = async function(silent = true) {
-        // Do NOT overwrite while user is actively saving/pushing data
-        if (!supabaseClient || window.CLOUD_STATE.isPushing || window.CLOUD_STATE.isPulling) return false;
-        window.CLOUD_STATE.isPulling = true;
-        if (!silent) updateCloudStatusBadge("syncing");
+    async function saveToIndexedDB(key, val) {
+      try {
+        const idb = await openRnsIndexedDB();
+        if (!idb) return;
+        const tx = idb.transaction(RNS_IDB_STORE, 'readwrite');
+        tx.objectStore(RNS_IDB_STORE).put(val, key);
+      } catch (e) {}
+    }
 
-        try {
-            const { data, error } = await supabaseClient
-                .from(CLOUD_TABLE)
-                .select("payload, updated_at")
-                .eq("id", "main_store_data")
-                .maybeSingle();
-
-            if (error) throw error;
-
-            if (data && data.payload) {
-                const hasUpdates = applyCloudSnapshotSafely(data.payload);
-                calculate1GBStorageUsage(data.payload);
-                if (hasUpdates) {
-                    // Refresh UI lists gracefully without reloading the page
-                    triggerUIRefreshSafely();
-                }
-            } else {
-                // First time setup: push current local data to initialize cloud
-                await window.pushToCloud(true);
-            }
-
-            window.CLOUD_STATE.cloudStatus = "online";
-            updateCloudStatusBadge("online");
-            return true;
-        } catch (err) {
-            console.warn("Supabase Pull Notice:", err.message || err);
-            updateCloudStatusBadge("offline");
-            calculate1GBStorageUsage(getLocalAppSnapshot());
-            return false;
-        } finally {
-            window.CLOUD_STATE.isPulling = false;
-        }
-    };
-
-    // Compatible aliases so your existing buttons & scripts work without changing Part 1,2,4,5,6
-    window.syncToCloud = window.pushToCloud;
-    window.syncFromCloud = window.pullFromCloud;
-    window.cloudSync = window.pullFromCloud;
-    window.saveToCloud = window.pushToCloud;
-    window.forceCloudScan = function() { return window.pullFromCloud(false); };
-
-    // 5. PRESCRIPTION PHOTO & PDF UPLOAD + VIEW/DOWNLOAD FIX
-    window.uploadPrescriptionToCloud = async function(file) {
-        if (!file) return null;
-        try {
-            if (supabaseClient) {
-                const safeName = Date.now() + "_" + file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-                const { data, error } = await supabaseClient
-                    .storage
-                    .from(STORAGE_BUCKET)
-                    .upload(safeName, file, { cacheControl: "3600", upsert: true });
-
-                if (!error && data) {
-                    const { data: pubUrl } = supabaseClient.storage.from(STORAGE_BUCKET).getPublicUrl(safeName);
-                    if (pubUrl && pubUrl.publicUrl) {
-                        await calculate1GBStorageUsage();
-                        return pubUrl.publicUrl;
-                    }
-                }
-            }
-        } catch (e) {
-            console.warn("Storage bucket fallback to compressed DataURL:", e);
-        }
-
-        // Fallback: Convert Photo/PDF to Base64 so upload NEVER fails even if bucket isn't public yet
+    async function loadFromIndexedDB(key) {
+      try {
+        const idb = await openRnsIndexedDB();
+        if (!idb) return null;
         return await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = () => resolve(null);
-            reader.readAsDataURL(file);
+          const tx = idb.transaction(RNS_IDB_STORE, 'readonly');
+          const req = tx.objectStore(RNS_IDB_STORE).get(key);
+          req.onsuccess = () => resolve(req.result || null);
+          req.onerror = () => resolve(null);
         });
-    };
+      } catch (e) {
+        return null;
+      }
+    }
 
-    // 6. 1GB (1024 MB) LIVE STORAGE METER FOR OWNER PORTAL (Auto-Calculated & Auto-Injected)
-    async function calculate1GBStorageUsage(snapshotData = null) {
+    function safePersistLocalDB(db, bumpTimestamp = true) {
+      if (!db) return;
+      if (bumpTimestamp) {
+        const now = Date.now();
+        db.lastModifiedTs = now;
+        lastLocalSaveTs = now;
+      }
+      window._RNS_RAM_DB = db;
+      saveToIndexedDB('MAIN_DB', db);
+      try {
+        localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(db));
+      } catch (quotaErr) {
         try {
-            const snap = snapshotData || getLocalAppSnapshot();
-            const jsonBytes = new Blob([JSON.stringify(snap)]).size;
-
-            let bucketBytes = 0;
-            let bucketFiles = 0;
-
-            // Check Supabase Storage Bucket files (Photos & PDFs)
-            if (supabaseClient) {
-                const { data: files, error } = await supabaseClient
-                    .storage
-                    .from(STORAGE_BUCKET)
-                    .list("", { limit: 1000 });
-
-                if (!error && Array.isArray(files)) {
-                    files.forEach(f => {
-                        if (f.metadata && f.metadata.size) {
-                            bucketBytes += Number(f.metadata.size);
-                            bucketFiles++;
-                        }
-                    });
-                }
-            }
-
-            // Also count embedded Base64 photos/PDFs inside orders
-            const rawStr = JSON.stringify(snap);
-            const base64Matches = rawStr.match(/data:(image|application\/pdf)[^"]+/g) || [];
-            const totalFiles = bucketFiles + base64Matches.length;
-            const totalUsedBytes = jsonBytes + bucketBytes;
-
-            window.CLOUD_STATE.usedStorageBytes = totalUsedBytes;
-            window.CLOUD_STATE.fileCount = totalFiles;
-
-            render1GBStorageWidget(totalUsedBytes, totalFiles);
-        } catch (e) {
-            console.warn("Storage meter calculation error:", e);
-        }
+          const lightDB = JSON.parse(JSON.stringify(db));
+          (lightDB.applications || []).forEach(a => {
+            if (a.docs && a.docs.statement) a.docs.statement = '';
+            a.insurancePdfData = '';
+            a.ownerReminderPdfData = '';
+          });
+          localStorage.setItem('RNS_FINANCE_CLOUD_DB', JSON.stringify(lightDB));
+        } catch (e2) {}
+      }
     }
 
-    function render1GBStorageWidget(usedBytes, fileCount) {
-        const usedMB = (usedBytes / (1024 * 1024)).toFixed(2);
-        const usedKB = (usedBytes / 1024).toFixed(1);
-        const totalMB = 1024; // 1 GB
-        const freeMB = Math.max(0, (totalMB - parseFloat(usedMB))).toFixed(2);
-        const rawPercent = (usedBytes / MAX_STORAGE_BYTES) * 100;
-        const displayPercent = rawPercent < 0.01 && usedBytes > 0 ? 0.05 : Math.min(100, rawPercent);
-
-        // Bar Color based on capacity
-        let barColor = "#10b981"; // Green (Safe)
-        let statusText = "स्टोरेज एकदम सुरक्षित है (Normal)";
-        if (rawPercent >= 85) {
-            barColor = "#ef4444"; // Red (Critical)
-            statusText = "⚠️ चेतावनी: 1GB स्टोरेज भरने वाला है! पुरानी फोटो/PDF डिलीट करें।";
-        } else if (rawPercent >= 65) {
-            barColor = "#f59e0b"; // Orange (Moderate)
-            statusText = "ध्यान दें: स्टोरेज 65% से ऊपर भर चुका है।";
-        }
-
-        let widget = document.getElementById("rns-1gb-storage-meter");
-        if (!widget) {
-            // Find Owner Portal container automatically without changing HTML parts
-            const ownerContainer = document.getElementById("ownerPortal") 
-                || document.getElementById("owner-portal")
-                || document.getElementById("adminPanel")
-                || document.getElementById("ownerSection")
-                || document.querySelector("[id*='owner' i], [class*='owner-panel' i], [class*='admin-dashboard' i]");
-
-            if (!ownerContainer) return; // Will auto-attach as soon as Owner Portal renders
-
-            widget = document.createElement("div");
-            widget.id = "rns-1gb-storage-meter";
-            widget.style.cssText = "background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:14px 18px;border-radius:12px;margin:12px 0;border:1px solid #334155;box-shadow:0 4px 15px rgba(0,0,0,0.2);font-family:sans-serif;";
-            ownerContainer.insertBefore(widget, ownerContainer.firstChild);
-        }
-
-        const sizeLabel = parseFloat(usedMB) >= 1 ? `${usedMB} MB` : `${usedKB} KB (${usedMB} MB)`;
-
-        widget.innerHTML = `
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="font-size:18px;">☁️</span>
-                    <div>
-                        <div style="font-weight:700;font-size:14px;color:#f8fafc;">
-                            Supabase Cloud Storage (1GB Photo & PDF Meter)
-                        </div>
-                        <div style="font-size:11px;color:#94a3b8;">${statusText}</div>
-                    </div>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <span id="rns-cloud-live-pill" style="font-size:11px;padding:3px 8px;border-radius:20px;background:#065f46;color:#6ee7b7;font-weight:600;">
-                        ● Live Connected
-                    </span>
-                    <button onclick="window.pullFromCloud(false)" style="background:#2563eb;color:#fff;border:none;padding:5px 10px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">
-                        🔄 Sync Now
-                    </button>
-                </div>
-            </div>
-
-            <!-- Progress Bar -->
-            <div style="width:100%;height:14px;background:#334155;border-radius:10px;overflow:hidden;position:relative;margin:8px 0;">
-                <div style="width:${Math.max(1.5, displayPercent)}%;height:100%;background:${barColor};border-radius:10px;transition:width 0.4s ease;"></div>
-            </div>
-
-            <!-- Stats Row -->
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:12px;color:#cbd5e1;gap:6px;">
-                <div>📦 <b>भरा हुआ (Used):</b> <span style="color:#38bdf8;font-weight:700;">${sizeLabel}</span> / 1024 MB (1 GB)</div>
-                <div>🟢 <b>खाली (Free):</b> <span style="color:#4ade80;font-weight:700;">${freeMB} MB</span> (${(100 - rawPercent).toFixed(2)}%)</div>
-                <div>🖼️ <b>फोटो/PDF फाइलें:</b> <span style="color:#fbbf24;font-weight:700;">${fileCount} Files</span></div>
-            </div>
-        `;
+    // NO TIMEOUT RESTRICTION: Waits until upload/download completes regardless of file size or network speed
+    function universalCloudRequest(url, options = {}) {
+      const method = options.method || 'GET';
+      const headers = options.headers || {};
+      const body = options.body || null;
+      return fetch(url, { method, headers, body, cache: 'no-store' });
     }
 
-    function updateCloudStatusBadge(state) {
-        const pill = document.getElementById("rns-cloud-live-pill");
-        if (!pill) return;
-        if (state === "syncing") {
-            pill.style.background = "#1e3a8a";
-            pill.style.color = "#93c5fd";
-            pill.textContent = "⏳ Syncing...";
-        } else if (state === "online") {
-            pill.style.background = "#065f46";
-            pill.style.color = "#6ee7b7";
-            pill.textContent = "● Live Connected";
-        } else {
-            pill.style.background = "#7f1d1d";
-            pill.style.color = "#fca5a5";
-            pill.textContent = "⚠️ Local Safe Mode";
-        }
+    // Store JSON or Heavy PDF Vault directly in Supabase (No expiration, No timeout restriction)
+    async function uploadJsonBlobToCloud(payloadObj, customRowId = null) {
+      try {
+        const sb = getSupabase();
+        if (!sb) return null;
+        const rowId = customRowId || ('VAULT_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7));
+        const { error } = await sb
+          .from(SUPABASE_TABLE)
+          .upsert({
+            id: rowId,
+            payload: payloadObj,
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'id' });
+        if (!error) return rowId;
+      } catch (e) {
+        console.warn('Supabase Vault Upload Warning:', e);
+      }
+      return null;
     }
 
-    // 7. AUTO-INTERCEPT LOCALSTORAGE SAVES (So every Inventory/Promo/Order edit auto-syncs!)
-    const originalSetItem = localStorage.setItem.bind(localStorage);
-    let autoPushTimer = null;
-    localStorage.setItem = function(key, value) {
-        originalSetItem(key, value);
-        if (!key.startsWith("sb-") && key !== "rns_last_edit_ts" && !window.CLOUD_STATE.isPulling) {
-            const now = Date.now();
-            window.CLOUD_STATE.lastLocalEditTime = now;
-            originalSetItem("rns_last_edit_ts", String(now));
-
-            clearTimeout(autoPushTimer);
-            autoPushTimer = setTimeout(() => {
-                window.pushToCloud(false);
-            }, 900);
+    // Download JSON or Heavy PDF Vault from Supabase (No timeout restriction)
+    async function downloadJsonBlobFromCloud(compositeKey) {
+      if (!compositeKey || typeof compositeKey !== 'string') return null;
+      try {
+        const sb = getSupabase();
+        if (!sb) return null;
+        const { data, error } = await sb
+          .from(SUPABASE_TABLE)
+          .select('payload')
+          .eq('id', compositeKey)
+          .maybeSingle();
+        if (!error && data && data.payload) {
+          return data.payload;
         }
-    };
+      } catch (e) {
+        console.warn('Supabase Vault Download Warning:', e);
+      }
+      return null;
+    }
 
-    // Safely trigger existing UI render functions if present in other parts
-    function triggerUIRefreshSafely() {
-        const fnNames = [
-            "renderOrders", "renderOwnerOrders", "renderInventory", "renderProducts",
-            "renderPromos", "renderReviews", "updateDashboard", "loadOrders", "initApp"
-        ];
-        fnNames.forEach(fn => {
-            if (typeof window[fn] === "function") {
-                try { window[fn](); } catch (e) {}
-            }
+    // Uploads Bank Statement PDF, Insurance PDF, and Owner Reminder PDF for ANY application to Supabase
+    async function uploadHeavyPdfVaultForApp(app) {
+      if (!app || !app.orderId) return;
+      const stmtData = (app.docs && app.docs.statement) ? app.docs.statement : '';
+      const insPdf = app.insurancePdfData || '';
+      const remPdf = app.ownerReminderPdfData || '';
+      if (!stmtData && !insPdf && !remPdf) return;
+
+      const pdfHash = `${stmtData.length}_${insPdf.length}_${remPdf.length}`;
+      const vaultRowId = 'PDF_VAULT_' + app.orderId;
+
+      const vaultPayload = {
+        orderId: app.orderId,
+        statement: stmtData,
+        statementName: (app.docs && app.docs.statementName) ? app.docs.statementName : '',
+        insurancePdfData: insPdf,
+        insurancePdfName: app.insurancePdfName || '',
+        ownerReminderPdfData: remPdf,
+        ownerReminderPdfName: app.ownerReminderPdfName || '',
+        updatedAt: Date.now()
+      };
+
+      await saveToIndexedDB(vaultRowId, vaultPayload);
+      if (app.pdfVaultKey === vaultRowId && app.pdfVaultHash === pdfHash) return;
+
+      const savedKey = await uploadJsonBlobToCloud(vaultPayload, vaultRowId);
+      if (savedKey) {
+        app.pdfVaultKey = vaultRowId;
+        app.pdfVaultHash = pdfHash;
+      }
+    }
+
+    // Restores Bank Statement PDF, Insurance PDF, and Owner Reminder PDF on demand without timeout
+    async function hydratePdfVaultForApp(app) {
+      if (!app || !app.orderId) return app;
+      if (!app.docs) app.docs = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
+      const needsStmt = !app.docs.statement && (app.docs.statementName || app.pdfVaultKey);
+      const needsIns = !app.insurancePdfData && (app.insurancePdfName || app.pdfVaultKey);
+      const needsRem = !app.ownerReminderPdfData && (app.ownerReminderPdfName || app.pdfVaultKey);
+      if (!needsStmt && !needsIns && !needsRem) return app;
+
+      const vaultRowId = app.pdfVaultKey || ('PDF_VAULT_' + app.orderId);
+      const localVault = await loadFromIndexedDB('PDF_VAULT_' + app.orderId);
+      if (localVault && (localVault.statement || localVault.insurancePdfData || localVault.ownerReminderPdfData)) {
+        if (localVault.statement && !app.docs.statement) app.docs.statement = localVault.statement;
+        if (localVault.statementName && !app.docs.statementName) app.docs.statementName = localVault.statementName;
+        if (localVault.insurancePdfData && !app.insurancePdfData) app.insurancePdfData = localVault.insurancePdfData;
+        if (localVault.insurancePdfName && !app.insurancePdfName) app.insurancePdfName = localVault.insurancePdfName;
+        if (localVault.ownerReminderPdfData && !app.ownerReminderPdfData) app.ownerReminderPdfData = localVault.ownerReminderPdfData;
+        if (localVault.ownerReminderPdfName && !app.ownerReminderPdfName) app.ownerReminderPdfName = localVault.ownerReminderPdfName;
+        return app;
+      }
+
+      const remoteVault = await downloadJsonBlobFromCloud(vaultRowId);
+      if (remoteVault) {
+        if (remoteVault.statement) app.docs.statement = remoteVault.statement;
+        if (remoteVault.statementName) app.docs.statementName = remoteVault.statementName;
+        if (remoteVault.insurancePdfData) app.insurancePdfData = remoteVault.insurancePdfData;
+        if (remoteVault.insurancePdfName) app.insurancePdfName = remoteVault.insurancePdfName;
+        if (remoteVault.ownerReminderPdfData) app.ownerReminderPdfData = remoteVault.ownerReminderPdfData;
+        if (remoteVault.ownerReminderPdfName) app.ownerReminderPdfName = remoteVault.ownerReminderPdfName;
+        await saveToIndexedDB('PDF_VAULT_' + app.orderId, remoteVault);
+      }
+      return app;
+    }
+
+    // Pushes Complete Master Database + All Pending PDF Vaults to Supabase Live Cloud
+    async function pushToGlobalCloud(db) {
+      if (!db) return false;
+      safePersistLocalDB(db, false);
+
+      if (isPushingCloud) {
+        pendingPushRequested = true;
+        return true;
+      }
+      isPushingCloud = true;
+
+      try {
+        const sb = getSupabase();
+        if (!sb) return false;
+
+        // Upload heavy PDFs for ALL applications (Removed the old 3-application limit bug!)
+        const apps = db.applications || [];
+        for (let i = 0; i < apps.length; i++) {
+          const a = apps[i];
+          const hasHeavyStmt = a.docs && a.docs.statement && a.docs.statement.length > 0;
+          const hasHeavyIns = a.insurancePdfData && a.insurancePdfData.length > 0;
+          const hasHeavyRem = a.ownerReminderPdfData && a.ownerReminderPdfData.length > 0;
+          const currentHash = `${hasHeavyStmt ? a.docs.statement.length : 0}_${hasHeavyIns ? a.insurancePdfData.length : 0}_${hasHeavyRem ? a.ownerReminderPdfData.length : 0}`;
+          if ((hasHeavyStmt || hasHeavyIns || hasHeavyRem) && (!a.pdfVaultKey || a.pdfVaultHash !== currentHash)) {
+            await uploadHeavyPdfVaultForApp(a);
+          }
+        }
+        safePersistLocalDB(db, false);
+
+        // Create lightweight master payload while keeping heavy PDFs safely linked in PDF_VAULT_<orderId>
+        const fastMasterClone = JSON.parse(JSON.stringify(db));
+        (fastMasterClone.applications || []).forEach(a => {
+          if (a.pdfVaultKey && a.docs && a.docs.statement && a.docs.statement.length > 100000) {
+            a.docs.statement = '';
+          }
+          if (a.pdfVaultKey && a.insurancePdfData && a.insurancePdfData.length > 100000) {
+            a.insurancePdfData = '';
+          }
+          if (a.pdfVaultKey && a.ownerReminderPdfData && a.ownerReminderPdfData.length > 100000) {
+            a.ownerReminderPdfData = '';
+          }
         });
+
+        const { error } = await sb
+          .from(SUPABASE_TABLE)
+          .upsert({
+            id: MASTER_ROW_ID,
+            payload: fastMasterClone,
+            updated_at: new Date().toISOString()
+          }, { onConflict: 'id' });
+
+        if (!error) {
+          lastSyncedCloudKey = String(fastMasterClone.lastModifiedTs || Date.now());
+          const txt = document.getElementById('cloudStatusText');
+          const activeAppsCount = (db.applications || []).filter(a => !['Rejected', 'Loan Closed'].includes(a.status)).length;
+          if (txt) txt.innerText = `Supabase Live (${activeAppsCount} Active Synced)`;
+          update1GBCloudStorageMeter();
+          return true;
+        }
+      } catch (e) {
+        console.warn('Supabase Push Error:', e);
+      } finally {
+        isPushingCloud = false;
+        if (pendingPushRequested) {
+          pendingPushRequested = false;
+          setTimeout(() => pushToGlobalCloud(getCloudData()), 300);
+        }
+      }
+      return false;
     }
 
-    // 8. REALTIME SUBSCRIPTION + 6-SECOND LOW-BANDWIDTH AUTO SCAN
-    function startLiveCloudEngine() {
-        // Initial pull on page load
-        window.pullFromCloud(true);
+    function mergeCloudDatabases(localDB, remoteDB) {
+      if (!remoteDB || typeof remoteDB !== 'object') return localDB;
+      const remoteNewer = (remoteDB.lastModifiedTs || 0) >= (localDB.lastModifiedTs || 0);
 
-        // Realtime Instant Channel (0 second delay when anyone places an order)
-        if (supabaseClient && supabaseClient.channel) {
-            supabaseClient
-                .channel("rns_live_sync_channel")
-                .on(
-                    "postgres_changes",
-                    { event: "*", schema: "public", table: CLOUD_TABLE },
-                    (payload) => {
-                        if (!window.CLOUD_STATE.isPushing && payload.new && payload.new.payload) {
-                            const updated = applyCloudSnapshotSafely(payload.new.payload);
-                            calculate1GBStorageUsage(payload.new.payload);
-                            if (updated) triggerUIRefreshSafely();
-                        }
-                    }
-                )
-                .subscribe();
+      // Deleted Order IDs Registry (Ensures deleted Rejected / Closed apps stay deleted across all devices)
+      const deletedIds = Array.from(new Set([...(localDB.deletedOrderIds || []), ...(remoteDB.deletedOrderIds || [])]));
+
+      const fbMap = new Map();
+      [...(remoteDB.feedbacks || []), ...(localDB.feedbacks || [])].forEach(f => {
+        if (f && f.name && f.comment) fbMap.set(`${f.name}_${f.comment}_${f.date}`, f);
+      });
+
+      // Smart merge Investors by ID/regCode so no investor entry is lost
+      let mergedInvestors = [];
+      const invSourcePrimary = remoteNewer ? (remoteDB.investors || []) : (localDB.investors || []);
+      const invSourceSecondary = remoteNewer ? (localDB.investors || []) : (remoteDB.investors || []);
+      const invMap = new Map();
+      invSourceSecondary.forEach(inv => { if (inv && inv.id) invMap.set(inv.id, inv); });
+      invSourcePrimary.forEach(inv => { if (inv && inv.id) invMap.set(inv.id, inv); });
+      mergedInvestors = Array.from(invMap.values());
+
+      const merged = {
+        lastModifiedTs: Math.max(localDB.lastModifiedTs || 0, remoteDB.lastModifiedTs || 0),
+        deletedOrderIds: deletedIds,
+        agreementSettings: remoteNewer ? (remoteDB.agreementSettings || localDB.agreementSettings) : (localDB.agreementSettings || remoteDB.agreementSettings),
+        orderAgreements: remoteNewer
+          ? (remoteDB.orderAgreements || {})
+          : (localDB.orderAgreements || {}),
+        promos: remoteNewer && Array.isArray(remoteDB.promos) ? remoteDB.promos : (localDB.promos || []),
+        investors: mergedInvestors,
+        defaulters: Array.from(new Set([...(localDB.defaulters || []), ...(remoteDB.defaulters || [])])),
+        feedbacks: Array.from(fbMap.values()),
+        applications: []
+      };
+
+      const appMap = new Map();
+      (localDB.applications || []).forEach(a => {
+        if (a && a.orderId && !deletedIds.includes(a.orderId)) appMap.set(a.orderId, a);
+      });
+
+      (remoteDB.applications || []).forEach(rApp => {
+        if (!rApp || !rApp.orderId || deletedIds.includes(rApp.orderId)) return;
+        if (rApp.status === 'Pending') rApp.status = 'Processing';
+        const existing = appMap.get(rApp.orderId);
+
+        if (!existing || (rApp.updatedAt || 0) >= (existing.updatedAt || 0)) {
+          if (existing && existing.docs) {
+            if (!rApp.docs) rApp.docs = existing.docs;
+            else {
+              if (!rApp.docs.pan && existing.docs.pan) rApp.docs.pan = existing.docs.pan;
+              if (!rApp.docs.photo && existing.docs.photo) rApp.docs.photo = existing.docs.photo;
+              if (!rApp.docs.sign && existing.docs.sign) rApp.docs.sign = existing.docs.sign;
+              if (!rApp.docs.statement && existing.docs.statement) rApp.docs.statement = existing.docs.statement;
+              if (!rApp.docs.statementName && existing.docs.statementName) rApp.docs.statementName = existing.docs.statementName;
+            }
+          }
+          if (existing && existing.insurancePdfData && !rApp.insurancePdfData) {
+            rApp.insurancePdfData = existing.insurancePdfData;
+          }
+          if (existing && existing.ownerReminderPdfData && !rApp.ownerReminderPdfData) {
+            rApp.ownerReminderPdfData = existing.ownerReminderPdfData;
+            rApp.ownerReminderPdfName = existing.ownerReminderPdfName;
+          }
+          if (existing && existing.pdfVaultKey && !rApp.pdfVaultKey) {
+            rApp.pdfVaultKey = existing.pdfVaultKey;
+            rApp.pdfVaultHash = existing.pdfVaultHash;
+          }
+          if (existing && existing.reuploadedDocs && existing.reuploadedDocs.length > (rApp.reuploadedDocs || []).length) {
+            rApp.reuploadedDocs = existing.reuploadedDocs;
+          }
+          appMap.set(rApp.orderId, rApp);
+        }
+      });
+
+      merged.applications = Array.from(appMap.values()).sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+      return merged;
+    }
+
+    // ============================================================================
+    // 1GB (1024 MB) LIVE SUPABASE STORAGE METER FOR OWNER PORTAL
+    // ============================================================================
+    async function update1GBCloudStorageMeter() {
+      try {
+        const ownerSec = document.getElementById('ownerPortalSection');
+        if (!ownerSec) return;
+
+        let meterBox = document.getElementById('rnsSupabase1GBMeter');
+        if (!meterBox) {
+          meterBox = document.createElement('div');
+          meterBox.id = 'rnsSupabase1GBMeter';
+          meterBox.className = 'bg-slate-900 text-white rounded-2xl p-4 border-2 border-emerald-500 shadow-md space-y-2 text-xs';
+          ownerSec.insertBefore(meterBox, ownerSec.firstChild);
         }
 
-        // Backup 6-second interval scan + ensure Owner 1GB Meter stays visible
-        setInterval(() => {
-            if (!document.hidden && !window.CLOUD_STATE.isPushing) {
-                window.pullFromCloud(true);
-            }
-            if (!document.getElementById("rns-1gb-storage-meter")) {
-                calculate1GBStorageUsage();
-            }
-        }, 6000);
+        const db = getCloudData();
+        let approxBytes = new Blob([JSON.stringify(db)]).size;
+        let vaultCount = 0;
+
+        (db.applications || []).forEach(a => {
+          if (a.docs && a.docs.pan) vaultCount++;
+          if (a.docs && a.docs.photo) vaultCount++;
+          if (a.docs && a.docs.sign) vaultCount++;
+          if ((a.docs && a.docs.statementName) || a.pdfVaultKey) vaultCount++;
+          if (a.insurancePdfName) vaultCount++;
+          if (a.ownerReminderPdfName) vaultCount++;
+          if (a.reuploadedDocs && a.reuploadedDocs.length) vaultCount += a.reuploadedDocs.length;
+        });
+
+        // Also query Supabase table rows size for accurate cloud storage tracking
+        const sb = getSupabase();
+        if (sb) {
+          const { data: rows } = await sb.from(SUPABASE_TABLE).select('id, payload');
+          if (Array.isArray(rows) && rows.length > 0) {
+            approxBytes = new Blob([JSON.stringify(rows)]).size;
+          }
+        }
+
+        totalCloudBytesUsed = approxBytes;
+        totalCloudVaultFiles = vaultCount;
+
+        const usedMB = (approxBytes / (1024 * 1024)).toFixed(2);
+        const usedKB = (approxBytes / 1024).toFixed(1);
+        const freeMB = Math.max(0, (1024 - parseFloat(usedMB))).toFixed(2);
+        const pct = Math.min(100, (approxBytes / MAX_CLOUD_BYTES) * 100);
+        const barWidth = Math.max(1.5, pct);
+
+        let barColor = 'bg-emerald-500';
+        let alertMsg = '🟢 Cloud Storage Healthy (No Timeout Restrictions Active)';
+        if (pct >= 85) {
+          barColor = 'bg-rose-600';
+          alertMsg = '⚠️ Critical: 1GB Cloud Storage is over 85% full! Delete old Rejected/Closed records.';
+        } else if (pct >= 65) {
+          barColor = 'bg-amber-500';
+          alertMsg = '🔔 Notice: Cloud Storage has crossed 65% capacity.';
+        }
+
+        const displayUsed = parseFloat(usedMB) >= 1 ? `${usedMB} MB` : `${usedKB} KB (${usedMB} MB)`;
+
+        meterBox.innerHTML = `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-extrabold text-[11px]">☁️ SUPABASE 1GB STORAGE METER</span>
+              <span class="text-slate-300 font-semibold text-[11px]">${alertMsg}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500 font-bold text-[10px]">● Project: zyggfuitmnvfsbtjcglz</span>
+              <button type="button" onclick="triggerCloudScan('FULL', true)" class="px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-[11px] shadow">
+                🔄 Refresh Cloud
+              </button>
+            </div>
+          </div>
+          <div class="w-full h-3.5 bg-slate-800 rounded-full overflow-hidden border border-slate-700">
+            <div class="h-full ${barColor} transition-all duration-500 rounded-full" style="width: ${barWidth}%;"></div>
+          </div>
+          <div class="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-300 pt-0.5">
+            <div>📦 <strong>Used Storage:</strong> <span class="text-amber-300 font-extrabold">${displayUsed}</span> / 1024 MB (1 GB)</div>
+            <div>🟢 <strong>Free Space:</strong> <span class="text-emerald-400 font-extrabold">${freeMB} MB (${(100 - pct).toFixed(2)}% Free)</span></div>
+            <div>📄 <strong>Synced KYC Photos & PDFs:</strong> <span class="text-sky-300 font-extrabold">${vaultCount} Files</span></div>
+          </div>
+        `;
+      } catch (e) {}
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", startLiveCloudEngine);
-    } else {
-        startLiveCloudEngine();
+    function refreshAllActivePortalViews() {
+      renderCustomerFeedbacks();
+      updateOwnerBusinessSummaryBar();
+      if (!document.getElementById('ownerPortalSection').classList.contains('hidden')) {
+        update1GBCloudStorageMeter();
+        renderOwnerApplications();
+        populateCollectAppDropdown();
+        populateUpiCustomerDropdown();
+        populateAgreementOrderDropdown();
+        renderPromoCodes();
+        renderInvestorsSection();
+      }
+      const trackIn = document.getElementById('trackSearchInput');
+      if (!document.getElementById('viewTrackCustomer').classList.contains('hidden') && trackIn && trackIn.value.trim().length >= 4) {
+        const q = trackIn.value.trim().toUpperCase();
+        const finalDB = getCloudData();
+        const matched = finalDB.applications.filter(a => a.orderId.toUpperCase() === q || a.mobile === q || a.aadhaar === q || (q.length === 4 && (a.mobile.endsWith(q) || a.aadhaar.endsWith(q))));
+        if (matched.length > 0) renderCustomerTrackingCard(matched[0]);
+      }
     }
-})();
-</script>
-<!-- ============================================================================ -->
-<!-- 🟢 PART 3 END: यहाँ PART 3 समाप्त होता है                                     -->
-<!-- ============================================================================ -->
+
+    async function applyIncomingCloudKey(incomingKey, manualClick = false) {
+      return await triggerCloudScan('FULL', manualClick);
+    }
+
+    function startLiveCloudStream() {
+      initFirebaseOnSnapshotEngine();
+    }
+
+    async function triggerCloudScan(scanMode = 'ACTIVE', manualClick = false) {
+      if (isCloudSyncing || isPushingCloud) return;
+      if (!manualClick && isUserCurrentlyTyping()) return;
+      isCloudSyncing = true;
+
+      const txt = document.getElementById('cloudStatusText');
+      const icon = document.getElementById('cloudScanIcon');
+      if (manualClick) {
+        if (txt) txt.innerText = 'Supabase Cloud Syncing...';
+        if (icon) icon.className = 'fa-solid fa-rotate fa-spin text-emerald-600';
+      }
+
+      try {
+        const sb = getSupabase();
+        if (sb) {
+          const { data, error } = await sb
+            .from(SUPABASE_TABLE)
+            .select('payload, updated_at')
+            .eq('id', MASTER_ROW_ID)
+            .maybeSingle();
+
+          if (!error && data && data.payload && !isPushingCloud) {
+            const remoteDB = data.payload;
+            const localDB = getCloudData();
+            const remoteTs = Number(remoteDB.lastModifiedTs || 0);
+            const localTs = Number(localDB.lastModifiedTs || 0);
+
+            const mergedDB = mergeCloudDatabases(localDB, remoteDB);
+            safePersistLocalDB(mergedDB, false);
+
+            // If local has newer unsynced changes, push them to Supabase automatically
+            if (localTs > remoteTs || (localDB.applications || []).length > (remoteDB.applications || []).length) {
+              await pushToGlobalCloud(mergedDB);
+            }
+
+            if (String(remoteTs) !== lastSyncedCloudKey || manualClick) {
+              lastSyncedCloudKey = String(remoteTs);
+              if (!isUserCurrentlyTyping() || manualClick) {
+                refreshAllActivePortalViews();
+              }
+            }
+          } else if (!error && !data) {
+            // Initialize cloud table row on first run
+            await pushToGlobalCloud(getCloudData());
+          }
+        }
+      } catch (e) {
+        console.warn('Supabase Scan Notice:', e);
+      }
+
+      const finalDB = getCloudData();
+      const activeAppsCount = (finalDB.applications || []).filter(a => !['Rejected', 'Loan Closed'].includes(a.status)).length;
+      if (txt) txt.innerText = `Supabase Live (${activeAppsCount} Active Synced)`;
+      if (icon) icon.className = 'fa-solid fa-fire-flame-curved text-amber-500';
+
+      if (manualClick) {
+        refreshAllActivePortalViews();
+        showCloudNotification(`☁️ Supabase Live Cloud Synced! (${activeAppsCount} Active / ${finalDB.applications.length} Total)`);
+      }
+      isCloudSyncing = false;
+    }
+
+    function saveCloudData(db, notifyMsg = 'Synced to Supabase Live Cloud!') {
+      safePersistLocalDB(db, true);
+      updateOwnerBusinessSummaryBar();
+      showCloudNotification(notifyMsg);
+      pushToGlobalCloud(db);
+    }
+
+    // ============================================================================
+    // 2. TESSERACT.JS AUTO-OCR SCANNING ENGINE (DETECTS PAN/ID & MISMATCH FLAG)
+    // ============================================================================
+    async function runTesseractAutoOcr(imageDataUrl) {
+      const badge = document.getElementById('ocrLiveStatusBadge');
+      if (!window.Tesseract || !imageDataUrl) return;
+      try {
+        ocrTempResult = { scannedPan: '', rawText: '', status: 'Scanning' };
+        if (badge) {
+          badge.innerText = '🔍 Auto-OCR Reading PAN Card...';
+          badge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-400';
+        }
+        const result = await Tesseract.recognize(imageDataUrl, 'eng');
+        const raw = (result && result.data && result.data.text) ? result.data.text.toUpperCase() : '';
+        const cleaned = raw.replace(/[^A-Z0-9\s]/g, ' ');
+        const panMatch = cleaned.match(/[A-Z]{5}[0-9]{4}[A-Z]{1}/);
+        ocrTempResult.rawText = cleaned.slice(0, 180).trim();
+        ocrTempResult.scannedPan = panMatch ? panMatch[0] : '';
+        ocrTempResult.status = 'Done';
+
+        if (badge) {
+          if (ocrTempResult.scannedPan) {
+            badge.innerText = `✔ OCR Scanned PAN: ${ocrTempResult.scannedPan}`;
+            badge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-400';
+          } else {
+            badge.innerText = `✔ OCR Scan Complete (Ready)`;
+            badge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200';
+          }
+        }
+      } catch (err) {
+        ocrTempResult.status = 'Error';
+        if (badge) badge.innerText = '🤖 Auto-OCR Active';
+      }
+    }
+
+    // ============================================================================
+    // 3. STRICT FILE SIZE & CANVAS COMPRESSION RULES (500 KB PHOTO & 2 MB PDF)
+    // ============================================================================
+    function handleFileUpload(event, docKey) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const sizeBytes = file.size;
+
+      const reader = new FileReader();
+      reader.onload = e => {
+        const originalDataUrl = e.target.result;
+
+        if (sizeBytes <= 500 * 1024) {
+          // <= 500 KB: NO CANVAS USED — DIRECT ORIGINAL UPLOAD
+          uploadedDocsTemp[docKey] = originalDataUrl;
+          const prev = document.getElementById('prev_' + docKey);
+          if (prev) { prev.src = originalDataUrl; prev.classList.remove('hidden'); }
+          if (docKey === 'pan') runTesseractAutoOcr(originalDataUrl);
+        } else {
+          // > 500 KB: CANVAS COMPRESSION APPLIED
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let targetW = 720, targetH = 500;
+            if (docKey === 'photo') { targetW = 480; targetH = 600; }
+            else if (docKey === 'sign') { targetW = 500; targetH = 200; }
+            const ratio = Math.min(1, targetW / img.width, targetH / img.height);
+            canvas.width = Math.round(img.width * ratio);
+            canvas.height = Math.round(img.height * ratio);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.68);
+            uploadedDocsTemp[docKey] = compressedDataUrl;
+            const prev = document.getElementById('prev_' + docKey);
+            if (prev) { prev.src = compressedDataUrl; prev.classList.remove('hidden'); }
+            if (docKey === 'pan') runTesseractAutoOcr(compressedDataUrl);
+          };
+          img.onerror = () => {
+            uploadedDocsTemp[docKey] = originalDataUrl;
+            const prev = document.getElementById('prev_' + docKey);
+            if (prev) { prev.src = originalDataUrl; prev.classList.remove('hidden'); }
+          };
+          img.src = originalDataUrl;
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function compressPdfViaCanvas(arrayBuffer) {
+      if (!window.pdfjsLib) return null;
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        const { jsPDF } = window.jspdf;
+        const outPdf = new jsPDF('p', 'mm', 'a4');
+        const maxPages = Math.min(pdfDoc.numPages, 6);
+
+        for (let p = 1; p <= maxPages; p++) {
+          const page = await pdfDoc.getPage(p);
+          const viewport = page.getViewport({ scale: 1.15 });
+          const canvas = document.createElement('canvas');
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+          const ctx = canvas.getContext('2d');
+          await page.render({ canvasContext: ctx, viewport }).promise;
+          const imgData = canvas.toDataURL('image/jpeg', 0.62);
+          if (p > 1) outPdf.addPage();
+          outPdf.addImage(imgData, 'JPEG', 5, 5, 200, 285);
+        }
+        return outPdf.output('datauristring');
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function handleBankStatementUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const sizeBytes = file.size;
+      const sizeKB = Math.round(sizeBytes / 1024);
+      const st = document.getElementById('statementUploadStatus');
+
+      if (sizeBytes <= 2 * 1024 * 1024) {
+        // <= 2 MB: NO CANVAS USED — DIRECT ORIGINAL UPLOAD
+        if (st) st.innerText = `⏳ Loading Original (${sizeKB} KB)...`;
+        const reader = new FileReader();
+        reader.onload = e => {
+          uploadedDocsTemp.statement = e.target.result;
+          uploadedDocsTemp.statementName = file.name;
+          if (st) st.innerText = `✔ Ready (Original Direct): ${file.name} (${sizeKB} KB)`;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        // > 2 MB: CANVAS COMPRESSION APPLIED
+        if (st) st.innerText = `⏳ File > 2 MB (${sizeKB} KB) — Optimizing via Canvas...`;
+        if (file.type && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = e => {
+            const img = new Image();
+            img.onload = () => {
+              const canvas = document.createElement('canvas');
+              const maxDim = 950;
+              const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+              canvas.width = Math.round(img.width * scale);
+              canvas.height = Math.round(img.height * scale);
+              const ctx = canvas.getContext('2d');
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              uploadedDocsTemp.statement = canvas.toDataURL('image/jpeg', 0.68);
+              uploadedDocsTemp.statementName = file.name;
+              if (st) st.innerText = `✔ Ready (Canvas Compressed): ${file.name}`;
+            };
+            img.src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        } else {
+          const bufReader = new FileReader();
+          bufReader.onload = async e => {
+            const compressedPdfDataUrl = await compressPdfViaCanvas(e.target.result);
+            if (compressedPdfDataUrl) {
+              uploadedDocsTemp.statement = compressedPdfDataUrl;
+              uploadedDocsTemp.statementName = file.name;
+              if (st) st.innerText = `✔ Ready (PDF Canvas Optimized): ${file.name}`;
+            } else {
+              const fallbackReader = new FileReader();
+              fallbackReader.onload = ev => {
+                uploadedDocsTemp.statement = ev.target.result;
+                uploadedDocsTemp.statementName = file.name;
+                if (st) st.innerText = `✔ Ready: ${file.name}`;
+              };
+              fallbackReader.readAsDataURL(file);
+            }
+          };
+          bufReader.readAsArrayBuffer(file);
+        }
+      }
+    }
+
+    // ============================================================================
+    // PROFESSIONAL WHATSAPP & SMS ENGINE FOR ALL 6 STAGES, NACH, UPI, EMI, PROMO & INVESTOR
+    // ============================================================================
+    function cleanPhoneForWa(mob) {
+      const digits = String(mob || '').replace(/\D/g, '');
+      return digits.length === 10 ? '91' + digits : digits;
+    }
+
+    function dispatchWaOrSms(mobile, messageText, mode = 'wa') {
+      if (!mobile) return alert('Customer mobile number not found!');
+      const encoded = encodeURIComponent(messageText);
+      if (mode === 'sms') {
+        window.open(`sms:+91${String(mobile).replace(/\D/g, '').slice(-10)}?body=${encoded}`, '_blank');
+      } else {
+        window.open(`https://wa.me/${cleanPhoneForWa(mobile)}?text=${encoded}`, '_blank');
+      }
+    }
+
+    function sendStageNotificationToCustomer(orderId, mode = 'wa') {
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (!app) return;
+      const siteUrl = window.location.href.split('?')[0];
+      let msg = '';
+
+      if (app.status === 'Processing') {
+        msg = `Dear ${app.name},\n\nYour loan application (Order ID: *${app.orderId}*) for Rs. ${app.amount} has been received and is currently *Under Processing* at RNS FINANCE.\n\nPlease wait while our team reviews your profile. Track live status here:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      } else if (app.status === 'Verification') {
+        msg = `Dear ${app.name},\n\nYour loan application (Order ID: *${app.orderId}*) is now *Under Verification*.\nSanctioned Offer: *Rs. ${app.amount}* (${app.tenure} Months).\n${app.remarkText ? `\n⚠️ Action Required: ${app.remarkText}\n` : ''}\nPlease open the Tracking Portal and complete your KYC / NACH verification steps immediately:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      } else if (app.status === 'Approved') {
+        msg = `Congratulations ${app.name}! 🎉\n\nYour loan application (Order ID: *${app.orderId}*) of *Rs. ${app.amount}* has been *FULLY APPROVED* by RNS FINANCE.\nMonthly EMI: Rs. ${app.monthlyEmi} for ${app.tenure} Months.\n\nDownload your Loan Agreement and check disbursal status on our portal:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      } else if (app.status === 'Loan Running') {
+        msg = `Dear ${app.name},\n\nYour Loan Account (Order ID: *${app.orderId}*) is currently *Active & Running*.\nMonthly EMI: *Rs. ${app.monthlyEmi}* | Paid Installments: ${app.emis.length}/${app.tenure}.\n\nPlease ensure timely EMI payment to maintain a strong CIBIL score. Track or pay EMI here:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      } else if (app.status === 'Rejected') {
+        msg = `Dear ${app.name},\n\nWe regret to inform you that your loan application (Order ID: *${app.orderId}*) could not be approved at this time due to internal credit and verification norms.\n\nYou may re-apply after 30 days with updated documents.\n\n— Team RNS FINANCE`;
+      } else if (app.status === 'Loan Closed') {
+        msg = `Dear ${app.name}, 🎓\n\nCongratulations! Your Loan Account (Order ID: *${app.orderId}*) with RNS FINANCE has been *100% Paid & Officially CLOSED* with Zero Dues.\n\nYou can download your official *No-Dues Certificate (NOC)* anytime from our portal:\n${siteUrl}\n\nThank you for choosing RNS FINANCE!`;
+      }
+      dispatchWaOrSms(app.mobile, msg, mode);
+    }
+
+    // LIVE BUSINESS PROFIT & CASHFLOW SUMMARY BAR CALCULATOR
+    function updateOwnerBusinessSummaryBar() {
+      const db = getCloudData();
+      const validApps = (db.applications || []).filter(a => ['Approved', 'Loan Running', 'Loan Closed'].includes(a.status));
+      let totalDisbursed = 0, totalCollected = 0, totalExpectedPayable = 0, totalFeesAndProfit = 0;
+
+      validApps.forEach(a => {
+        const principal = Number(a.amount) || 0;
+        const rate = Number(a.customInterestRate) || parseFloat(db.agreementSettings.interestRate) || 3;
+        const extraInt = Math.round(principal * (rate / 100) * (Number(a.tenure) || 6));
+        const procFee = Math.round(a.totalFee || ((Number(a.processingFee) || 0) + (Number(a.gstFee) || 0)));
+        const insFee = a.insuranceOpted ? Math.round(Number(a.insuranceAmount) || 0) : 0;
+        const lateFees = (a.emis || []).reduce((s, e) => s + (Number(e.lateFee) || 0), 0);
+        const collectedEmis = (a.emis || []).reduce((s, e) => s + (Number(e.amount) || 0), 0);
+
+        totalDisbursed += principal;
+        totalCollected += (collectedEmis + lateFees);
+        if (a.status !== 'Loan Closed') {
+          totalExpectedPayable += Math.max(0, (principal + extraInt) - collectedEmis);
+        }
+        totalFeesAndProfit += (procFee + insFee + extraInt + lateFees);
+      });
+
+      const elDisb = document.getElementById('sumTotalDisbursed');
+      const elColl = document.getElementById('sumTotalCollected');
+      const elOut = document.getElementById('sumMarketOutstanding');
+      const elProf = document.getElementById('sumNetProfit');
+      if (elDisb) elDisb.innerText = `₹${totalDisbursed.toLocaleString('en-IN')}`;
+      if (elColl) elColl.innerText = `₹${totalCollected.toLocaleString('en-IN')}`;
+      if (elOut) elOut.innerText = `₹${totalExpectedPayable.toLocaleString('en-IN')}`;
+      if (elProf) elProf.innerText = `₹${totalFeesAndProfit.toLocaleString('en-IN')}`;
+    }
+
+    // 1-CLICK FULL BACKUP DOWNLOAD & RESTORE
+    function downloadFullJsonBackup() {
+      const db = getCloudData();
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(db, null, 2));
+      const a = document.createElement('a');
+      a.setAttribute("href", dataStr);
+      a.setAttribute("download", `RNS_FINANCE_Backup_${new Date().toISOString().split('T')[0]}.json`);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      showCloudNotification('💾 Full Master Backup Downloaded!');
+    }
+
+    function restoreFullJsonBackup(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const imported = JSON.parse(e.target.result);
+          if (!imported || !Array.isArray(imported.applications)) {
+            return alert('❌ Invalid Backup JSON File!');
+          }
+          const merged = mergeCloudDatabases(getCloudData(), imported);
+          saveCloudData(merged, '✅ Master Backup Restored & Synced to Supabase Cloud!');
+          refreshAllActivePortalViews();
+          alert('✅ Full Backup Restored & Synced Successfully!');
+        } catch (err) {
+          alert('❌ Error reading backup file!');
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    // DEFAULTER / RED FLAG ALERT SYSTEM
+    function isCustomerMarkedDefaulter(app) {
+      if (!app) return false;
+      if (app.isDefaulter) return true;
+      const db = getCloudData();
+      const list = db.defaulters || [];
+      return list.includes(app.mobile) || list.includes((app.pan || '').toUpperCase());
+    }
+
+    function toggleDefaulterFlag(orderId) {
+      const db = getCloudData();
+      if (!db.defaulters) db.defaulters = [];
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (!app) return;
+
+      const currentlyFlagged = isCustomerMarkedDefaulter(app);
+      app.isDefaulter = !currentlyFlagged;
+      const panKey = (app.pan || '').toUpperCase();
+      if (app.isDefaulter) {
+        if (app.mobile && !db.defaulters.includes(app.mobile)) db.defaulters.push(app.mobile);
+        if (panKey && !db.defaulters.includes(panKey)) db.defaulters.push(panKey);
+      } else {
+        db.defaulters = db.defaulters.filter(x => x !== app.mobile && x !== panKey);
+      }
+      app.updatedAt = Date.now();
+      saveCloudData(db, app.isDefaulter ? '⚠️ Marked as Defaulter / Red Flag!' : '✅ Defaulter Flag Removed!');
+      renderSingleOwnerApplication(orderId);
+    }
+
+    function cleanSafeUrl(url) {
+      if (!url || typeof url !== 'string') return '';
+      const trimmed = url.trim();
+      if (trimmed.includes('<') || trimmed.includes('>') || trimmed.includes('"') || trimmed.includes("'") || trimmed.length > 300) return '';
+      return trimmed;
+    }
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function isValidEmail(email) {
+      const re = /^[a-zA-Z0-9._%+-]{3,}@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!re.test(email)) return false;
+      const lower = email.toLowerCase();
+      if (lower.startsWith('abcd@') || lower.startsWith('test@') || lower.startsWith('1234@') || lower.startsWith('xyz@')) return false;
+      return true;
+    }
+
+    function isValidMobile(mobile) {
+      if (!/^[6-9]\d{9}$/.test(mobile)) return false;
+      if (/^(\d)\1{9}$/.test(mobile)) return false;
+      return true;
+    }
+
+    function getOrdinalSuffix(n) {
+      const s = ["th", "st", "nd", "rd"], v = n % 100;
+      return n + (s[(v - 20) % 10] || s[v] || s[0]);
+    }
+
+    function getCustomerLatestSignature(app) {
+      if (app.reuploadedDocs && app.reuploadedDocs.length > 0) {
+        const reSigns = app.reuploadedDocs.filter(r => r.type === 'sign' && r.data && r.data.startsWith('data:image'));
+        if (reSigns.length > 0) return reSigns[reSigns.length - 1].data;
+      }
+      if (app.docs && app.docs.sign && app.docs.sign.startsWith('data:image')) return app.docs.sign;
+      return '';
+    }
+
+    function showCloudNotification(msg) {
+      const t = document.getElementById('cloudToast');
+      const m = document.getElementById('cloudToastMsg');
+      if (!t || !m) return;
+      m.innerText = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2500);
+    }
+
+    function isUserCurrentlyTyping() {
+      const active = document.activeElement;
+      if (!active) return false;
+      const tag = active.tagName.toLowerCase();
+      if ((tag === 'input' || tag === 'textarea' || tag === 'select') && active.id !== 'trackSearchInput') {
+        return true;
+      }
+      if (active.isContentEditable) return true;
+      return false;
+    }
+
+    function getCloudData() {
+      if (window._RNS_RAM_DB && typeof window._RNS_RAM_DB === 'object') {
+        return window._RNS_RAM_DB;
+      }
+      try {
+        const raw = localStorage.getItem('RNS_FINANCE_CLOUD_DB');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (!parsed.agreementSettings || parsed.agreementSettings.customBody.includes('संपत्ति')) {
+            parsed.agreementSettings = {
+              interestRate: '3% Monthly',
+              emiDate: '5',
+              nachPenalty: 'Rs. 500 per bounce',
+              latePenalty: '3% per month additional',
+              penaltyText: '3% per month additional | NACH: Rs. 500 per bounce',
+              customBody: DEFAULT_AGREEMENT_CLAUSES
+            };
+          }
+          if (!parsed.deletedOrderIds) parsed.deletedOrderIds = [];
+          if (!parsed.orderAgreements) parsed.orderAgreements = {};
+          if (!parsed.promos) parsed.promos = [];
+          if (!parsed.investors) parsed.investors = [];
+          if (!parsed.defaulters) parsed.defaulters = [];
+          if (!parsed.feedbacks) parsed.feedbacks = [
+            { name: 'Amit Kumar', mobile: '98******12', rating: 5, comment: 'Very fast loan approval and transparent EMI process!', date: '28/10/2026' },
+            { name: 'Priya Sharma', mobile: '87******45', rating: 5, comment: 'Online shopping finance was approved within hours. Great service!', date: '29/10/2026' },
+            { name: 'Vikash Verma', mobile: '76******89', rating: 4, comment: 'Helpful support team and easy NACH mandate process.', date: '30/10/2026' }
+          ];
+          if (!parsed.applications) parsed.applications = [];
+          parsed.applications.forEach(a => {
+            if (a.status === 'Pending') a.status = 'Processing';
+            a.nachLink = cleanSafeUrl(a.nachLink);
+            if (!a.upiId) a.upiId = 'rahul9656170@slc';
+            if (!a.docs) a.docs = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
+          });
+          window._RNS_RAM_DB = parsed;
+          return parsed;
+        }
+      } catch (e) {}
+      const init = {
+        lastModifiedTs: 0,
+        deletedOrderIds: [],
+        agreementSettings: {
+          interestRate: '3% Monthly',
+          emiDate: '5',
+          nachPenalty: 'Rs. 500 per bounce',
+          latePenalty: '3% per month additional',
+          penaltyText: '3% per month additional | NACH: Rs. 500 per bounce',
+          customBody: DEFAULT_AGREEMENT_CLAUSES
+        },
+        orderAgreements: {},
+        promos: [{ code: 'DIWALI200', target: 'All Customers', type: 'FLAT', value: 200, minLoan: 1000, maxLoan: 50000, expiryDate: '2027-12-31' }],
+        investors: [],
+        defaulters: [],
+        feedbacks: [
+          { name: 'Amit Kumar', mobile: '98******12', rating: 5, comment: 'Very fast loan approval and transparent EMI process!', date: '28/10/2026' },
+          { name: 'Priya Sharma', mobile: '87******45', rating: 5, comment: 'Online shopping finance was approved within hours. Great service!', date: '29/10/2026' },
+          { name: 'Vikash Verma', mobile: '76******89', rating: 4, comment: 'Helpful support team and easy NACH mandate process.', date: '30/10/2026' }
+        ],
+        applications: []
+      };
+      safePersistLocalDB(init, false);
+      return init;
+    }
+
+    function toggleTheme() { document.body.classList.toggle('dark-mode'); }
+
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'hi' : 'en';
+      const isHi = (currentLang === 'hi');
+      document.getElementById('langBtnText').innerText = isHi ? 'English / हिंदी' : 'हिंदी / English';
+      document.getElementById('txtHeroTitle').innerText = isHi ? 'पर्सनल लोन एवं ऑनलाइन शॉपिंग फाइनेंस सेवाएँ' : 'Personal Loan & Online Shopping Finance Services';
+      document.getElementById('txtHeroSub').innerText = isHi ? 'न्यूनतम दस्तावेज • लाइव क्लाउड सिंक • ऑटो-OCR जांच • 1 से 24 महीने की किस्तें' : 'Minimal Documentation • Live Cloud Sync • Auto-OCR Verification • 1 to 24 Months EMI';
+      document.getElementById('txtComplaintTop').innerText = isHi ? 'किसी भी शिकायत या सहायता के लिए ईमेल करें — तुरंत शिकायत दर्ज करने के लिए नीचे ईमेल पर टैप करें:' : 'For any grievance or support, email us — tap the email ID below to register your complaint instantly:';
+      document.getElementById('txtComplaintSub').innerText = isHi ? '(सीधे ईमेल भेजने के लिए ऊपर दी गई ईमेल आईडी पर टैप करें)' : '(Tap on the email ID above to send an email directly)';
+      document.getElementById('txtTabNew').innerText = isHi ? 'New Customer (नया आवेदन)' : 'New Customer Application';
+      document.getElementById('txtTabNewSub').innerText = isHi ? 'पर्सनल या शॉपिंग लोन के लिए आवेदन करें' : 'Apply for Personal or Online Shopping Loan';
+      document.getElementById('txtTabTrack').innerText = isHi ? 'Tracking Services (लोन एवं इन्वेस्टर ट्रैक)' : 'Tracking Services (Loan & Investor)';
+      document.getElementById('txtTabTrackSub').innerText = isHi ? 'Order ID, अंतिम 4 अंक या इन्वेस्टर कोड से ट्रैक करें' : 'Track by Order ID, Last 4 Digits or Investor Code';
+      document.getElementById('txtTabCibil').innerText = isHi ? 'Check CIBIL Score (सिबिल स्कोर)' : 'Check CIBIL Score';
+      document.getElementById('txtTabCibilSub').innerText = isHi ? 'मुफ्त में अपना सिबिल स्कोर तुरंत जांचें' : 'Check your credit score for free';
+      document.getElementById('txtFormHeading').innerText = isHi ? 'नया ऋण आवेदन फॉर्म (New Loan Application)' : 'New Loan Application Form';
+      document.getElementById('txtTrackBoxHeading').innerText = isHi ? '📦 कस्टमर लोन, वेरिफिकेशन, UPI QR एवं किस्त रसीद ट्रैक करें' : '📦 Customer Loan, Verification, UPI QR & EMI Tracking';
+      showCloudNotification(isHi ? 'भाषा हिंदी में बदल गई है' : 'Language switched to English');
+    }
+
+    function toggleShoppingAddressField() {
+      const type = document.getElementById('appLoanType').value;
+      const box = document.getElementById('shoppingAddressContainer');
+      const addrInput = document.getElementById('appDeliveryAddress');
+      if (type === 'Online Shopping Loan') {
+        box.classList.remove('hidden');
+        addrInput.required = true;
+      } else {
+        box.classList.add('hidden');
+        addrInput.required = false;
+      }
+    }
+
+    function switchMainView(view) {
+      document.getElementById('customerPortalSection').classList.toggle('hidden', view !== 'customer');
+      document.getElementById('ownerPortalSection').classList.toggle('hidden', view === 'customer');
+      if (view === 'owner') {
+        update1GBCloudStorageMeter();
+        updateOwnerBusinessSummaryBar();
+        renderOwnerApplications();
+        renderPromoCodes();
+        populateCollectAppDropdown();
+        populateUpiCustomerDropdown();
+        populateAgreementOrderDropdown();
+        renderInvestorsSection();
+        triggerCloudScan('ACTIVE', false);
+      }
+    }
+
+    function openOwnerPortalPrompt() {
+      const pin = prompt('Enter Owner Portal Password:', '');
+      if (pin === '7402') {
+        switchMainView('owner');
+        showCloudNotification('Welcome to Owner Portal!');
+      } else if (pin !== null) {
+        alert('Invalid Password!');
+      }
+    }
+
+    function switchCustomerTab(tab) {
+      switchMainView('customer');
+      document.getElementById('viewNewCustomer').classList.toggle('hidden', tab !== 'new');
+      document.getElementById('viewTrackCustomer').classList.toggle('hidden', tab !== 'track');
+      document.getElementById('viewCibilCheck').classList.toggle('hidden', tab !== 'cibil');
+
+      const btnNew = document.getElementById('tabNewCustomer');
+      const btnTrack = document.getElementById('tabTrackCustomer');
+      const btnCibil = document.getElementById('tabCibilCheck');
+
+      btnNew.className = tab === 'new'
+        ? 'tab-btn p-4 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-extrabold text-left flex items-center justify-between shadow-inner'
+        : 'tab-btn p-4 rounded-xl border-2 border-emerald-700 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-left flex items-center justify-between shadow';
+
+      btnTrack.className = tab === 'track'
+        ? 'tab-btn p-4 rounded-xl border-2 border-indigo-500 bg-indigo-100 text-indigo-950 font-extrabold text-left flex items-center justify-between shadow-inner'
+        : 'tab-btn p-4 rounded-xl border-2 border-indigo-700 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-left flex items-center justify-between shadow';
+
+      btnCibil.className = tab === 'cibil'
+        ? 'tab-btn p-4 rounded-xl border-2 border-amber-500 bg-amber-100 text-amber-950 font-extrabold text-left flex items-center justify-between shadow-inner'
+        : 'tab-btn p-4 rounded-xl border-2 border-amber-600 bg-amber-500 hover:bg-amber-600 text-white font-bold text-left flex items-center justify-between shadow';
+    }
+
+    function switchOwnerTab(tab) {
+      ['apps', 'nach', 'upi', 'collect', 'agreement', 'promo', 'investor'].forEach(t => {
+        const el = document.getElementById('ownerView' + t.charAt(0).toUpperCase() + t.slice(1));
+        if (el) el.classList.toggle('hidden', tab !== t);
+      });
+      update1GBCloudStorageMeter();
+      updateOwnerBusinessSummaryBar();
+      if (tab === 'apps') renderOwnerApplications();
+      if (tab === 'upi') populateUpiCustomerDropdown();
+      if (tab === 'collect') populateCollectAppDropdown();
+      if (tab === 'agreement') { currentEditingAgreementOrderId = ''; populateAgreementOrderDropdown(); }
+      if (tab === 'promo') renderPromoCodes();
+      if (tab === 'investor') renderInvestorsSection();
+    }
+
+    function updateFeeCalculation() {
+      const amount = parseFloat(document.getElementById('appLoanAmount').value) || 0;
+      let slabFee = 300;
+      if (amount <= 5000) slabFee = 300;
+      else if (amount <= 15000) slabFee = 600;
+      else slabFee = 1000;
+
+      const baseFee = Math.round(Math.max(0, slabFee - appliedPromoDiscount));
+      const gst = Math.round(baseFee * 0.18);
+      const total = Math.round(baseFee + gst);
+
+      document.getElementById('dispProcFee').innerText = `₹${baseFee}`;
+      document.getElementById('dispDiscount').innerText = `-₹${appliedPromoDiscount}`;
+      document.getElementById('dispGstFee').innerText = `₹${gst}`;
+      document.getElementById('dispTotalFee').innerText = `₹${total}`;
+      return { baseFee, gst, total };
+    }
+
+    // PROMO CODE VALIDATION WITH EXPIRY DATE & MIN-MAX LOAN RANGE
+    function applyPromoCode() {
+      const code = document.getElementById('appPromoInput').value.trim().toUpperCase();
+      const custType = document.getElementById('appCustomerType').value;
+      const loanAmt = parseFloat(document.getElementById('appLoanAmount').value) || 0;
+      const db = getCloudData();
+      const found = db.promos.find(p => p.code === code);
+      if (!found) {
+        appliedPromoDiscount = 0;
+        document.getElementById('promoMsg').innerText = '❌ Invalid Promo Code';
+        document.getElementById('promoMsg').className = 'font-bold text-rose-600';
+        updateFeeCalculation();
+        return;
+      }
+      const todayStr = new Date().toISOString().split('T')[0];
+      if (found.expiryDate && todayStr > found.expiryDate) {
+        appliedPromoDiscount = 0;
+        document.getElementById('promoMsg').innerText = `❌ Promo Expired on ${found.expiryDate}`;
+        document.getElementById('promoMsg').className = 'font-bold text-rose-600';
+        updateFeeCalculation();
+        return;
+      }
+      if (found.target !== 'All Customers' && found.target !== custType) {
+        appliedPromoDiscount = 0;
+        document.getElementById('promoMsg').innerText = `❌ Only for ${found.target}`;
+        document.getElementById('promoMsg').className = 'font-bold text-rose-600';
+        updateFeeCalculation();
+        return;
+      }
+      const minL = Number(found.minLoan) || 1;
+      const maxL = Number(found.maxLoan) || 500000;
+      if (loanAmt < minL || loanAmt > maxL) {
+        appliedPromoDiscount = 0;
+        document.getElementById('promoMsg').innerText = `❌ Valid only for Loan ₹${minL} - ₹${maxL}`;
+        document.getElementById('promoMsg').className = 'font-bold text-rose-600';
+        updateFeeCalculation();
+        return;
+      }
+      let slab = loanAmt <= 5000 ? 300 : (loanAmt <= 15000 ? 600 : 1000);
+      appliedPromoDiscount = found.type === 'PERCENT' ? Math.round((slab * found.value) / 100) : Math.round(found.value);
+      document.getElementById('promoMsg').innerText = `✅ ₹${appliedPromoDiscount} Off Applied!`;
+      document.getElementById('promoMsg').className = 'font-bold text-emerald-600';
+      updateFeeCalculation();
+    }
+
+    // CUSTOMER FEEDBACK SYSTEM (INSTANT MULTI-PHONE SYNC)
+    function submitCustomerFeedback(e) {
+      e.preventDefault();
+      const name = document.getElementById('fbName').value.trim();
+      const mob = document.getElementById('fbMobile').value.trim();
+      const rating = parseInt(document.getElementById('fbRating').value) || 5;
+      const comment = document.getElementById('fbComment').value.trim();
+      if (!isValidMobile(mob)) return alert('Please enter a valid 10-digit mobile number!');
+      const maskedMob = mob.slice(0, 2) + '******' + mob.slice(-2);
+      const db = getCloudData();
+      db.feedbacks.unshift({
+        name,
+        mobile: maskedMob,
+        rating,
+        comment,
+        date: new Date().toLocaleDateString('hi-IN')
+      });
+      saveCloudData(db, '🌟 Feedback Posted & Synced via Live Cloud!');
+      document.getElementById('feedbackForm').reset();
+      renderCustomerFeedbacks();
+    }
+
+    function toggleViewMoreFeedbacks() {
+      showAllFeedbacks = !showAllFeedbacks;
+      renderCustomerFeedbacks();
+    }
+
+    function renderCustomerFeedbacks() {
+      const db = getCloudData();
+      const list = db.feedbacks || [];
+      const container = document.getElementById('customerFeedbackListContainer');
+      const btnMore = document.getElementById('btnToggleFeedbackMore');
+      if (!container) return;
+
+      if (list.length > 3) {
+        btnMore.classList.remove('hidden');
+        btnMore.innerText = showAllFeedbacks ? 'Show Less ▴' : `View More (${list.length - 3} more) ▾`;
+      } else {
+        btnMore.classList.add('hidden');
+      }
+
+      const visibleItems = showAllFeedbacks ? list : list.slice(0, 3);
+      container.innerHTML = visibleItems.map(f => {
+        const stars = '★'.repeat(f.rating) + '☆'.repeat(5 - f.rating);
+        return `
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border space-y-1">
+            <div class="flex items-center justify-between">
+              <strong class="text-slate-900 dark:text-white">${escapeHtml(f.name)} <span class="text-[10px] text-slate-400 font-normal">(${escapeHtml(f.mobile)})</span></strong>
+              <span class="text-amber-500 font-extrabold tracking-tight">${stars}</span>
+            </div>
+            <p class="text-slate-600 dark:text-slate-300 text-[11px] leading-snug">"${escapeHtml(f.comment)}"</p>
+            <div class="text-[9px] text-slate-400 text-right">${escapeHtml(f.date || '')}</div>
+          </div>`;
+      }).join('');
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const idbSaved = await loadFromIndexedDB('MAIN_DB');
+      const localDB = getCloudData();
+      const db = idbSaved ? mergeCloudDatabases(localDB, idbSaved) : localDB;
+      safePersistLocalDB(db, false);
+
+      updateFeeCalculation();
+      toggleShoppingAddressField();
+      renderCustomerFeedbacks();
+      updateOwnerBusinessSummaryBar();
+      switchCustomerTab('new');
+      document.getElementById('agrInterestRate').value = db.agreementSettings.interestRate || '3% Monthly';
+      document.getElementById('agrEmiDate').value = db.agreementSettings.emiDate || '5';
+      document.getElementById('agrNachPenalty').value = db.agreementSettings.nachPenalty || 'Rs. 500 per bounce';
+      document.getElementById('agrLatePenalty').value = db.agreementSettings.latePenalty || '3% per month additional';
+      document.getElementById('agrCustomBody').value = db.agreementSettings.customBody || DEFAULT_AGREEMENT_CLAUSES;
+      renderPromoCodes();
+
+      // Start Supabase Realtime Channel + Initial Scan
+      startLiveCloudStream();
+      triggerCloudScan('FULL', false);
+
+      window.addEventListener('online', () => { startLiveCloudStream(); triggerCloudScan('FULL', false); });
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) triggerCloudScan('ACTIVE', false);
+      });
+
+      // Fast 4-Second Real-Time Poll Backup
+      setInterval(() => { triggerCloudScan('DELTA', false); }, 4000);
+    });
+  </script>
+<!-- END OF PART 3 -->
 <!-- START OF PART 4 -->
   <script>
     async function submitLoanApplication(e) {
@@ -1351,15 +2183,15 @@
       if (!isValidMobile(refMobile)) return alert('❌ Invalid Reference Mobile Number! Please enter a valid 10-digit family/reference mobile number.');
       if (mobile === refMobile) return alert('❌ Applicant Mobile and Reference Mobile cannot be the same!');
       if (!isValidEmail(email)) return alert('❌ Invalid Email ID! Please enter a genuine Email ID (e.g. name@gmail.com).');
-      if (!/^\d{12}$/.test(idNum)) return alert('❌ Please enter a valid 12-digit Aadhaar Card Number!');
+      if (!/^\d{12}$/.test(idNum)) return alert('❌ Please enter a valid 12-digit KYC ID Number!');
       if (loanType === 'Online Shopping Loan' && !deliveryAddr) return alert('❌ Please enter the complete Delivery Address for your Online Shopping order!');
-      if (!uploadedDocsTemp.pan || !uploadedDocsTemp.photo || !uploadedDocsTemp.sign) return alert('❌ Please upload PAN Card, Photo, and Signature (Max 1 MB each)!');
-      if (!uploadedDocsTemp.statement) return alert('❌ Please upload your 3 Months Bank Statement (Max 2 MB)!');
+      if (!uploadedDocsTemp.pan || !uploadedDocsTemp.photo || !uploadedDocsTemp.sign) return alert('❌ Please upload PAN Card, Photo, and Signature!');
+      if (!uploadedDocsTemp.statement) return alert('❌ Please upload your 3 Months Bank Statement!');
 
       const btn = document.getElementById('btnSubmitLoanApp');
       if (btn) {
         btn.disabled = true;
-        btn.innerText = '⚡ Generating Instant Order ID...';
+        btn.innerText = '⚡ Syncing via Firebase Cloud...';
       }
 
       const db = getCloudData();
@@ -1377,9 +2209,18 @@
       const ifsc = document.getElementById('appIfsc').value.trim().toUpperCase();
       const purpose = document.getElementById('appPurpose').value.trim();
 
-      // Auto-check if applicant's Mobile or PAN is in Defaulter Red-Flag list
+      // 1. Check Defaulter Red-Flag list
       const defList = db.defaulters || [];
       const autoDefaulterFlag = defList.includes(mobile) || defList.includes(panNum);
+
+      // 2. Check Tesseract.js Auto-OCR Mismatch Warning (Does NOT block form, flags on Owner Portal)
+      let ocrMismatchWarning = '';
+      const scannedPan = (ocrTempResult && ocrTempResult.scannedPan) ? ocrTempResult.scannedPan.trim().toUpperCase() : '';
+      if (scannedPan && scannedPan !== panNum) {
+        ocrMismatchWarning = `⚠️ Data Mismatch Warning: User Typed (${panNum}) vs OCR Scanned (${scannedPan})`;
+      } else if (ocrTempResult && ocrTempResult.status === 'Done' && !scannedPan && ocrTempResult.rawText.length > 5 && !ocrTempResult.rawText.includes(panNum)) {
+        ocrMismatchWarning = `⚠️ Data Mismatch Warning: User Typed (${panNum}) vs OCR Scanned (Unmatched/Unclear Card Text)`;
+      }
 
       const newRecord = {
         orderId,
@@ -1406,6 +2247,8 @@
         email,
         aadhaar: idNum,
         pan: panNum,
+        ocrScannedPan: scannedPan || 'Auto-Checked',
+        ocrMismatchWarning,
         refName,
         refMobile,
         isDefaulter: autoDefaulterFlag,
@@ -1422,6 +2265,8 @@
         insuranceNote: '',
         insurancePdfData: '',
         insurancePdfName: '',
+        ownerReminderPdfData: '',
+        ownerReminderPdfName: '',
         aadhaarVerifyInput: '',
         aadhaarStep1Done: false,
         aadhaarOtpInput: '',
@@ -1447,19 +2292,23 @@
 
       db.applications.unshift(newRecord);
       safePersistLocalDB(db);
-
-      // Push to Global Cloud in background immediately so Order ID is issued in <1 second!
       pushToGlobalCloud(db);
 
       if (btn) {
         btn.disabled = false;
-        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Submit Application & Get Instant Order ID';
+        btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up mr-1"></i> Submit Application & Sync via Firebase Cloud';
       }
       showCloudNotification(`✅ Instant Order ID Generated: ${orderId}`);
       alert(`🎉 Application Submitted Successfully!\nYour Instant Order ID: ${orderId}`);
 
       document.getElementById('loanApplicationForm').reset();
       uploadedDocsTemp = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
+      ocrTempResult = { scannedPan: '', rawText: '', status: 'Idle' };
+      const ocrBadge = document.getElementById('ocrLiveStatusBadge');
+      if (ocrBadge) {
+        ocrBadge.innerText = '🤖 Tesseract Auto-OCR Ready';
+        ocrBadge.className = 'text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-800 border border-indigo-200';
+      }
       ['pan','photo','sign'].forEach(k => {
         const el = document.getElementById('prev_' + k);
         if (el) el.classList.add('hidden');
@@ -1609,7 +2458,7 @@
         </div>`;
     }
 
-    // CUSTOMER TRACKING CARD: BLANK INTEREST (—) UNTIL VERIFICATION OFFER IS SAVED + CUSTOMER UTR SCREENSHOT UPLOAD
+    // CUSTOMER TRACKING CARD: BLANK INTEREST (—) UNTIL VERIFICATION OFFER IS SAVED + OPTIONAL UTR SCREENSHOT
     function renderCustomerTrackingCard(app) {
       const db = getCloudData();
       const container = document.getElementById('trackingResultContainer');
@@ -1678,25 +2527,25 @@
       if (inVerificationOrLater) {
         const aadhaarSection = isAadhaarVerified ? `
           <div class="bg-emerald-100/90 dark:bg-slate-900 p-3 rounded-xl border-2 border-emerald-600 flex items-center justify-between">
-            <span class="font-extrabold text-emerald-950 dark:text-emerald-300">🆔 Step 1: Aadhaar e-KYC Verification</span>
+            <span class="font-extrabold text-emerald-950 dark:text-emerald-300">🆔 Step 1: Digital e-KYC Verification</span>
             <span class="px-3 py-1 rounded-full bg-emerald-700 text-white font-extrabold text-xs">✔ Verified</span>
           </div>
         ` : `
           <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border-2 border-indigo-400 space-y-2.5">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <span class="font-extrabold text-indigo-900 dark:text-indigo-300 block">🆔 Step 1: Aadhaar e-KYC Verification</span>
+                <span class="font-extrabold text-indigo-900 dark:text-indigo-300 block">🆔 Step 1: Digital e-KYC Verification</span>
                 <span class="text-[11px] text-slate-500">Status: <strong class="text-amber-700">${escapeHtml(app.aadhaarAuthStatus || 'Pending Verification')}</strong></span>
               </div>
               <button type="button" onclick="document.getElementById('aadhaarAuthBox_${escapeHtml(app.orderId)}').classList.toggle('hidden')" class="px-3.5 py-1.5 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white font-extrabold shadow">
-                Please Verify Your Aadhaar
+                Please Verify Your KYC ID
               </button>
             </div>
             <div id="aadhaarAuthBox_${escapeHtml(app.orderId)}" class="pt-2 border-t space-y-3">
               <div class="space-y-1">
-                <label class="block font-bold text-[11px]">1. Enter 12-Digit Aadhaar Card Number & Click Send *</label>
+                <label class="block font-bold text-[11px]">1. Enter 12-Digit KYC ID Number & Click Send *</label>
                 <div class="flex gap-2">
-                  <input type="text" id="custAadhaarInput_${escapeHtml(app.orderId)}" maxlength="12" value="${escapeHtml(app.aadhaarVerifyInput || '')}" placeholder="Enter 12-digit Aadhaar number" class="flex-grow rounded-lg border px-3 py-1.5 font-mono font-bold">
+                  <input type="text" id="custAadhaarInput_${escapeHtml(app.orderId)}" maxlength="12" value="${escapeHtml(app.aadhaarVerifyInput || '')}" placeholder="Enter 12-digit ID number" class="flex-grow rounded-lg border px-3 py-1.5 font-mono font-bold">
                   <button type="button" onclick="sendCustomerAadhaarStep1('${escapeHtml(app.orderId)}')" class="px-5 py-1.5 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white font-extrabold">Send</button>
                 </div>
               </div>
@@ -1764,7 +2613,7 @@
           </div>`;
       }
 
-      // UPI QR CODE + CUSTOMER UTR & SCREENSHOT SUBMISSION BOX
+      // UPI QR CODE + CUSTOMER UTR SUBMISSION BOX (SCREENSHOT IS NOW OPTIONAL)
       let upiQrSectionHtml = '';
       if (inApprovedOrRunning && app.status !== 'Loan Closed') {
         const upiId = app.upiId || 'rahul9656170@slc';
@@ -1804,18 +2653,21 @@
               </div>
             </div>
 
-            <!-- PAY EMI & UPLOAD UTR / SCREENSHOT BOX FOR CUSTOMER -->
+            <!-- PAY EMI & SUBMIT UTR / REFERENCE NO. (SCREENSHOT OPTIONAL) -->
             <div class="bg-white dark:bg-slate-900 p-3.5 rounded-xl border-2 border-emerald-500 space-y-2.5">
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="font-extrabold text-emerald-900 dark:text-emerald-300">📸 Paid via UPI QR? Submit UTR / Transaction No. & Payment Screenshot for Instant Receipt:</span>
+                <span class="font-extrabold text-emerald-900 dark:text-emerald-300">📸 Paid via UPI QR? Enter UTR / Reference No. & Submit (Screenshot is Optional):</span>
                 ${pendingCount > 0 ? `<span class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 font-bold text-[11px]">⏳ ${pendingCount} Payment Proof Pending Owner Verification</span>` : ''}
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 items-center">
-                <input type="text" id="custUtrNo_${escapeHtml(app.orderId)}" placeholder="12-Digit UTR / Txn ID *" class="rounded-lg border px-3 py-1.5 font-mono font-bold">
+                <input type="text" id="custUtrNo_${escapeHtml(app.orderId)}" placeholder="UTR / Reference No. *" class="rounded-lg border px-3 py-1.5 font-mono font-bold">
                 <input type="number" id="custUtrAmt_${escapeHtml(app.orderId)}" value="${upiAmt}" placeholder="Paid Amount (₹) *" class="rounded-lg border px-3 py-1.5 font-extrabold text-emerald-700">
-                <input type="file" accept="image/*" onchange="handleCustomerUtrScreenshot(event)" class="text-[11px]">
+                <div>
+                  <label class="block text-[9px] font-bold text-slate-500 mb-0.5">Screenshot (Optional):</label>
+                  <input type="file" accept="image/*" onchange="handleCustomerUtrScreenshot(event)" class="text-[10px] w-full">
+                </div>
                 <button type="button" onclick="submitCustomerUtrProof('${escapeHtml(app.orderId)}')" class="py-2 px-3 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
-                  ✅ Submit Payment Proof
+                  ✅ Submit UTR / Proof
                 </button>
               </div>
             </div>
@@ -1912,34 +2764,39 @@
         </div>`;
     }
 
-    // CUSTOMER UTR & PAYMENT SCREENSHOT UPLOAD HANDLERS
+    // CUSTOMER UTR & OPTIONAL SCREENSHOT UPLOAD HANDLERS (500 KB RULE APPLIED)
     function handleCustomerUtrScreenshot(event) {
       const file = event.target.files[0];
-      if (!file) return;
+      if (!file) { tempCustomerUtrScreenshot = ''; return; }
+      const sizeBytes = file.size;
       const reader = new FileReader();
       reader.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const scale = Math.min(1, 500 / Math.max(img.width, img.height));
-          canvas.width = Math.round(img.width * scale);
-          canvas.height = Math.round(img.height * scale);
-          const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          tempCustomerUtrScreenshot = canvas.toDataURL('image/jpeg', 0.65);
-        };
-        img.src = e.target.result;
+        if (sizeBytes <= 500 * 1024) {
+          tempCustomerUtrScreenshot = e.target.result;
+        } else {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const scale = Math.min(1, 550 / Math.max(img.width, img.height));
+            canvas.width = Math.round(img.width * scale);
+            canvas.height = Math.round(img.height * scale);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            tempCustomerUtrScreenshot = canvas.toDataURL('image/jpeg', 0.68);
+          };
+          img.src = e.target.result;
+        }
       };
       reader.readAsDataURL(file);
     }
 
+    // SCREENSHOT IS OPTIONAL: SUBMITS IMMEDIATELY WITH UTR / REFERENCE NO.
     function submitCustomerUtrProof(orderId) {
       const utrNo = document.getElementById('custUtrNo_' + orderId).value.trim();
       const utrAmt = Math.round(parseFloat(document.getElementById('custUtrAmt_' + orderId).value) || 0);
-      if (!utrNo || utrAmt <= 0) return alert('Please enter your UTR / Transaction Number and Paid Amount!');
-      if (!tempCustomerUtrScreenshot) return alert('Please select your Payment Screenshot image!');
+      if (!utrNo || utrAmt <= 0) return alert('Please enter your UTR / Reference Number and Paid Amount!');
 
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
@@ -1951,13 +2808,13 @@
         utr: utrNo,
         amount: utrAmt,
         date: new Date().toLocaleDateString('hi-IN'),
-        screenshot: tempCustomerUtrScreenshot,
+        screenshot: tempCustomerUtrScreenshot || '', // Optional screenshot
         status: 'Pending'
       });
       tempCustomerUtrScreenshot = '';
       app.updatedAt = Date.now();
-      saveCloudData(db, '✅ Payment Screenshot & UTR Sent to Owner Portal!');
-      alert('✅ Your UTR & Payment Screenshot have been submitted! Once approved by Owner, your official EMI receipt will be generated automatically.');
+      saveCloudData(db, '✅ UTR / Payment Proof Sent to Owner Portal!');
+      alert('✅ Your UTR / Reference No. has been submitted for verification! Once approved by Owner, your official EMI receipt will be generated automatically.');
       renderCustomerTrackingCard(app);
     }
 
@@ -1977,15 +2834,15 @@
 
     function sendCustomerAadhaarStep1(orderId) {
       const aNum = document.getElementById('custAadhaarInput_' + orderId).value.trim();
-      if (!/^\d{12}$/.test(aNum)) return alert('Please enter a valid 12-digit Aadhaar number first!');
+      if (!/^\d{12}$/.test(aNum)) return alert('Please enter a valid 12-digit KYC ID number first!');
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
       if (app) {
         app.aadhaarVerifyInput = aNum;
         app.aadhaarStep1Done = true;
-        app.aadhaarAuthStatus = 'Aadhaar Number Sent - Enter OTP Below';
+        app.aadhaarAuthStatus = 'ID Number Sent - Enter OTP Below';
         app.updatedAt = Date.now();
-        saveCloudData(db, 'Aadhaar Number Sent! Now enter OTP below.');
+        saveCloudData(db, 'ID Number Sent! Now enter OTP below.');
         renderCustomerTrackingCard(app);
       }
     }
@@ -2076,66 +2933,119 @@
       document.getElementById('documentModal').classList.add('flex');
     }
 
-    // RE-UPLOAD DOCUMENT HANDLER: IMMEDIATELY DISPLAYS ON OWNER PORTAL & UPDATES MAIN DOC SLOT
+    // RE-UPLOAD DOCUMENT HANDLER WITH 500 KB (PHOTO) & 2 MB (PDF) IF-ELSE LOGIC
     function customerReuploadDocument(event, orderId, docKey) {
       const file = event.target.files[0];
       if (!file) return;
+      const sizeBytes = file.size;
+
+      if (file.type === 'application/pdf') {
+        if (sizeBytes <= 2 * 1024 * 1024) {
+          const reader = new FileReader();
+          reader.onload = async e => {
+            const db = getCloudData();
+            const app = db.applications.find(a => a.orderId === orderId);
+            if (!app) return;
+            if (!app.reuploadedDocs) app.reuploadedDocs = [];
+            app.reuploadedDocs.push({
+              type: docKey || 'other',
+              label: (docKey || 'other').toUpperCase() + ' (PDF)',
+              data: e.target.result,
+              fileName: file.name,
+              time: new Date().toLocaleString('hi-IN')
+            });
+            app.remarkText = '';
+            app.status = 'Verification';
+            app.updatedAt = Date.now();
+            await uploadHeavyPdfVaultForApp(app);
+            saveCloudData(db, '✅ Re-uploaded PDF Synced to Owner Portal!');
+            renderCustomerTrackingCard(app);
+          };
+          reader.readAsDataURL(file);
+        } else {
+          const bufReader = new FileReader();
+          bufReader.onload = async e => {
+            const compressed = await compressPdfViaCanvas(e.target.result);
+            const db = getCloudData();
+            const app = db.applications.find(a => a.orderId === orderId);
+            if (!app) return;
+            if (!app.reuploadedDocs) app.reuploadedDocs = [];
+            app.reuploadedDocs.push({
+              type: docKey || 'other',
+              label: (docKey || 'other').toUpperCase() + ' (Compressed PDF)',
+              data: compressed || '',
+              fileName: file.name,
+              time: new Date().toLocaleString('hi-IN')
+            });
+            app.remarkText = '';
+            app.status = 'Verification';
+            app.updatedAt = Date.now();
+            saveCloudData(db, '✅ Re-uploaded PDF Synced to Owner Portal!');
+            renderCustomerTrackingCard(app);
+          };
+          bufReader.readAsArrayBuffer(file);
+        }
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = async e => {
+        const rawDataUrl = e.target.result;
         const db = getCloudData();
         const app = db.applications.find(a => a.orderId === orderId);
         if (!app) return;
         if (!app.docs) app.docs = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
         if (!app.reuploadedDocs) app.reuploadedDocs = [];
 
-        if (file.type === 'application/pdf') {
-          app.docs.statement = e.target.result;
-          app.docs.statementName = file.name;
-          app.reuploadedDocs.push({
-            type: docKey || 'other',
-            label: (docKey || 'other').toUpperCase() + ' (PDF)',
-            data: e.target.result,
-            fileName: file.name,
-            time: new Date().toLocaleString('hi-IN')
-          });
-          app.remarkText = '';
-          app.status = 'Verification';
-          app.updatedAt = Date.now();
-          await uploadHeavyPdfVaultForApp(app);
-          saveCloudData(db, '✅ Re-uploaded PDF Document Synced to Owner Portal!');
-          renderCustomerTrackingCard(app);
-          return;
-        }
-
-        const img = new Image();
-        img.onload = async () => {
-          const canvas = document.createElement('canvas');
-          let targetW = 420, targetH = docKey === 'sign' ? 140 : 300;
-          canvas.width = targetW; canvas.height = targetH;
-          const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, targetW, targetH);
-          const ratio = Math.min(targetW / img.width, targetH / img.height);
-          ctx.drawImage(img, 0, 0, img.width, img.height, (targetW - img.width * ratio) / 2, (targetH - img.height * ratio) / 2, img.width * ratio, img.height * ratio);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.68);
-
+        if (sizeBytes <= 500 * 1024) {
+          // <= 500 KB: Direct Original Upload without Canvas
           app.reuploadedDocs.push({
             type: docKey || 'other',
             label: (docKey || 'other').toUpperCase(),
-            data: dataUrl,
+            data: rawDataUrl,
             time: new Date().toLocaleString('hi-IN')
           });
-          if (docKey === 'pan') app.docs.pan = dataUrl;
-          if (docKey === 'photo') app.docs.photo = dataUrl;
-          if (docKey === 'sign') app.docs.sign = dataUrl;
-
+          if (docKey === 'pan') app.docs.pan = rawDataUrl;
+          if (docKey === 'photo') app.docs.photo = rawDataUrl;
+          if (docKey === 'sign') app.docs.sign = rawDataUrl;
           app.remarkText = '';
           app.status = 'Verification';
           app.updatedAt = Date.now();
           saveCloudData(db, '✅ Re-uploaded Photo Synced to Owner Portal!');
           alert('✅ Document Re-uploaded Successfully! It is now visible on the Owner Portal.');
           renderCustomerTrackingCard(app);
-        };
-        img.src = e.target.result;
+        } else {
+          // > 500 KB: Compress via Canvas
+          const img = new Image();
+          img.onload = async () => {
+            const canvas = document.createElement('canvas');
+            let targetW = 600, targetH = docKey === 'sign' ? 200 : 450;
+            const ratio = Math.min(1, targetW / img.width, targetH / img.height);
+            canvas.width = Math.round(img.width * ratio);
+            canvas.height = Math.round(img.height * ratio);
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/jpeg', 0.68);
+
+            app.reuploadedDocs.push({
+              type: docKey || 'other',
+              label: (docKey || 'other').toUpperCase(),
+              data: dataUrl,
+              time: new Date().toLocaleString('hi-IN')
+            });
+            if (docKey === 'pan') app.docs.pan = dataUrl;
+            if (docKey === 'photo') app.docs.photo = dataUrl;
+            if (docKey === 'sign') app.docs.sign = dataUrl;
+            app.remarkText = '';
+            app.status = 'Verification';
+            app.updatedAt = Date.now();
+            saveCloudData(db, '✅ Re-uploaded Photo Synced to Owner Portal!');
+            alert('✅ Document Re-uploaded Successfully! It is now visible on the Owner Portal.');
+            renderCustomerTrackingCard(app);
+          };
+          img.src = rawDataUrl;
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -2168,6 +3078,94 @@
     function selectOwnerStatusCategory(status) {
       currentOwnerStatusFilter = status;
       renderOwnerApplications();
+    }
+
+    // DELETE APPLICATION FUNCTION (FOR REJECTED & LOAN CLOSED CATEGORIES)
+    function deleteApplicationRecord(orderId) {
+      if (!confirm(`⚠️ Are you sure you want to permanently DELETE application ${orderId}?`)) return;
+      const db = getCloudData();
+      if (!db.deletedOrderIds) db.deletedOrderIds = [];
+      if (!db.deletedOrderIds.includes(orderId)) db.deletedOrderIds.push(orderId);
+      db.applications = (db.applications || []).filter(a => a.orderId !== orderId);
+      if (db.orderAgreements && db.orderAgreements[orderId]) {
+        delete db.orderAgreements[orderId];
+      }
+      currentSelectedOwnerOrderId = '';
+      saveCloudData(db, `🗑️ Application ${orderId} Permanently Deleted!`);
+      renderOwnerApplications();
+      populateCollectAppDropdown();
+      populateUpiCustomerDropdown();
+      populateAgreementOrderDropdown();
+    }
+
+    function clearOcrMismatchWarning(orderId) {
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (app) {
+        app.ocrMismatchWarning = '';
+        app.updatedAt = Date.now();
+        saveCloudData(db, '✅ OCR Warning Dismissed!');
+        renderSingleOwnerApplication(orderId);
+      }
+    }
+
+    // OWNER INTERNAL REMINDER PDF UPLOAD (STAYS ONLY IN OWNER PORTAL UNDER BOX 3)
+    function handleOwnerReminderPdfUpload(event, orderId) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const sizeBytes = file.size;
+
+      const saveRemToApp = async (dataUrl) => {
+        const db = getCloudData();
+        const app = db.applications.find(a => a.orderId === orderId);
+        if (!app) return;
+        app.ownerReminderPdfData = dataUrl;
+        app.ownerReminderPdfName = file.name;
+        app.updatedAt = Date.now();
+        await uploadHeavyPdfVaultForApp(app);
+        saveCloudData(db, '📌 Internal Reminder PDF Saved in Owner Portal!');
+        renderSingleOwnerApplication(orderId);
+      };
+
+      if (sizeBytes <= 2 * 1024 * 1024) {
+        const reader = new FileReader();
+        reader.onload = e => saveRemToApp(e.target.result);
+        reader.readAsDataURL(file);
+      } else if (file.type === 'application/pdf') {
+        const bufReader = new FileReader();
+        bufReader.onload = async e => {
+          const compressed = await compressPdfViaCanvas(e.target.result);
+          if (compressed) saveRemToApp(compressed);
+          else {
+            const r2 = new FileReader();
+            r2.onload = ev => saveRemToApp(ev.target.result);
+            r2.readAsDataURL(file);
+          }
+        };
+        bufReader.readAsArrayBuffer(file);
+      } else {
+        const reader = new FileReader();
+        reader.onload = e => saveRemToApp(e.target.result);
+        reader.readAsDataURL(file);
+      }
+    }
+
+    async function viewOwnerReminderPdf(orderId, action = 'view') {
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (!app) return;
+      await hydratePdfVaultForApp(app);
+      if (!app.ownerReminderPdfData) return alert('Reminder file is syncing from cloud, please tap again in 2 seconds.');
+      if (action === 'download') {
+        const a = document.createElement('a');
+        a.href = app.ownerReminderPdfData;
+        a.download = app.ownerReminderPdfName || `Owner_Reminder_${app.orderId}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } else {
+        viewSingleImage(`Owner Reminder File — ${app.name} (${app.orderId})`, app.ownerReminderPdfData);
+      }
     }
 
     function renderOwnerApplications() {
@@ -2267,6 +3265,7 @@
       const isUrl = (purposeVal.startsWith('http://') || purposeVal.startsWith('https://') || purposeVal.startsWith('www.')) && !purposeVal.includes('<');
       const cleanUrl = purposeVal.startsWith('www.') ? 'https://' + purposeVal : purposeVal;
       const isDefaulter = isCustomerMarkedDefaulter(app);
+      const canDeleteApp = (app.status === 'Rejected' || app.status === 'Loan Closed');
 
       const docList = [
         { key: 'pan', title: '1. PAN Card Photo', img: app.docs ? app.docs.pan : '' },
@@ -2274,7 +3273,6 @@
         { key: 'sign', title: '3. Customer Signature', img: getCustomerLatestSignature(app) }
       ];
 
-      // Re-uploaded documents gallery (Visible directly on Owner Portal!)
       const reuploads = app.reuploadedDocs || [];
       let reuploadGalleryHtml = '';
       if (reuploads.length > 0) {
@@ -2305,6 +3303,12 @@
               <span class="bg-white text-rose-700 px-2.5 py-0.5 rounded text-[11px]">High Risk Alert</span>
             </div>` : ''}
 
+          ${app.ocrMismatchWarning ? `
+            <div class="p-3 rounded-xl bg-rose-100 border-2 border-rose-600 text-rose-950 font-extrabold flex flex-wrap items-center justify-between gap-2 shadow-sm">
+              <span>${escapeHtml(app.ocrMismatchWarning)}</span>
+              <button type="button" onclick="clearOcrMismatchWarning('${escapeHtml(app.orderId)}')" class="px-2.5 py-1 rounded bg-rose-700 text-white text-[10px]">✔ Mark Verified / Dismiss</button>
+            </div>` : ''}
+
           <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-3 border-b-2 pb-4">
             <div>
               <div class="flex flex-wrap items-center gap-2">
@@ -2315,6 +3319,10 @@
                 <button type="button" onclick="toggleDefaulterFlag('${escapeHtml(app.orderId)}')" class="px-2.5 py-1 rounded-lg font-extrabold border ${isDefaulter ? 'bg-rose-100 text-rose-800 border-rose-400' : 'bg-slate-100 text-slate-700 border-slate-300'}">
                   ${isDefaulter ? '🚩 Unmark Defaulter' : '🚩 Mark Defaulter / Red Flag'}
                 </button>
+                ${canDeleteApp ? `
+                  <button type="button" onclick="deleteApplicationRecord('${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-extrabold shadow">
+                    🗑️ Delete Application
+                  </button>` : ''}
               </div>
               <h3 class="text-xl font-extrabold mt-2 text-slate-900 dark:text-white">${escapeHtml(app.name)}</h3>
             </div>
@@ -2340,8 +3348,8 @@
                 <div><span class="text-slate-500 block">Date of Birth (DOB):</span><strong>${escapeHtml(app.dob || '-')}</strong></div>
                 <div><span class="text-slate-500 block">Mobile Number:</span><strong class="text-sm text-emerald-700">${escapeHtml(app.mobile)}</strong></div>
                 <div><span class="text-slate-500 block">Email ID:</span><strong>${escapeHtml(app.email || '-')}</strong></div>
-                <div><span class="text-slate-500 block">Aadhaar Card No:</span><strong class="font-mono">${escapeHtml(app.aadhaar)}</strong></div>
-                <div><span class="text-slate-500 block">PAN Card No:</span><strong class="font-mono">${escapeHtml(app.pan)}</strong></div>
+                <div><span class="text-slate-500 block">KYC 12-Digit ID No:</span><strong class="font-mono">${escapeHtml(app.aadhaar)}</strong></div>
+                <div><span class="text-slate-500 block">PAN Card No (OCR):</span><strong class="font-mono">${escapeHtml(app.pan)}</strong> <span class="text-[10px] text-indigo-700">(${escapeHtml(app.ocrScannedPan || 'Checked')})</span></div>
                 <div class="col-span-2 pt-1 border-t flex items-center justify-between text-amber-900 dark:text-amber-300">
                   <span>👪 <strong>Reference / Family:</strong> ${escapeHtml(app.refName || 'Not Provided')}</span>
                   <span>📞 <strong>Ref Mobile:</strong> ${escapeHtml(app.refMobile || '-')}</span>
@@ -2409,7 +3417,7 @@
             ${reuploadGalleryHtml}
           </div>
 
-          <!-- OWNER VERIFICATION & OFFER CONTROLS (4 REMARK OPTIONS: PHOTO, SIGN, PAN, OTHER DOCUMENT) -->
+          <!-- OWNER VERIFICATION & OFFER CONTROLS (WITH OWNER INTERNAL REMINDER PDF UPLOAD BELOW BOX 3) -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5 pt-2 border-t">
             <div class="p-3.5 rounded-xl border-2 border-amber-400 bg-amber-50/50 dark:bg-slate-800 space-y-2">
               <div class="font-extrabold text-slate-900 dark:text-white">💡 1. Verification Loan Offer, Months & Status</div>
@@ -2453,16 +3461,34 @@
               </div>
             </div>
 
+            <!-- BOX 3: LIVE 2-STEP VERIFICATION + OWNER INTERNAL REMINDER PDF UPLOAD BELOW IT -->
             <div class="p-3.5 rounded-xl border-2 border-indigo-400 bg-indigo-50/50 dark:bg-slate-800 space-y-2">
-              <div class="font-extrabold text-indigo-950 dark:text-indigo-200">🆔 3. Live 2-Step Aadhaar Verification</div>
+              <div class="font-extrabold text-indigo-950 dark:text-indigo-200">🆔 3. Live 2-Step e-KYC Verification</div>
               <div class="bg-white dark:bg-slate-900 p-2 rounded border space-y-1 text-[11px]">
                 <div>Status: <strong class="text-indigo-700">${escapeHtml(app.aadhaarAuthStatus || 'Not Verified')}</strong></div>
-                <div>Step 1 Sent Aadhaar: <strong class="font-mono text-slate-900 dark:text-white">${escapeHtml(app.aadhaarVerifyInput || 'Waiting Step 1...')}</strong></div>
+                <div>Step 1 Sent ID: <strong class="font-mono text-slate-900 dark:text-white">${escapeHtml(app.aadhaarVerifyInput || 'Waiting Step 1...')}</strong></div>
                 <div>Step 2 Sent OTP: <strong class="font-mono text-sm text-rose-600 bg-rose-50 px-2 py-0.5 rounded">${escapeHtml(app.aadhaarOtpInput || 'Waiting OTP...')}</strong></div>
               </div>
               <div class="grid grid-cols-2 gap-1.5 pt-1">
                 <button type="button" onclick="verifyCustomerAadhaarOtp('${escapeHtml(app.orderId)}','Verified ✔')" class="py-1.5 rounded-lg bg-emerald-600 text-white font-bold">✔ Verify OTP</button>
                 <button type="button" onclick="verifyCustomerAadhaarOtp('${escapeHtml(app.orderId)}','Invalid OTP - Retry')" class="py-1.5 rounded-lg bg-rose-600 text-white font-bold">✕ Reject OTP</button>
+              </div>
+
+              <!-- OWNER INTERNAL REMINDER / ID PDF UPLOAD (STAYS ONLY IN OWNER PORTAL) -->
+              <div class="pt-2 mt-1 border-t-2 border-indigo-200 space-y-1.5">
+                <label class="block text-[10px] font-extrabold text-indigo-950 dark:text-indigo-300">
+                  📌 Owner Internal Reminder / ID PDF (Private — Owner Only):
+                </label>
+                <input type="file" accept="application/pdf,image/*" onchange="handleOwnerReminderPdfUpload(event, '${escapeHtml(app.orderId)}')" class="text-[10px] w-full">
+                ${(app.ownerReminderPdfData || app.ownerReminderPdfName) ? `
+                  <div class="bg-emerald-50 dark:bg-slate-900 p-1.5 rounded border border-emerald-400 flex items-center justify-between gap-1">
+                    <span class="text-[10px] font-bold text-emerald-800 truncate">✔ ${escapeHtml(app.ownerReminderPdfName || 'Reminder_File.pdf')}</span>
+                    <div class="flex gap-1 shrink-0">
+                      <button type="button" onclick="viewOwnerReminderPdf('${escapeHtml(app.orderId)}', 'view')" class="px-2 py-0.5 rounded bg-indigo-700 text-white font-bold text-[10px]">👁️ View</button>
+                      <button type="button" onclick="viewOwnerReminderPdf('${escapeHtml(app.orderId)}', 'download')" class="px-2 py-0.5 rounded bg-emerald-700 text-white font-bold text-[10px]">📥</button>
+                    </div>
+                  </div>
+                ` : `<div class="text-[9.5px] text-slate-500">Upload downloaded KYC/ID PDF here for lifetime internal reference.</div>`}
               </div>
             </div>
 
@@ -2504,7 +3530,6 @@
       }
     }
 
-    // OWNER LOAN OFFER: UNLOCKS INTEREST ON CUSTOMER TRACKING & MOVES TO VERIFICATION
     function saveOwnerLoanOffer(orderId) {
       const newAmt = Math.round(parseFloat(document.getElementById('offerAmt_' + orderId).value) || 0);
       const newRate = parseFloat(document.getElementById('offerRate_' + orderId).value) || 3;
@@ -2524,7 +3549,7 @@
         app.interestRateText = `${newRate}% Monthly`;
         app.extraInterestAmount = Math.round(newAmt * (newRate / 100) * newTenure);
         app.monthlyEmi = customEmi > 0 ? Math.round(customEmi) : Math.round((newAmt + app.extraInterestAmount) / newTenure);
-        app.interestUnlocked = true; // Unlocks Interest & EMI display on Customer Tracking Page
+        app.interestUnlocked = true;
         app.offerNote = rawNote || `Sanctioned Rs. ${newAmt} for ${newTenure} Month(s) at ${newRate}%/M (Monthly EMI: Rs. ${app.monthlyEmi}) based on profile verification.`;
 
         let slab = newAmt <= 5000 ? 300 : (newAmt <= 15000 ? 600 : 1000);
@@ -2583,11 +3608,12 @@
       if (app) {
         app.aadhaarAuthStatus = statusText;
         app.updatedAt = Date.now();
-        saveCloudData(db, `Aadhaar Verification marked: ${statusText}`);
+        saveCloudData(db, `e-KYC Verification marked: ${statusText}`);
         renderSingleOwnerApplication(orderId);
       }
     }
 
+    // SEND NACH LINK + INSTANT WHATSAPP & SMS NOTIFICATION
     function dispatchNachLinkToCustomer() {
       const q = document.getElementById('nachSearchCustomer').value.trim().toUpperCase();
       const rawUrl = document.getElementById('nachPasteUrl').value.trim();
@@ -2602,9 +3628,31 @@
       app.nachLink = safeUrl;
       app.nachState = 'Link Active (Pending Customer Action)';
       app.updatedAt = Date.now();
-      saveCloudData(db, `NACH Link Sent to ${app.name}`);
-      document.getElementById('nachPasteUrl').value = '';
-      alert(`NACH Link sent to ${app.name} (${app.orderId})`);
+      saveCloudData(db, `NACH Link Saved & Synced for ${app.name}`);
+      alert(`✅ NACH Link saved for ${app.name} (${app.orderId})! You can now click WhatsApp or SMS to send the link directly.`);
+    }
+
+    function sendNachLinkNotification(mode = 'wa') {
+      const q = document.getElementById('nachSearchCustomer').value.trim().toUpperCase();
+      const rawUrl = document.getElementById('nachPasteUrl').value.trim();
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId.toUpperCase() === q || a.mobile === q || a.aadhaar === q || (q.length === 4 && (a.mobile.endsWith(q) || a.aadhaar.endsWith(q))));
+      if (!app) return alert('Please enter a valid Customer Order ID or Mobile Number first!');
+
+      const cleanUrl = cleanSafeUrl(rawUrl) || app.nachLink;
+      if (!cleanUrl) return alert('Please paste the NACH Mandate Link first!');
+
+      if (rawUrl && cleanSafeUrl(rawUrl)) {
+        if (app.status === 'Processing') app.status = 'Verification';
+        app.nachLink = cleanSafeUrl(rawUrl);
+        app.nachState = 'Link Active (Pending Customer Action)';
+        app.updatedAt = Date.now();
+        saveCloudData(db, `NACH Link Synced for ${app.name}`);
+      }
+
+      const siteUrl = window.location.href.split('?')[0];
+      const msg = `Dear ${app.name},\n\nYour NACH Auto-Debit e-Mandate verification link for Loan Order ID *${app.orderId}* (Sanctioned Amount: *Rs. ${app.amount}*) is now active.\n\n🔗 *Click here to complete NACH Mandate:*\n${cleanUrl}\n\nOr open the RNS FINANCE Tracking Portal to complete your verification:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      dispatchWaOrSms(app.mobile, msg, mode);
     }
 
     function setOwnerNachDecision(orderId, decision) {
@@ -2673,9 +3721,7 @@
       }
     }
 
-    // ============================================================================
     // UPI QR SETUP: ACTIVE LOANS DROPDOWN + WHATSAPP/SMS + CLOSED LOANS HISTORY BOX
-    // ============================================================================
     function populateUpiCustomerDropdown() {
       const db = getCloudData();
       const activeUpiApps = db.applications.filter(a => a.status !== 'Loan Closed' && a.status !== 'Rejected' && !a.upiArchived);
@@ -2754,7 +3800,7 @@
       const upiAmt = document.getElementById('upiAmountInput').value || app.upiAmount || app.monthlyEmi;
       const expDate = document.getElementById('upiExpiryDateInput').value || app.upiExpiryDate || 'Due Date';
       const siteUrl = window.location.href.split('?')[0];
-      const msg = `Dear ${app.name},\n\nYour official UPI QR Code for EMI payment of *Rs. ${upiAmt}* (Order ID: *${app.orderId}*) is now active on the RNS FINANCE portal (Valid until: ${expDate}).\n\nPlease scan the QR on the Tracking Portal and upload your UTR / Screenshot for an instant EMI receipt:\n${siteUrl}\n\n— Team RNS FINANCE`;
+      const msg = `Dear ${app.name},\n\nYour official UPI QR Code for EMI payment of *Rs. ${upiAmt}* (Order ID: *${app.orderId}*) is now active on the RNS FINANCE portal (Valid until: ${expDate}).\n\nPlease scan the QR on the Tracking Portal and submit your UTR / Reference No. for an instant EMI receipt:\n${siteUrl}\n\n— Team RNS FINANCE`;
       dispatchWaOrSms(app.mobile, msg, mode);
     }
 
@@ -2787,15 +3833,12 @@
       }
     }
 
-    // ============================================================================
-    // COLLECT AMOUNT + CUSTOMER UTR QUEUE + FORECLOSURE + CLOSED HISTORY
-    // ============================================================================
+    // COLLECT AMOUNT + CUSTOMER UTR QUEUE (OPTIONAL SCREENSHOT) + CLOSED HISTORY WITH WA & SMS
     function populateCollectAppDropdown() {
       const db = getCloudData();
       const activeApps = db.applications.filter(a => a.status !== 'Loan Closed' && (a.emis.length < (Number(a.tenure) || 6)));
       const closedApps = db.applications.filter(a => a.status === 'Loan Closed' || (a.emis.length >= (Number(a.tenure) || 6)));
 
-      // Render Pending Customer UTR & Screenshot Queue
       const allPendingUtrs = [];
       db.applications.forEach(a => {
         (a.pendingUtrSubmissions || []).forEach((u, uIdx) => {
@@ -2810,7 +3853,7 @@
       const utrContainer = document.getElementById('pendingUtrApprovalsContainer');
       if (utrContainer) {
         if (allPendingUtrs.length === 0) {
-          utrContainer.innerHTML = `<div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border text-center text-slate-400">No pending customer UTR / Screenshot submissions right now.</div>`;
+          utrContainer.innerHTML = `<div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border text-center text-slate-400">No pending customer UTR / Reference submissions right now.</div>`;
         } else {
           utrContainer.innerHTML = allPendingUtrs.map(item => `
             <div class="p-3 rounded-xl bg-white dark:bg-slate-900 border-2 border-amber-400 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -2818,10 +3861,10 @@
                 <span class="bg-slate-900 text-white font-extrabold px-2 py-0.5 rounded text-[10px]">${escapeHtml(item.orderId)}</span>
                 <strong class="ml-1">${escapeHtml(item.name)}</strong>
                 <span class="text-emerald-700 font-extrabold ml-2">Paid: ₹${item.amount}</span>
-                <div class="text-[11px] font-mono text-indigo-800 dark:text-indigo-300 mt-0.5">UTR / Txn No: <strong>${escapeHtml(item.utr)}</strong> | Date: ${escapeHtml(item.date)}</div>
+                <div class="text-[11px] font-mono text-indigo-800 dark:text-indigo-300 mt-0.5">UTR / Ref No: <strong>${escapeHtml(item.utr)}</strong> | Date: ${escapeHtml(item.date)}</div>
               </div>
-              <div class="flex flex-wrap gap-1.5">
-                <button type="button" onclick="viewSingleImage('UTR ${escapeHtml(item.utr)} - ${escapeHtml(item.name)}', '${item.screenshot}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-[11px]">👁️ View Screenshot</button>
+              <div class="flex flex-wrap items-center gap-1.5">
+                ${item.screenshot ? `<button type="button" onclick="viewSingleImage('UTR ${escapeHtml(item.utr)} - ${escapeHtml(item.name)}', '${item.screenshot}')" class="px-3 py-1.5 rounded-lg bg-indigo-600 text-white font-bold text-[11px]">👁️ View Screenshot</button>` : `<span class="px-2.5 py-1 rounded bg-slate-100 text-slate-600 font-bold text-[10px]">UTR Only (No Screenshot)</span>`}
                 <button type="button" onclick="approveCustomerUtrSubmission('${escapeHtml(item.orderId)}', ${item.uIdx})" class="px-3 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-[11px] shadow">✔ Approve & Generate Receipt</button>
                 <button type="button" onclick="rejectCustomerUtrSubmission('${escapeHtml(item.orderId)}', ${item.uIdx})" class="px-2.5 py-1.5 rounded-lg bg-rose-600 text-white font-bold text-[11px]">✕ Reject</button>
               </div>
@@ -2854,7 +3897,8 @@
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button type="button" onclick="openNoDuesModal('${escapeHtml(c.orderId)}')" class="px-3 py-1.5 rounded-lg bg-teal-700 text-white font-extrabold text-[11px]">🎓 No Dues PDF</button>
-              <button type="button" onclick="sendStageNotificationToCustomer('${escapeHtml(c.orderId)}', 'wa')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 text-white font-bold text-[11px]"><i class="fa-brands fa-whatsapp"></i> WA</button>
+              <button type="button" onclick="sendStageNotificationToCustomer('${escapeHtml(c.orderId)}', 'wa')" class="px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px]"><i class="fa-brands fa-whatsapp"></i> WA</button>
+              <button type="button" onclick="sendStageNotificationToCustomer('${escapeHtml(c.orderId)}', 'sms')" class="px-2.5 py-1.5 rounded-lg bg-sky-600 hover:bg-sky-700 text-white font-bold text-[11px]"><i class="fa-solid fa-comment-sms"></i> SMS</button>
               <button type="button" onclick="reopenClosedLoanForEdit('${escapeHtml(c.orderId)}')" class="px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold text-[11px]">✏️ Re-open / Edit EMIs</button>
             </div>
           </div>`).join('');
@@ -2903,7 +3947,6 @@
       }
     }
 
-    // ONE-TIME SETTLEMENT / PRE-CLOSURE (FORECLOSE LOAN IN 1 CLICK)
     function executeLoanForeclosure() {
       const orderId = document.getElementById('collectAppCustomerSelect').value;
       const settleAmt = Math.round(parseFloat(document.getElementById('forecloseSettlementAmt').value) || 0);
@@ -3215,7 +4258,7 @@
         selectedInvestorId = list[0].id;
       }
 
-      grid.innerHTML = list.map((inv, i) => {
+      grid.innerHTML = list.map((inv) => {
         if (!inv.regCode) inv.regCode = 'RNS' + inv.id;
         const txs = inv.transactions || [];
         const totalCr = txs.filter(t => (t.type || 'CREDIT') !== 'DEBIT').reduce((s, t) => s + (Number(t.amount) || 0), 0);
@@ -3554,19 +4597,28 @@
     }
 
     // ============================================================================
-    // ORDER-WISE & GLOBAL EDITABLE AGREEMENT SYSTEM + CONFIGURED HISTORY BOX
+    // ORDER-WISE & GLOBAL EDITABLE AGREEMENT (AUTO-MOVES TO HISTORY BOX WHEN SAVED)
     // ============================================================================
     function populateAgreementOrderDropdown() {
       const db = getCloudData();
       const sel = document.getElementById('agrTargetOrderIdSelect');
       if (!sel) return;
-      const currentVal = sel.value || 'GLOBAL';
+      const configuredMap = db.orderAgreements || {};
+
+      // Only show applications that are NOT yet saved in History Box (or the one currently being edited/reopened)
+      const unconfiguredApps = (db.applications || []).filter(a => !configuredMap[a.orderId] || a.orderId === currentEditingAgreementOrderId);
+
       const optionsHtml = [`<option value="GLOBAL">🌐 Global Master Template (Default for All Applications)</option>`];
-      (db.applications || []).forEach(a => {
+      unconfiguredApps.forEach(a => {
         optionsHtml.push(`<option value="${escapeHtml(a.orderId)}">🎯 Order ID: ${escapeHtml(a.orderId)} — ${escapeHtml(a.name)} (₹${a.amount} | [${escapeHtml(a.status)}])</option>`);
       });
       sel.innerHTML = optionsHtml.join('');
-      sel.value = currentVal;
+
+      if (currentEditingAgreementOrderId && unconfiguredApps.some(a => a.orderId === currentEditingAgreementOrderId)) {
+        sel.value = currentEditingAgreementOrderId;
+      } else {
+        sel.value = 'GLOBAL';
+      }
       loadTargetOrderAgreementSettings();
       renderCustomAgreementHistoryBox();
     }
@@ -3622,9 +4674,10 @@
           app.interestUnlocked = true;
           app.updatedAt = Date.now();
         }
-        saveCloudData(db, `✅ Custom Agreement Saved for Order ID ${target}!`);
+        currentEditingAgreementOrderId = ''; // Clears from top dropdown and moves into History Box below!
+        saveCloudData(db, `✅ Agreement Saved for ${target} & Moved to History Box!`);
       }
-      renderCustomAgreementHistoryBox();
+      populateAgreementOrderDropdown();
     }
 
     function renderCustomAgreementHistoryBox() {
@@ -3637,7 +4690,7 @@
       if (!box) return;
 
       if (keys.length === 0) {
-        box.innerHTML = `<div class="p-3 rounded-xl bg-white dark:bg-slate-900 border text-center text-slate-400">No order-specific custom agreement configured yet. Select an Order ID above and click Save to create one.</div>`;
+        box.innerHTML = `<div class="p-3 rounded-xl bg-white dark:bg-slate-900 border text-center text-slate-400">No order-specific custom agreement in history yet. Select an Order ID above and click Save to move it here.</div>`;
         return;
       }
 
@@ -3656,7 +4709,8 @@
             </div>
             <div class="flex flex-wrap gap-1.5">
               <button type="button" onclick="openAgreementModal('${escapeHtml(ordId)}')" class="px-2.5 py-1 rounded bg-indigo-600 text-white font-bold text-[11px]">👁️ View PDF</button>
-              <button type="button" onclick="editOrderSpecificAgreement('${escapeHtml(ordId)}')" class="px-2.5 py-1 rounded bg-amber-500 text-white font-bold text-[11px]">✏️ Edit</button>
+              <button type="button" onclick="editOrderSpecificAgreement('${escapeHtml(ordId)}')" class="px-2.5 py-1 rounded bg-amber-500 text-white font-bold text-[11px]">✏️ Edit / Modify</button>
+              <button type="button" onclick="reopenOrderSpecificAgreement('${escapeHtml(ordId)}')" class="px-2.5 py-1 rounded bg-teal-600 text-white font-bold text-[11px]">🔄 Re-open</button>
               <button type="button" onclick="deleteOrderSpecificAgreement('${escapeHtml(ordId)}')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-bold text-[11px]">🗑️ Delete</button>
             </div>
           </div>`;
@@ -3664,6 +4718,8 @@
     }
 
     function editOrderSpecificAgreement(orderId) {
+      currentEditingAgreementOrderId = orderId;
+      populateAgreementOrderDropdown();
       const sel = document.getElementById('agrTargetOrderIdSelect');
       if (sel) {
         sel.value = orderId;
@@ -3672,11 +4728,32 @@
       }
     }
 
+    function reopenOrderSpecificAgreement(orderId) {
+      const db = getCloudData();
+      const existingCfg = (db.orderAgreements && db.orderAgreements[orderId]) ? db.orderAgreements[orderId] : null;
+      if (db.orderAgreements && db.orderAgreements[orderId]) {
+        delete db.orderAgreements[orderId];
+      }
+      currentEditingAgreementOrderId = orderId;
+      saveCloudData(db, `🔄 Order ${orderId} Re-opened in Top Agreement Selector!`);
+      populateAgreementOrderDropdown();
+      const sel = document.getElementById('agrTargetOrderIdSelect');
+      if (sel) sel.value = orderId;
+      if (existingCfg) {
+        document.getElementById('agrInterestRate').value = existingCfg.interestRate || '3% Monthly';
+        document.getElementById('agrEmiDate').value = existingCfg.emiDate || '5';
+        document.getElementById('agrNachPenalty').value = existingCfg.nachPenalty || 'Rs. 500 per bounce';
+        document.getElementById('agrLatePenalty').value = existingCfg.latePenalty || '3% per month additional';
+        document.getElementById('agrCustomBody').value = existingCfg.customBody || DEFAULT_AGREEMENT_CLAUSES;
+      }
+    }
+
     function deleteOrderSpecificAgreement(orderId) {
-      if (!confirm(`Reset custom agreement settings for Order ID ${orderId} back to Global Template?`)) return;
+      if (!confirm(`Delete custom agreement history for Order ID ${orderId} and return it to active selector?`)) return;
       const db = getCloudData();
       if (db.orderAgreements && db.orderAgreements[orderId]) {
         delete db.orderAgreements[orderId];
+        currentEditingAgreementOrderId = '';
         saveCloudData(db, `Custom Agreement for ${orderId} Deleted!`);
         populateAgreementOrderDropdown();
       }
@@ -3790,7 +4867,7 @@
                   </thead>
                   <tbody>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">01.</td><td class="p-1.5 border border-slate-400 font-bold">Permanent Account Number (PAN Card)</td><td class="p-1.5 border border-slate-400 font-mono">${escapeHtml(app.pan)}</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Verified</td></tr>
-                    <tr><td class="p-1.5 border border-slate-400 text-center font-bold">02.</td><td class="p-1.5 border border-slate-400 font-bold">Aadhaar Card (Front & Back e-KYC)</td><td class="p-1.5 border border-slate-400">OTP Auth: ${escapeHtml(app.aadhaarAuthStatus || 'Verified')}</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Verified</td></tr>
+                    <tr><td class="p-1.5 border border-slate-400 text-center font-bold">02.</td><td class="p-1.5 border border-slate-400 font-bold">Digital Identity Card (Front & Back e-KYC)</td><td class="p-1.5 border border-slate-400">OTP Auth: ${escapeHtml(app.aadhaarAuthStatus || 'Verified')}</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Verified</td></tr>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">03.</td><td class="p-1.5 border border-slate-400 font-bold">Bank Passbook & 3-Month Bank Statement</td><td class="p-1.5 border border-slate-400">${escapeHtml(app.bankName || '')} (IFSC: ${escapeHtml(app.ifsc || '')})</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Verified</td></tr>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">04.</td><td class="p-1.5 border border-slate-400 font-bold">Customer Live Photograph & Digital Signature</td><td class="p-1.5 border border-slate-400">Standardized KYC Biometric/Image</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Verified</td></tr>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">05.</td><td class="p-1.5 border border-slate-400 font-bold">NACH Auto-Debit e-Mandate Registration</td><td class="p-1.5 border border-slate-400 font-mono">Ref: ${escapeHtml(app.nachRefNo || 'Approved')}</td><td class="p-1.5 border border-slate-400 text-center font-bold text-emerald-700">☑ Active</td></tr>
@@ -3969,11 +5046,11 @@
       if (editIdx >= 0 && db.promos[editIdx]) {
         db.promos[editIdx] = newObj;
         cancelPromoEdit();
-        saveCloudData(db, `Promo Code ${code} Updated & Synced Across All Phones!`);
+        saveCloudData(db, `Promo Code ${code} Updated & Synced via Firebase!`);
       } else {
         db.promos.push(newObj);
         document.getElementById('promoCodeName').value = '';
-        saveCloudData(db, `Promo Code ${code} Activated & Synced Across All Phones!`);
+        saveCloudData(db, `Promo Code ${code} Activated & Synced via Firebase!`);
       }
       renderPromoCodes();
     }
