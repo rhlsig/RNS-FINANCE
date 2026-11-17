@@ -1,3 +1,4 @@
+<!-- START OF PART 1 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,8 +188,8 @@
                   </select>
                 </div>
                 <div>
-                  <label class="block font-bold mb-1">Customer Type *</label>
-                  <select id="appCustomerType" required class="w-full rounded-lg border px-3 py-2">
+                  <label class="block font-bold mb-1">Customer Type (Auto-Detects) *</label>
+                  <select id="appCustomerType" required class="w-full rounded-lg border px-3 py-2 font-semibold">
                     <option value="New Customer">New Customer</option>
                     <option value="Old Customer">Old Customer</option>
                   </select>
@@ -233,7 +234,7 @@
 
               <div class="pt-2 border-t flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
                 <div class="flex items-center gap-2">
-                  <input type="text" id="appPromoInput" placeholder="Promo Code" class="rounded-lg border px-3 py-1.5 uppercase font-bold">
+                  <input type="text" id="appPromoInput" oninput="this.value=this.value.toUpperCase()" placeholder="Promo Code" class="rounded-lg border px-3 py-1.5 uppercase font-bold">
                   <button type="button" onclick="applyPromoCode()" class="bg-slate-800 text-white px-3 py-1.5 rounded-lg font-bold">Apply</button>
                   <span id="promoMsg" class="font-bold"></span>
                 </div>
@@ -250,10 +251,10 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
               <div><label class="block font-bold mb-1">Full Name *</label><input type="text" id="appName" required class="w-full rounded-lg border px-3 py-2" placeholder="Enter Full Name"></div>
               <div><label class="block font-bold mb-1">Date of Birth (DD/MM/YYYY) *</label><input type="text" id="appDob" required class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="DD/MM/YYYY (e.g. 15/08/1995)"></div>
-              <div><label class="block font-bold mb-1">Mobile Number (10 Digits) *</label><input type="tel" id="appMobile" required maxlength="10" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Valid 10 Digit Mobile"></div>
+              <div><label class="block font-bold mb-1">Mobile Number (10 Digits) *</label><input type="tel" id="appMobile" required maxlength="10" oninput="if(typeof autoDetectCustomerTypeByMobileOrPan==='function') autoDetectCustomerTypeByMobileOrPan(true);" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Valid 10 Digit Mobile"></div>
               <div><label class="block font-bold mb-1">Genuine Email ID *</label><input type="email" id="appEmail" required class="w-full rounded-lg border px-3 py-2" placeholder="yourname@gmail.com"></div>
               <div><label class="block font-bold mb-1">KYC 12-Digit ID Number *</label><input type="text" id="appAadhaar" required maxlength="12" class="w-full rounded-lg border px-3 py-2 font-bold" placeholder="Enter 12 Digit ID Number"></div>
-              <div><label class="block font-bold mb-1">PAN Card Number *</label><input type="text" id="appPan" required maxlength="10" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="ABCDE1234F"></div>
+              <div><label class="block font-bold mb-1">PAN Card Number *</label><input type="text" id="appPan" required maxlength="10" oninput="this.value=this.value.toUpperCase(); if(typeof autoDetectCustomerTypeByMobileOrPan==='function') autoDetectCustomerTypeByMobileOrPan(true);" class="w-full rounded-lg border px-3 py-2 uppercase font-bold" placeholder="ABCDE1234F"></div>
               <div class="bg-amber-50/70 dark:bg-slate-800 p-1.5 rounded-lg border border-amber-300">
                 <label class="block font-extrabold text-amber-900 dark:text-amber-300 mb-1">👪 Reference / Family Member Name *</label>
                 <input type="text" id="appRefName" required class="w-full rounded-lg border px-2.5 py-1.5 font-semibold bg-white" placeholder="Father / Spouse / Local Reference">
@@ -861,7 +862,7 @@
           <p class="text-white font-bold mt-1">24 Hour Apply Loan & Helpline</p>
           <p class="text-slate-400 mt-1">Personal Loan & Online Shopping Finance Service.</p>
           <p class="text-emerald-400 font-mono mt-1">CIN: U64990MH2026PTC007402</p>
-          <!-- ABOUT US & TERMS AND CONDITIONS UNDER RNS FINANCE AS REQUESTED -->
+          <!-- ABOUT US & TERMS AND CONDITIONS UNDER RNS FINANCE -->
           <div class="pt-3 mt-2.5 border-t border-slate-800 flex flex-wrap gap-2">
             <button type="button" onclick="openFooterLegalModal('about')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-700 text-emerald-300 hover:text-white font-bold border border-slate-700 transition">ℹ️ About Us</button>
             <button type="button" onclick="openFooterLegalModal('terms')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-700 text-emerald-300 hover:text-white font-bold border border-slate-700 transition">📜 Terms & Conditions</button>
@@ -878,7 +879,7 @@
           <p class="mt-1"><button type="button" onclick="switchCustomerTab('new')" class="hover:text-white underline">⚡ 24 Hour Apply Loan</button></p>
           <p class="mt-1"><button type="button" onclick="switchCustomerTab('track')" class="hover:text-white underline">📦 Track Application / Investor</button></p>
           <p class="mt-1"><button type="button" onclick="switchCustomerTab('cibil')" class="hover:text-white underline">📊 Free CIBIL Score Check</button></p>
-          <!-- ONLY PRIVACY & POLICY HERE AS REQUESTED -->
+          <!-- ONLY PRIVACY & POLICY HERE -->
           <div class="pt-2.5 mt-2 border-t border-slate-800 flex flex-wrap gap-2">
             <button type="button" onclick="openFooterLegalModal('policy')" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-emerald-700 text-emerald-300 hover:text-white font-bold border border-slate-700 transition">🛡️ Privacy & Policy</button>
           </div>
@@ -1178,7 +1179,7 @@
         const sb = getSupabase();
         if (!sb) return false;
 
-        // Upload heavy PDFs for ALL applications (No 3-application limit bug)
+        // Upload heavy PDFs for ALL applications
         const apps = db.applications || [];
         for (let i = 0; i < apps.length; i++) {
           const a = apps[i];
@@ -1238,7 +1239,7 @@
       if (!remoteDB || typeof remoteDB !== 'object') return localDB;
       const remoteNewer = (remoteDB.lastModifiedTs || 0) >= (localDB.lastModifiedTs || 0);
 
-      // Deleted Registration IDs Registry (Ensures deleted Rejected / Closed apps stay deleted across all devices)
+      // Deleted Registration IDs Registry
       const deletedIds = Array.from(new Set([...(localDB.deletedOrderIds || []), ...(remoteDB.deletedOrderIds || [])]));
 
       const fbMap = new Map();
@@ -1342,7 +1343,6 @@
           if (a.reuploadedDocs && a.reuploadedDocs.length) vaultCount += a.reuploadedDocs.length;
         });
 
-        // Also query Supabase table rows size for accurate cloud storage tracking
         const sb = getSupabase();
         if (sb) {
           const { data: rows } = await sb.from(SUPABASE_TABLE).select('id, payload');
@@ -1456,7 +1456,6 @@
             const mergedDB = mergeCloudDatabases(localDB, remoteDB);
             safePersistLocalDB(mergedDB, false);
 
-            // If local has newer unsynced changes, push them to Supabase automatically
             if (localTs > remoteTs || (localDB.applications || []).length > (remoteDB.applications || []).length) {
               await pushToGlobalCloud(mergedDB);
             }
@@ -1468,7 +1467,6 @@
               }
             }
           } else if (!error && !data) {
-            // Initialize cloud table row on first run
             await pushToGlobalCloud(getCloudData());
           }
         }
@@ -1543,13 +1541,11 @@
         const originalDataUrl = e.target.result;
 
         if (sizeBytes <= 500 * 1024) {
-          // <= 500 KB: NO CANVAS USED — DIRECT ORIGINAL UPLOAD
           uploadedDocsTemp[docKey] = originalDataUrl;
           const prev = document.getElementById('prev_' + docKey);
           if (prev) { prev.src = originalDataUrl; prev.classList.remove('hidden'); }
           if (docKey === 'pan') runTesseractAutoOcr(originalDataUrl);
         } else {
-          // > 500 KB: CANVAS COMPRESSION APPLIED
           const img = new Image();
           img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -1615,7 +1611,6 @@
       const st = document.getElementById('statementUploadStatus');
 
       if (sizeBytes <= 2 * 1024 * 1024) {
-        // <= 2 MB: NO CANVAS USED — DIRECT ORIGINAL UPLOAD
         if (st) st.innerText = `⏳ Loading Original (${sizeKB} KB)...`;
         const reader = new FileReader();
         reader.onload = e => {
@@ -1625,7 +1620,6 @@
         };
         reader.readAsDataURL(file);
       } else {
-        // > 2 MB: CANVAS COMPRESSION APPLIED
         if (st) st.innerText = `⏳ File > 2 MB (${sizeKB} KB) — Optimizing via Canvas...`;
         if (file.type && file.type.startsWith('image/')) {
           const reader = new FileReader();
@@ -1672,7 +1666,7 @@
     }
 
     // ============================================================================
-    // PROFESSIONAL WHATSAPP & SMS ENGINE (UPDATED WITH REGISTRATION NO., 2-HOUR DISPATCH & *ACTIVE & IN PROCESS*)
+    // PROFESSIONAL WHATSAPP & SMS ENGINE (REGISTRATION NO., 2-HOUR DISPATCH & *ACTIVE & IN PROCESS*)
     // ============================================================================
     function cleanPhoneForWa(mob) {
       const digits = String(mob || '').replace(/\D/g, '');
@@ -1726,7 +1720,9 @@
         const principal = Number(a.amount) || 0;
         const rate = Number(a.customInterestRate) || parseFloat(db.agreementSettings.interestRate) || 3;
         const extraInt = Math.round(principal * (rate / 100) * (Number(a.tenure) || 6));
-        const procFee = Math.round(a.totalFee || ((Number(a.processingFee) || 0) + (Number(a.gstFee) || 0)));
+        const procFee = (a.totalFee !== undefined && a.totalFee !== null)
+          ? Math.round(Number(a.totalFee))
+          : Math.round((Number(a.processingFee) || 0) + (Number(a.gstFee) || 0));
         const insFee = a.insuranceOpted ? Math.round(Number(a.insuranceAmount) || 0) : 0;
         const lateFees = (a.emis || []).reduce((s, e) => s + (Number(e.lateFee) || 0), 0);
         const collectedEmis = (a.emis || []).reduce((s, e) => s + (Number(e.amount) || 0), 0);
@@ -2079,6 +2075,25 @@
       else if (amount <= 15000) slabFee = 600;
       else slabFee = 1000;
 
+      // Dynamically recalculate percentage or flat promo discount if a valid promo code is active
+      const codeEl = document.getElementById('appPromoInput');
+      const rawCode = codeEl ? codeEl.value.trim().toUpperCase() : '';
+      if (rawCode && appliedPromoDiscount > 0) {
+        const db = getCloudData();
+        const foundPromo = (db.promos || []).find(p => p.code === rawCode);
+        if (foundPromo) {
+          const minL = Number(foundPromo.minLoan) || 1;
+          const maxL = Number(foundPromo.maxLoan) || 500000;
+          if (amount >= minL && amount <= maxL) {
+            appliedPromoDiscount = foundPromo.type === 'PERCENT'
+              ? Math.round((slabFee * foundPromo.value) / 100)
+              : Math.min(slabFee, Math.round(foundPromo.value));
+          } else {
+            appliedPromoDiscount = 0;
+          }
+        }
+      }
+
       const baseFee = Math.round(Math.max(0, slabFee - appliedPromoDiscount));
       const gst = Math.round(baseFee * 0.18);
       const total = Math.round(baseFee + gst);
@@ -2146,7 +2161,7 @@
       }
 
       let slab = loanAmt <= 5000 ? 300 : (loanAmt <= 15000 ? 600 : 1000);
-      appliedPromoDiscount = found.type === 'PERCENT' ? Math.round((slab * found.value) / 100) : Math.round(found.value);
+      appliedPromoDiscount = found.type === 'PERCENT' ? Math.round((slab * found.value) / 100) : Math.min(slab, Math.round(found.value));
       document.getElementById('promoMsg').innerText = `✅ ₹${appliedPromoDiscount} Off Applied! (${custType})`;
       document.getElementById('promoMsg').className = 'font-bold text-emerald-600';
       updateFeeCalculation();
@@ -2214,7 +2229,6 @@
       const db = idbSaved ? mergeCloudDatabases(localDB, idbSaved) : localDB;
       safePersistLocalDB(db, false);
 
-      // Automatically update Part 1 subtitle from 'Order ID' to 'Registration No.'
       const tabTrackSubEl = document.getElementById('txtTabTrackSub');
       if (tabTrackSubEl) {
         tabTrackSubEl.innerText = 'Track by Registration No., Last 4 Digits or Investor Code';
@@ -2314,7 +2328,8 @@
       const tenure = parseInt(document.getElementById('appTenure').value) || 6;
       const defaultRateNum = parseFloat(db.agreementSettings.interestRate) || 3;
       const extraInterest = Math.round(requestedAmount * (defaultRateNum / 100) * tenure);
-      const monthlyEmi = Math.round((requestedAmount + extraInterest) / tenure);
+      // Math.ceil ensures even 1 paisa extra rounds UP to the next rupee (e.g. 417.10 -> 418)
+      const monthlyEmi = Math.ceil((requestedAmount + extraInterest) / tenure);
 
       const bankName = document.getElementById('appBankName').value.trim();
       const bankHolder = document.getElementById('appBankHolder').value.trim();
@@ -2447,7 +2462,7 @@
       searchCustomerApplication();
     }
 
-    // CUSTOMER FULL APPLICATION A-TO-Z RE-UPDATE HANDLER (PRESERVES PROMO DISCOUNT)
+    // CUSTOMER FULL APPLICATION A-TO-Z RE-UPDATE HANDLER (PRESERVES PROMO DISCOUNT & USES Math.ceil FOR EMI)
     function submitCustomerFullApplicationReupdate(orderId) {
       const db = getCloudData();
       const app = db.applications.find(a => a.orderId === orderId);
@@ -2500,7 +2515,7 @@
 
       const rateNum = Number(app.customInterestRate) || parseFloat(db.agreementSettings.interestRate) || 3;
       app.extraInterestAmount = Math.round(newAmount * (rateNum / 100) * newTenure);
-      app.monthlyEmi = Math.round((newAmount + app.extraInterestAmount) / newTenure);
+      app.monthlyEmi = Math.ceil((newAmount + app.extraInterestAmount) / newTenure);
 
       let slab = newAmount <= 5000 ? 300 : (newAmount <= 15000 ? 600 : 1000);
       const savedDiscount = Math.round(Number(app.promoDiscount) || 0);
@@ -2751,7 +2766,8 @@
 
     // CUSTOMER TRACKING CARD:
     // - Agreement letter ONLY in Step 3 (Third Section), NEVER duplicated on top.
-    // - Agreement letter & UTR/Tracking ONLY visible when application is in Approved (or Running/Closed) AND Owner has submitted UTR or Tracking Number!
+    // - Zero Fee (₹0) preserved when 100% Promo Code is applied.
+    // - UPI Payment Note has ONLY Registration No. (app.orderId), 'EMI' keyword removed.
     function renderCustomerTrackingCard(app) {
       const db = getCloudData();
       const container = document.getElementById('trackingResultContainer');
@@ -2765,7 +2781,10 @@
       const totalPaid = Math.round(app.emis.reduce((s, i) => s + Number(i.amount), 0));
       const rem = Math.max(0, totalPayableWithInterest - totalPaid);
 
-      const procPlusGst = Math.round(app.totalFee || (app.processingFee + app.gstFee));
+      // Zero Fee Safe Calculation (Fixes || 300 fallback bug when fee is 0)
+      const procPlusGst = (app.totalFee !== undefined && app.totalFee !== null)
+        ? Math.round(Number(app.totalFee))
+        : Math.round(Number(app.processingFee || 0) + Number(app.gstFee || 0));
       const insAmt = Math.round(app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0);
       const totalDeductible = procPlusGst + insAmt;
       const netBankDisbursal = Math.max(0, Math.round(app.amount - totalDeductible));
@@ -2992,7 +3011,7 @@
           </div>`;
       }
 
-      // UPI QR CODE + CUSTOMER UTR SUBMISSION BOX (SCREENSHOT IS OPTIONAL)
+      // UPI QR CODE + CUSTOMER UTR SUBMISSION BOX (UPI NOTE CONTAINS ONLY REGISTRATION NO. - 'EMI' REMOVED)
       let upiQrSectionHtml = '';
       if (inApprovedOrRunning && app.status !== 'Loan Closed') {
         const upiId = app.upiId || 'rahul9656170@slc';
@@ -3000,7 +3019,8 @@
         const expDateStr = app.upiExpiryDate || '';
         const todayStr = new Date().toISOString().split('T')[0];
         const isExpired = (expDateStr && todayStr > expDateStr);
-        const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent('RNS FINANCE')}&am=${upiAmt}&cu=INR&tn=${encodeURIComponent('EMI ' + app.orderId)}`;
+        // ONLY Registration No. (app.orderId) in transaction note (tn)
+        const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent('RNS FINANCE')}&am=${upiAmt}&cu=INR&tn=${encodeURIComponent(app.orderId)}`;
         const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUri)}`;
         const pendingCount = (app.pendingUtrSubmissions || []).filter(u => u.status === 'Pending').length;
 
@@ -3012,7 +3032,7 @@
                   📲 RNS FINANCE — OFFICIAL UPI QR PAYMENT
                 </span>
                 <h5 class="text-sm font-extrabold text-slate-900 dark:text-white mt-1">UPI ID: <span class="font-mono text-purple-800 dark:text-purple-300">${escapeHtml(upiId)}</span></h5>
-                <div>Payable Amount: <strong class="text-base text-emerald-700">₹${upiAmt}</strong> ${expDateStr ? `| Valid Until: <strong>${escapeHtml(expDateStr)}</strong>` : ''}</div>
+                <div>Payable Amount: <strong class="text-base text-emerald-700">₹${upiAmt}</strong> | Note: <strong class="font-mono text-indigo-700">${escapeHtml(app.orderId)}</strong> ${expDateStr ? `| Valid Until: <strong>${escapeHtml(expDateStr)}</strong>` : ''}</div>
                 ${isExpired ? `
                   <div class="text-rose-700 font-extrabold text-xs pt-1">❌ Payment Due Date (${escapeHtml(expDateStr)}) Has Passed — QR Code Disabled! Contact RNS Finance Support.</div>
                 ` : `
@@ -3384,13 +3404,11 @@
         if (!app.reuploadedDocs) app.reuploadedDocs = [];
 
         if (sizeBytes <= 500 * 1024) {
-          // <= 500 KB: Direct Original Upload without Canvas
           if (isPrimaryKycSlot) {
             if (cleanDocKey === 'pan') app.docs.pan = rawDataUrl;
             if (cleanDocKey === 'photo') app.docs.photo = rawDataUrl;
             if (cleanDocKey === 'sign') app.docs.sign = rawDataUrl;
           } else {
-            // 'other' option: Do NOT replace PAN/Photo/Sign; store separately in reuploadedDocs
             app.reuploadedDocs.push({
               type: 'other',
               label: 'OTHER DOCUMENT',
@@ -3405,7 +3423,6 @@
           alert('✅ Document Uploaded Successfully! It is now visible on the Owner Portal.');
           renderCustomerTrackingCard(app);
         } else {
-          // > 500 KB: Compress via Canvas
           const img = new Image();
           img.onload = async () => {
             const canvas = document.createElement('canvas');
@@ -3423,7 +3440,6 @@
               if (cleanDocKey === 'photo') app.docs.photo = dataUrl;
               if (cleanDocKey === 'sign') app.docs.sign = dataUrl;
             } else {
-              // 'other' option: Do NOT replace PAN/Photo/Sign; store separately in reuploadedDocs
               app.reuploadedDocs.push({
                 type: 'other',
                 label: 'OTHER DOCUMENT',
@@ -3657,6 +3673,12 @@
       a.remove();
     }
 
+    // TOGGLE EDIT/MODIFY FOR LOCKED UTR, SHOPPING TRACKING & PRODUCT INVOICE BOXES
+    function toggleLockedOwnerField(boxId) {
+      const el = document.getElementById(boxId);
+      if (el) el.classList.toggle('hidden');
+    }
+
     async function renderSingleOwnerApplication(orderId) {
       currentSelectedOwnerOrderId = orderId;
       const db = getCloudData();
@@ -3667,7 +3689,9 @@
       hydratePdfVaultForApp(app);
 
       const rateNum = Number(app.customInterestRate) || parseFloat(db.agreementSettings.interestRate) || 3;
-      const procFee = Math.round(app.totalFee !== undefined ? app.totalFee : (app.processingFee + app.gstFee));
+      const procFee = (app.totalFee !== undefined && app.totalFee !== null)
+        ? Math.round(Number(app.totalFee))
+        : Math.round(Number(app.processingFee || 0) + Number(app.gstFee || 0));
       const insFee = Math.round(app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0);
       const netDisb = Math.max(0, Math.round(app.amount - procFee - insFee));
       const extraInt = Math.round(app.amount * (rateNum / 100) * app.tenure);
@@ -3786,7 +3810,7 @@
             </div>
           </div>
 
-          <!-- LOAN PURPOSE + SHOPPING TRACKING ID + PRODUCT INVOICE GENERATOR + PERSONAL LOAN UTR TRANSFER BOX -->
+          <!-- LOAN PURPOSE + AUTO-LOCKING SHOPPING TRACKING ID + PRODUCT INVOICE + PERSONAL LOAN UTR TRANSFER BOX (WITH EDIT/MODIFY BUTTON) -->
           <div class="p-3.5 rounded-xl bg-amber-50 dark:bg-slate-800 border border-amber-300 space-y-3">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
@@ -3798,33 +3822,69 @@
             </div>
 
             ${isShoppingLoan ? `
-              <!-- SHOPPING TRACKING ID + PRODUCT INVOICE GENERATOR BELOW IT -->
+              <!-- SHOPPING TRACKING ID (AUTO-LOCKS ON SUBMIT WITH EDIT/MODIFY BUTTON) -->
               <div class="pt-2 border-t border-amber-200 space-y-2">
-                <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                ${app.shoppingTrackingNo ? `
+                  <div class="p-2.5 rounded-lg bg-sky-100 dark:bg-slate-900 border-2 border-sky-500 flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <span class="font-extrabold text-sky-950 dark:text-sky-300">🔒 Order Tracking ID Submitted & Locked:</span>
+                      <span class="ml-2 px-2.5 py-0.5 rounded bg-sky-800 text-white font-mono font-extrabold">${escapeHtml(app.shoppingTrackingNo)}</span>
+                    </div>
+                    <button type="button" onclick="toggleLockedOwnerField('editTrackBox_${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow">
+                      ✏️ Edit / Modify
+                    </button>
+                  </div>
+                ` : ''}
+                <div id="editTrackBox_${escapeHtml(app.orderId)}" class="${app.shoppingTrackingNo ? 'hidden' : ''} flex flex-col sm:flex-row sm:items-center gap-2">
                   <span class="font-extrabold text-sky-900 dark:text-sky-300 shrink-0">🚚 1. Assign Shopping Order Tracking No.:</span>
                   <input type="text" id="shopTrack_${escapeHtml(app.orderId)}" value="${escapeHtml(app.shoppingTrackingNo || '')}" placeholder="Enter Order Tracking Number (e.g. ORD-TRK-99281)" class="flex-grow rounded-lg border px-3 py-1.5 font-mono font-bold bg-white">
-                  <button type="button" onclick="saveShoppingTrackingNumber('${escapeHtml(app.orderId)}')" class="px-4 py-1.5 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-extrabold shadow">Save Tracking & Unlock Agreement</button>
+                  <button type="button" onclick="saveShoppingTrackingNumber('${escapeHtml(app.orderId)}')" class="px-4 py-1.5 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-extrabold shadow">Save & Lock Tracking</button>
                 </div>
 
-                <!-- PRODUCT NAME & AMOUNT INVOICE GENERATOR (BELOW TRACKING ID) -->
-                <div class="p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-emerald-400 flex flex-col sm:flex-row sm:items-center gap-2">
+                <!-- PRODUCT NAME & AMOUNT INVOICE GENERATOR (AUTO-LOCKS ON SUBMIT WITH EDIT/MODIFY BUTTON) -->
+                ${app.invoiceProductName ? `
+                  <div class="p-2.5 rounded-lg bg-emerald-100 dark:bg-slate-900 border-2 border-emerald-500 flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <span class="font-extrabold text-emerald-950 dark:text-emerald-300">🔒 Product Invoice Generated & Locked:</span>
+                      <strong class="ml-1 text-slate-900 dark:text-white">${escapeHtml(app.invoiceProductName)} (₹${app.invoiceProductAmount || app.amount})</strong>
+                    </div>
+                    <div class="flex gap-1.5">
+                      <button type="button" onclick="openProductInvoiceModal('${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded-lg bg-slate-900 text-white font-extrabold text-[11px] shadow">👁️ View Invoice</button>
+                      <button type="button" onclick="toggleLockedOwnerField('editInvBox_${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow">✏️ Edit / Modify</button>
+                    </div>
+                  </div>
+                ` : ''}
+                <div id="editInvBox_${escapeHtml(app.orderId)}" class="${app.invoiceProductName ? 'hidden' : ''} p-2.5 rounded-lg bg-white dark:bg-slate-900 border border-emerald-400 flex flex-col sm:flex-row sm:items-center gap-2">
                   <span class="font-extrabold text-emerald-900 dark:text-emerald-300 shrink-0">🧾 2. Generate Product Invoice:</span>
                   <input type="text" id="invProdName_${escapeHtml(app.orderId)}" value="${escapeHtml(app.invoiceProductName || '')}" placeholder="Enter Product Name (e.g. Samsung Galaxy 5G)" class="flex-grow rounded-lg border px-3 py-1.5 font-bold">
                   <input type="number" id="invProdAmt_${escapeHtml(app.orderId)}" value="${app.invoiceProductAmount || app.amount}" placeholder="Product Amount (₹)" class="w-36 rounded-lg border px-3 py-1.5 font-extrabold text-emerald-700">
                   <button type="button" onclick="saveShoppingProductInvoice('${escapeHtml(app.orderId)}')" class="px-4 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow shrink-0">
-                    💾 Submit & Generate Invoice
+                    💾 Submit & Lock Invoice
                   </button>
-                  ${app.invoiceProductName ? `<button type="button" onclick="openProductInvoiceModal('${escapeHtml(app.orderId)}')" class="px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold shrink-0">👁️ View Invoice</button>` : ''}
                 </div>
               </div>
             ` : `
-              <!-- PERSONAL LOAN DISBURSAL UTR NUMBER CONFIRMATION BOX -->
-              <div class="pt-2 border-t border-amber-200 flex flex-col sm:flex-row sm:items-center gap-2">
-                <span class="font-extrabold text-emerald-900 dark:text-emerald-300 shrink-0">🏦 Personal Loan Transfer UTR No.:</span>
-                <input type="text" id="disbUtr_${escapeHtml(app.orderId)}" value="${escapeHtml(app.disbursalUtrNo || '')}" placeholder="Enter Bank Disbursal UTR / Ref No. (e.g. UTR4291839201)" class="flex-grow rounded-lg border px-3 py-1.5 font-mono font-bold bg-white">
-                <button type="button" onclick="savePersonalLoanDisbursalUtr('${escapeHtml(app.orderId)}')" class="px-4 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
-                  ✅ Submit UTR & Mark Successful Transfer
-                </button>
+              <!-- PERSONAL LOAN DISBURSAL UTR NUMBER CONFIRMATION BOX (AUTO-LOCKS ON SUBMIT WITH EDIT/MODIFY BUTTON) -->
+              <div class="pt-2 border-t border-amber-200 space-y-2">
+                ${app.disbursalUtrNo ? `
+                  <div class="p-2.5 rounded-lg bg-emerald-100 dark:bg-slate-900 border-2 border-emerald-600 flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                      <span class="font-extrabold text-emerald-950 dark:text-emerald-300">🔒 Loan Disbursal UTR Submitted & Locked:</span>
+                      <span class="ml-2 px-2.5 py-0.5 rounded bg-emerald-800 text-white font-mono font-extrabold">${escapeHtml(app.disbursalUtrNo)}</span>
+                      <span class="text-[10px] text-slate-600 ml-1">(${escapeHtml(app.disbursalUtrDate || 'Synced')})</span>
+                    </div>
+                    <button type="button" onclick="toggleLockedOwnerField('editUtrBox_${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] shadow">
+                      ✏️ Edit / Modify
+                    </button>
+                  </div>
+                ` : ''}
+                <div id="editUtrBox_${escapeHtml(app.orderId)}" class="${app.disbursalUtrNo ? 'hidden' : ''} flex flex-col sm:flex-row sm:items-center gap-2">
+                  <span class="font-extrabold text-emerald-900 dark:text-emerald-300 shrink-0">🏦 Personal Loan Transfer UTR No.:</span>
+                  <input type="text" id="disbUtr_${escapeHtml(app.orderId)}" value="${escapeHtml(app.disbursalUtrNo || '')}" placeholder="Enter Bank Disbursal UTR / Ref No. (e.g. UTR4291839201)" class="flex-grow rounded-lg border px-3 py-1.5 font-mono font-bold bg-white">
+                  <button type="button" onclick="savePersonalLoanDisbursalUtr('${escapeHtml(app.orderId)}')" class="px-4 py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
+                    ✅ Submit & Lock UTR
+                  </button>
+                </div>
               </div>
             `}
           </div>
@@ -3972,9 +4032,8 @@
       if (app) {
         app.shoppingTrackingNo = trk;
         app.updatedAt = Date.now();
-        saveCloudData(db, `✅ Shopping Tracking No (${trk}) Saved & Synced!`);
+        saveCloudData(db, `🔒 Shopping Tracking No (${trk}) Saved & Locked!`);
         renderSingleOwnerApplication(orderId);
-        alert(`✅ Shopping Order Tracking No (${trk}) Saved!\nNote: Once this application is in 'Approved' status, the Tracking ID and Agreement letter will automatically appear in Step 3 on the Customer Portal.`);
       }
     }
 
@@ -3993,9 +4052,8 @@
         if (!app.invoiceNo) app.invoiceNo = 'INV-RNS-' + app.orderId;
         app.invoiceDate = new Date().toLocaleDateString('hi-IN');
         app.updatedAt = Date.now();
-        saveCloudData(db, `🧾 Official RNS FINANCE Product Invoice Generated for ${app.name}!`);
+        saveCloudData(db, `🔒 Product Invoice Generated & Locked for ${app.name}!`);
         renderSingleOwnerApplication(orderId);
-        alert(`✅ Product Invoice Generated & Synced for ${app.name}!\nProduct: ${prodName}\nAmount: ₹${prodAmt}\nCustomer can view & download it once the application is in Approved status.`);
       }
     }
 
@@ -4008,13 +4066,12 @@
         app.disbursalUtrNo = utrVal;
         app.disbursalUtrDate = new Date().toLocaleDateString('hi-IN');
         app.updatedAt = Date.now();
-        saveCloudData(db, `✅ Loan Transfer UTR (${utrVal}) Saved & Synced!`);
+        saveCloudData(db, `🔒 Loan Transfer UTR (${utrVal}) Saved & Locked!`);
         renderSingleOwnerApplication(orderId);
-        alert(`✅ Loan Transfer UTR (${utrVal}) Saved!\nOnce the application is in 'Approved' status, the UTR Transfer Confirmation and Agreement letter will automatically appear in Step 3 on the Customer Portal.`);
       }
     }
 
-    // SAVE OWNER LOAN OFFER: PRESERVES CUSTOMER PROMO DISCOUNT SO IT NEVER RESETS TO ₹354
+    // SAVE OWNER LOAN OFFER: PRESERVES CUSTOMER PROMO DISCOUNT & USES Math.ceil FOR EMI
     function saveOwnerLoanOffer(orderId) {
       const newAmt = Math.round(parseFloat(document.getElementById('offerAmt_' + orderId).value) || 0);
       const newRate = parseFloat(document.getElementById('offerRate_' + orderId).value) || 3;
@@ -4033,7 +4090,7 @@
         app.customInterestRate = newRate;
         app.interestRateText = `${newRate}% Monthly`;
         app.extraInterestAmount = Math.round(newAmt * (newRate / 100) * newTenure);
-        app.monthlyEmi = customEmi > 0 ? Math.round(customEmi) : Math.round((newAmt + app.extraInterestAmount) / newTenure);
+        app.monthlyEmi = customEmi > 0 ? Math.ceil(customEmi) : Math.ceil((newAmt + app.extraInterestAmount) / newTenure);
         app.interestUnlocked = true;
         app.offerNote = rawNote || `Sanctioned Rs. ${newAmt} for ${newTenure} Month(s) at ${newRate}%/M (Monthly EMI: Rs. ${app.monthlyEmi}) based on profile verification.`;
 
@@ -4453,10 +4510,15 @@
         date: new Date().toLocaleDateString('hi-IN'),
         lateFee: foreFee,
         amount: settleAmt,
-        mode: 'Online UPI'
+        mode: 'Online UPI',
+        isForeclosure: true
       });
       app.status = 'Loan Closed';
       app.upiArchived = true;
+      app.foreclosed = true;
+      app.foreclosureAmount = settleAmt;
+      app.foreclosureFee = foreFee;
+      app.foreclosureTxnId = refNo;
       app.updatedAt = Date.now();
       saveCloudData(db, `🎓 Loan ${orderId} Foreclosed & Moved to Closed History!`);
       document.getElementById('forecloseSettlementAmt').value = '';
@@ -4464,7 +4526,7 @@
       document.getElementById('forecloseTxnInput').value = '';
       populateCollectAppDropdown();
       populateUpiCustomerDropdown();
-      alert(`🎓 Loan Registration No. ${app.orderId} (${app.name}) has been settled and closed! You can now download their No Dues Certificate.`);
+      alert(`🎓 Loan Registration No. ${app.orderId} (${app.name}) has been settled and closed via Foreclosure! Their No Dues Certificate now includes the official Foreclosure Settlement statement.`);
     }
 
     function sendCollectNotification(mode = 'wa') {
@@ -4485,7 +4547,12 @@
       if (app && app.emis.length > 0) {
         app.status = 'Loan Running';
         app.upiArchived = false;
-        app.emis.pop();
+        const popped = app.emis.pop();
+        if (popped && (popped.isForeclosure || String(popped.month).toLowerCase().includes('foreclosure'))) {
+          app.foreclosed = false;
+          app.foreclosureAmount = 0;
+          app.foreclosureFee = 0;
+        }
         app.updatedAt = Date.now();
         saveCloudData(db, `Loan ${orderId} Re-opened in Active Collect Box!`);
         populateCollectAppDropdown();
@@ -4577,11 +4644,14 @@
       app.emis.splice(idx, 1);
       app.emis.forEach((item, i) => {
         item.serial = i + 1;
-        item.month = `${getOrdinalSuffix(i + 1)} Installment`;
+        if (!item.isForeclosure && !String(item.month).toLowerCase().includes('foreclosure')) {
+          item.month = `${getOrdinalSuffix(i + 1)} Installment`;
+        }
       });
       if (app.status === 'Loan Closed' && app.emis.length < app.tenure) {
         app.status = 'Loan Running';
         app.upiArchived = false;
+        app.foreclosed = false;
       }
       app.updatedAt = Date.now();
       saveCloudData(db, 'Installment Deleted & Synced!');
@@ -4646,6 +4716,66 @@
   </script>
 <!-- END OF PART 5 -->
 <!-- START OF PART 6 (FINAL PART) -->
+  <!-- IN-BUILT MULTILINGUAL & VOICE AI ASSISTANT WIDGET (SLIGHTLY LARGER DASHBOARD) -->
+  <div id="rnsAiAssistantWrapper" class="fixed bottom-4 right-4 z-50 flex flex-col items-end">
+    <!-- AI CHAT WINDOW (ENLARGED COMFORTABLE SIZE FOR DESKTOP & MOBILE) -->
+    <div id="rnsAiChatWindow" class="hidden mb-3 w-[360px] sm:w-[440px] bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border-2 border-emerald-600 overflow-hidden flex flex-col max-h-[86vh]">
+      <!-- HEADER -->
+      <div class="bg-gradient-to-r from-slate-900 via-emerald-900 to-slate-900 text-white p-3.5 flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center font-extrabold text-base shadow">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <div>
+            <div class="font-extrabold text-xs sm:text-sm flex items-center gap-1.5">
+              <span>RNS FINANCE Smart AI Desk</span>
+              <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
+            </div>
+            <div id="aiVerifiedStatusSub" class="text-[10px] text-emerald-300 font-semibold">Hindi • English • Hinglish • Voice & Live Apply</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="toggleAiVoiceOutput()" id="btnAiSpeakerToggle" title="Voice Speaker On/Off" class="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold">
+            <i class="fa-solid fa-volume-high text-emerald-300"></i>
+          </button>
+          <button type="button" id="btnAiLogoutSession" onclick="logoutAiCustomerSession()" title="Reset / Logout Session" class="hidden px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-extrabold">
+            🔒 Reset
+          </button>
+          <button type="button" onclick="toggleRnsAiChatWindow()" class="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-rose-600 text-white text-xs font-extrabold">✕</button>
+        </div>
+      </div>
+
+      <!-- REGISTRATION NO. / WIZARD STATUS BAR -->
+      <div id="aiSessionBanner" class="bg-emerald-50 dark:bg-slate-800 px-3.5 py-1.5 border-b border-emerald-200 dark:border-slate-700 flex items-center justify-between text-[10.5px]">
+        <span id="aiSessionBannerText" class="font-bold text-slate-700 dark:text-slate-200">🔓 Enter Registration No. (RNSF...) or Apply Online Here</span>
+        <button type="button" onclick="startAiChatLoanApplicationWizard()" class="text-emerald-800 dark:text-emerald-300 font-extrabold underline shrink-0 ml-2">📝 Apply on Chat</button>
+      </div>
+
+      <!-- MESSAGES CONTAINER (LARGER VIEWPORT) -->
+      <div id="rnsAiMessagesBox" class="p-3.5 space-y-3 overflow-y-auto flex-grow text-xs bg-slate-50/80 dark:bg-slate-950" style="min-height: 320px; max-height: 430px;"></div>
+
+      <!-- DYNAMIC QUICK ACTION CHIPS -->
+      <div id="rnsAiQuickChips" class="px-3 py-2 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex gap-1.5 overflow-x-auto text-[10.5px]"></div>
+
+      <!-- INPUT & VOICE MIC BAR -->
+      <form onsubmit="handleRnsAiUserSubmit(event)" class="p-2.5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center gap-1.5">
+        <button type="button" id="btnAiVoiceMic" onclick="startRnsAiVoiceRecognition()" title="Speak in Hindi or English" class="w-9 h-9 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 flex items-center justify-center shrink-0 font-bold border border-amber-300 transition">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <input type="text" id="rnsAiUserInput" placeholder="Ask anything, type RNSF... or reply here..." class="flex-grow rounded-xl border border-slate-300 dark:border-slate-700 px-3 py-2 text-xs font-semibold">
+        <button type="submit" class="px-3.5 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs shrink-0 shadow">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- FLOATING TRIGGER BUTTON -->
+    <button type="button" onclick="toggleRnsAiChatWindow()" class="px-4 py-3 rounded-full bg-gradient-to-r from-emerald-700 to-slate-900 hover:from-emerald-800 hover:to-slate-950 text-white font-extrabold text-xs shadow-2xl border-2 border-emerald-400 flex items-center gap-2 transition transform hover:scale-105">
+      <i class="fa-solid fa-robot text-amber-300 text-base"></i>
+      <span>🤖 RNS AI Help & Live Apply</span>
+    </button>
+  </div>
+
   <script>
     // ============================================================================
     // INVESTOR MANAGEMENT: REG CODE, WA/SMS, CREDIT/DEBIT LEDGER, SINGLE & ALL PDF
@@ -5084,7 +5214,7 @@
     }
 
     // ============================================================================
-    // REGISTRATION-WISE & GLOBAL EDITABLE AGREEMENT (AUTO-MOVES TO HISTORY BOX WHEN SAVED)
+    // REGISTRATION-WISE & GLOBAL EDITABLE AGREEMENT (USES Math.ceil FOR EMI)
     // ============================================================================
     function populateAgreementOrderDropdown() {
       const db = getCloudData();
@@ -5092,7 +5222,6 @@
       if (!sel) return;
       const configuredMap = db.orderAgreements || {};
 
-      // Only show applications that are NOT yet saved in History Box (or the one currently being edited/reopened)
       const unconfiguredApps = (db.applications || []).filter(a => !configuredMap[a.orderId] || a.orderId === currentEditingAgreementOrderId);
 
       const optionsHtml = [`<option value="GLOBAL">🌐 Global Master Template (Default for All Applications)</option>`];
@@ -5157,11 +5286,11 @@
           app.customInterestRate = parsedRate;
           app.interestRateText = `${parsedRate}% Monthly`;
           app.extraInterestAmount = Math.round(app.amount * (parsedRate / 100) * app.tenure);
-          app.monthlyEmi = Math.round((app.amount + app.extraInterestAmount) / app.tenure);
+          app.monthlyEmi = Math.ceil((app.amount + app.extraInterestAmount) / app.tenure);
           app.interestUnlocked = true;
           app.updatedAt = Date.now();
         }
-        currentEditingAgreementOrderId = ''; // Clears from top dropdown and moves into History Box below!
+        currentEditingAgreementOrderId = '';
         saveCloudData(db, `✅ Agreement letter Saved for Reg No. ${target} & Moved to History Box!`);
       }
       populateAgreementOrderDropdown();
@@ -5260,7 +5389,7 @@
     }
 
     // ============================================================================
-    // AGREEMENT LETTER & NO DUES CERTIFICATE PDF (LENDER/BORROWER + UTR/TRACKING MENTION)
+    // AGREEMENT LETTER (FIXED ₹0 FEE ON 100% PROMO + PROMO CODE DISPLAY)
     // ============================================================================
     function openAgreementModal(orderId) {
       const db = getCloudData();
@@ -5268,9 +5397,11 @@
       if (!app) return;
       const cfg = (db.orderAgreements && db.orderAgreements[orderId]) ? db.orderAgreements[orderId] : db.agreementSettings;
       const rateNum = Number(app.customInterestRate) || parseFloat(cfg.interestRate) || 3;
-      const procBase = Math.round(app.processingFee || 300);
-      const gstVal = Math.round(app.gstFee || Math.round(procBase * 0.18));
-      const fee = Math.round(app.totalFee || (procBase + gstVal));
+
+      const procBase = (app.processingFee !== undefined && app.processingFee !== null) ? Math.round(Number(app.processingFee)) : 0;
+      const gstVal = (app.gstFee !== undefined && app.gstFee !== null) ? Math.round(Number(app.gstFee)) : Math.round(procBase * 0.18);
+      const fee = (app.totalFee !== undefined && app.totalFee !== null) ? Math.round(Number(app.totalFee)) : (procBase + gstVal);
+
       const insAmt = Math.round(app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0);
       const totalDeductions = Math.round(fee + insAmt);
       const netDisbursed = Math.max(0, Math.round(app.amount - totalDeductions));
@@ -5281,9 +5412,13 @@
       const latePen = cfg.latePenalty || '3% per month additional';
       const isShoppingLoan = app.loanType && app.loanType.toLowerCase().includes('shopping');
 
+      const promoMentionSentence = app.promoCode
+        ? ` (Promo Code <strong>${escapeHtml(app.promoCode)}</strong> applied with discount of <strong>Rs. ${app.promoDiscount || 0}</strong>; Net Processing Fee: <strong>Rs. ${fee}</strong>)`
+        : ` (inclusive of 18% GST)`;
+
       const disbursalExplanationText = isShoppingLoan
-        ? `The Borrower has applied for an <strong>Online Shopping Finance Facility (${escapeHtml(app.loanType)})</strong> for the purchase of product/item (Order/Link Details: <strong>${escapeHtml(app.purpose || 'Online Product')}</strong> ${app.deliveryAddress ? `| Delivery Shipping Address: <strong>${escapeHtml(app.deliveryAddress)}</strong>` : ''}). Upon verification of KYC and bank credentials, RNS FINANCE has sanctioned a principal loan of <strong>Rs. ${app.amount}</strong>. After adjusting the Processing Fee of <strong>Rs. ${fee} (inclusive of 18% GST)</strong> and Loan Protection Insurance Fee of <strong>Rs. ${insAmt}</strong>, the net financed product order valued at <strong>Rs. ${netDisbursed}</strong> shall be processed and dispatched to the Borrower's registered delivery address. ${app.shoppingTrackingNo ? `<strong class="text-sky-900">Your Order Has Been Placed & Dispatched — Your Order Tracking ID Number is: <u>${escapeHtml(app.shoppingTrackingNo)}</u>.</strong>` : ''}`
-        : `The Borrower has applied for a <strong>Personal Loan Facility (${escapeHtml(app.loanType)})</strong> (Purpose: <strong>${escapeHtml(app.purpose || 'Personal Financial Requirement')}</strong>). Upon complete verification of KYC and banking credentials, RNS FINANCE has sanctioned a principal loan amount of <strong>Rs. ${app.amount}</strong>. In accordance with company disbursement norms, after deducting the Processing Fee of <strong>Rs. ${fee} (inclusive of 18% GST)</strong> and Loan Protection Insurance Fee of <strong>Rs. ${insAmt}</strong>, the net disbursement amount of <strong>Rs. ${netDisbursed}</strong> shall be credited directly to the Borrower's verified Bank Account (${escapeHtml(app.bankName || '')}, A/C No: ${escapeHtml(app.accNo || app.bank)}, IFSC: ${escapeHtml(app.ifsc || '')}). ${app.disbursalUtrNo ? `<strong class="text-emerald-900">Your Sanctioned Loan Amount Has Been Transferred — Your Bank Transfer UTR Number is: <u>${escapeHtml(app.disbursalUtrNo)}</u>.</strong>` : ''}`;
+        ? `The Borrower has applied for an <strong>Online Shopping Finance Facility (${escapeHtml(app.loanType)})</strong> for the purchase of product/item (Order/Link Details: <strong>${escapeHtml(app.purpose || 'Online Product')}</strong> ${app.deliveryAddress ? `| Delivery Shipping Address: <strong>${escapeHtml(app.deliveryAddress)}</strong>` : ''}). Upon verification of KYC and bank credentials, RNS FINANCE has sanctioned a principal loan of <strong>Rs. ${app.amount}</strong>. After adjusting the Processing Fee of <strong>Rs. ${fee}</strong>${promoMentionSentence} and Loan Protection Insurance Fee of <strong>Rs. ${insAmt}</strong>, the net financed product order valued at <strong>Rs. ${netDisbursed}</strong> shall be processed and dispatched to the Borrower's registered delivery address. ${app.shoppingTrackingNo ? `<strong class="text-sky-900">Your Order Has Been Placed & Dispatched — Your Order Tracking ID Number is: <u>${escapeHtml(app.shoppingTrackingNo)}</u>.</strong>` : ''}`
+        : `The Borrower has applied for a <strong>Personal Loan Facility (${escapeHtml(app.loanType)})</strong> (Purpose: <strong>${escapeHtml(app.purpose || 'Personal Financial Requirement')}</strong>). Upon complete verification of KYC and banking credentials, RNS FINANCE has sanctioned a principal loan amount of <strong>Rs. ${app.amount}</strong>. In accordance with company disbursement norms, after deducting the Processing Fee of <strong>Rs. ${fee}</strong>${promoMentionSentence} and Loan Protection Insurance Fee of <strong>Rs. ${insAmt}</strong>, the net disbursement amount of <strong>Rs. ${netDisbursed}</strong> shall be credited directly to the Borrower's verified Bank Account (${escapeHtml(app.bankName || '')}, A/C No: ${escapeHtml(app.accNo || app.bank)}, IFSC: ${escapeHtml(app.ifsc || '')}). ${app.disbursalUtrNo ? `<strong class="text-emerald-900">Your Sanctioned Loan Amount Has Been Transferred — Your Bank Transfer UTR Number is: <u>${escapeHtml(app.disbursalUtrNo)}</u>.</strong>` : ''}`;
 
       document.getElementById('modalTitle').innerText = `Agreement_letter_${app.orderId}`;
       document.getElementById('modalPrintableArea').innerHTML = `
@@ -5298,7 +5433,7 @@
                 <p class="text-[10px]">${MUMBAI_CORP_ADDRESS}</p>
                 <p class="text-[10px]">Helpline & WhatsApp: +91 7668273774 | Email: rnsgpl2316@gmail.com | CIN: U64990MH2026PTC007402</p>
                 <div class="flex justify-between font-extrabold text-[10.5px] mt-1 pt-1 border-t border-slate-300">
-                  <span>Registration No.: ${escapeHtml(app.orderId)}</span>
+                  <span>Registration No.: ${escapeHtml(app.orderId)} ${app.promoCode ? `| Promo Applied: ${escapeHtml(app.promoCode)}` : ''}</span>
                   <span>Execution Date: ${escapeHtml(app.createdAt)}</span>
                 </div>
               </div>
@@ -5308,7 +5443,7 @@
                 <h3 class="text-sm font-extrabold underline uppercase mt-0.5">LOAN & FINANCE SERVICE AGREEMENT LETTER (PAGE 1 OF 2)</h3>
               </div>
 
-              <!-- LENDER DETAILS & BORROWER DETAILS (FIRST/SECOND PARTY REMOVED AS REQUESTED) -->
+              <!-- LENDER DETAILS & BORROWER DETAILS -->
               <div class="grid grid-cols-2 gap-2.5 bg-slate-50 p-2.5 rounded-xl border border-slate-300 text-[10px]">
                 <div class="space-y-0.5">
                   <div class="font-extrabold text-emerald-800 uppercase border-b pb-0.5">Lender Details</div>
@@ -5338,7 +5473,14 @@
                   </thead>
                   <tbody>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">01.</td><td class="p-1.5 border border-slate-400 font-semibold">Total Sanctioned Loan Principal Amount (Registration No.: ${escapeHtml(app.orderId)})</td><td class="p-1.5 border border-slate-400 text-right font-extrabold">Rs. ${app.amount}</td></tr>
-                    <tr><td class="p-1.5 border border-slate-400 text-center font-bold">02.</td><td class="p-1.5 border border-slate-400">Processing Fee & 18% GST Deduction (Base Fee Rs. ${procBase} + 18% GST Rs. ${gstVal})</td><td class="p-1.5 border border-slate-400 text-right font-bold text-rose-700">- Rs. ${fee}</td></tr>
+                    <tr>
+                      <td class="p-1.5 border border-slate-400 text-center font-bold">02.</td>
+                      <td class="p-1.5 border border-slate-400">
+                        Processing Fee & 18% GST Deduction (Base Fee Rs. ${procBase} + 18% GST Rs. ${gstVal})
+                        ${app.promoCode ? `<strong class="text-emerald-800 block">[Promo Code Applied: ${escapeHtml(app.promoCode)} | Fee Discount: -Rs. ${app.promoDiscount || 0} | Net Fee Payable: Rs. ${fee}]</strong>` : ''}
+                      </td>
+                      <td class="p-1.5 border border-slate-400 text-right font-bold ${fee === 0 ? 'text-emerald-700' : 'text-rose-700'}">${fee === 0 ? 'Rs. 0 (Waived)' : `- Rs. ${fee}`}</td>
+                    </tr>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">03.</td><td class="p-1.5 border border-slate-400">Loan Protection Insurance Deduction (${escapeHtml(app.insuranceNote || 'Policy Coverage')})</td><td class="p-1.5 border border-slate-400 text-right font-bold text-rose-700">- Rs. ${insAmt}</td></tr>
                     <tr class="bg-emerald-50"><td class="p-1.5 border border-slate-400 text-center font-extrabold">04.</td><td class="p-1.5 border border-slate-400 font-extrabold text-emerald-950">${isShoppingLoan ? `Net Financed Online Shopping Product / Order Disbursal Value ${app.shoppingTrackingNo ? `(Your Order Tracking ID No.: ${escapeHtml(app.shoppingTrackingNo)})` : ''}` : `Net Disbursed Amount Credited to Bank Account (${escapeHtml(app.bankName || '')} - ${escapeHtml(app.accNo || '')}) ${app.disbursalUtrNo ? `[Transferred — Your UTR No.: ${escapeHtml(app.disbursalUtrNo)}]` : ''}`}</td><td class="p-1.5 border border-slate-400 text-right font-extrabold text-emerald-800">Rs. ${netDisbursed}</td></tr>
                     <tr><td class="p-1.5 border border-slate-400 text-center font-bold">05.</td><td class="p-1.5 border border-slate-400">Total Applicable Interest (@ ${rateNum}% Monthly for ${app.tenure} Month(s) Tenure)</td><td class="p-1.5 border border-slate-400 text-right font-bold text-amber-800">+ Rs. ${extraInt}</td></tr>
@@ -5389,7 +5531,7 @@
               <div class="text-[10px] leading-snug bg-white p-2.5 rounded-xl border border-slate-300">
                 ${formatLegalClausesWithBoldHeadings(cfg.customBody)}
                 <div class="mt-2 pt-2 border-t border-slate-300 text-justify">
-                  <strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">Borrower Affirmation & Undertaking:</strong> I, <strong>${escapeHtml(app.name)}</strong>, hereby solemnly affirm and declare that all KYC documents, 3-month bank statements, and personal details submitted by me are true, authentic, and valid. I have thoroughly read, understood, and accepted the loan sanction amount, processing fee, insurance charges, interest rate (${rateNum}% Monthly), ${isShoppingLoan && app.shoppingTrackingNo ? `Order Tracking ID (${escapeHtml(app.shoppingTrackingNo)}), ` : ''}${!isShoppingLoan && app.disbursalUtrNo ? `Loan Transfer UTR No. (${escapeHtml(app.disbursalUtrNo)}), ` : ''}NACH bounce charges, and late fee penalties stated in this Agreement letter.
+                  <strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">Borrower Affirmation & Undertaking:</strong> I, <strong>${escapeHtml(app.name)}</strong>, hereby solemnly affirm and declare that all KYC documents, 3-month bank statements, and personal details submitted by me are true, authentic, and valid. I have thoroughly read, understood, and accepted the loan sanction amount, processing fee (Rs. ${fee}${app.promoCode ? ` via Promo ${escapeHtml(app.promoCode)}` : ''}), insurance charges, interest rate (${rateNum}% Monthly), ${isShoppingLoan && app.shoppingTrackingNo ? `Order Tracking ID (${escapeHtml(app.shoppingTrackingNo)}), ` : ''}${!isShoppingLoan && app.disbursalUtrNo ? `Loan Transfer UTR No. (${escapeHtml(app.disbursalUtrNo)}), ` : ''}NACH bounce charges, and late fee penalties stated in this Agreement letter.
                 </div>
               </div>
             </div>
@@ -5418,78 +5560,111 @@
       document.getElementById('documentModal').classList.add('flex');
     }
 
-    // NO DUES CERTIFICATE (EXACT MATTER PRESERVED, REGISTRATION NO. UPDATED)
+    // ============================================================================
+    // NO DUES CERTIFICATE (COMPACT 2-3 LINE BOLD FORECLOSURE SETTLEMENT BOX INSIDE LOCKED A4)
+    // ============================================================================
     function openNoDuesModal(orderId) {
       const app = getCloudData().applications.find(a => a.orderId === orderId);
       if (!app) return;
       const custSignImg = getCustomerLatestSignature(app);
       const totalTenure = Number(app.tenure) || 6;
-      const totalLateFeePaid = Math.round((app.emis || []).reduce((s, e) => s + (Number(e.lateFee) || 0), 0));
-      const lateInstallmentsList = (app.emis || []).filter(e => Number(e.lateFee) > 0).map(e => `${e.month} (Paid on ${e.date} with Late Fee Rs. ${Math.round(e.lateFee)})`);
 
-      const repaymentConductParagraph = (totalLateFeePaid > 0)
-        ? `The Borrower has completed all ${totalTenure} monthly installments for this loan account. As per repayment records, ${escapeHtml(lateInstallmentsList.join(', '))} experienced a delay, attracting a cumulative <strong>Late Fee of Rs. ${totalLateFeePaid}</strong>, which has been duly paid and settled in full along with the principal EMI. All other installments were paid on time.`
-        : `The Borrower has maintained an exemplary and disciplined repayment track record throughout the loan tenure. All ${totalTenure} monthly installments, from the 1st Installment to the final installment, were paid strictly on time (100% Paid on Time) without any default or late fee.`;
+      const forecloseEmi = (app.emis || []).find(e => e.isForeclosure || String(e.month || '').toLowerCase().includes('foreclosure'));
+      const isForeclosedLoan = Boolean(app.foreclosed || forecloseEmi);
+      const regularEmis = (app.emis || []).filter(e => !e.isForeclosure && !String(e.month || '').toLowerCase().includes('foreclosure'));
+      const regPaidCount = regularEmis.length;
+
+      const totalLateFeePaid = Math.round(regularEmis.reduce((s, e) => s + (Number(e.lateFee) || 0), 0));
+      const lateInstallmentsList = regularEmis.filter(e => Number(e.lateFee) > 0).map(e => `${e.month} (Paid on ${e.date} with Late Fee Rs. ${Math.round(e.lateFee)})`);
+
+      let repaymentConductParagraph = '';
+      let foreclosureHighlightBoxHtml = '';
+
+      if (isForeclosedLoan) {
+        const fcAmt = Math.round(Number(forecloseEmi ? forecloseEmi.amount : app.foreclosureAmount) || app.amount);
+        const fcFee = Math.round(Number(forecloseEmi ? forecloseEmi.lateFee : app.foreclosureFee) || 0);
+        const fcTxn = (forecloseEmi && forecloseEmi.txnId) ? forecloseEmi.txnId : (app.foreclosureTxnId || 'FORECLOSE-' + app.orderId);
+        const fcDate = (forecloseEmi && forecloseEmi.date) ? forecloseEmi.date : new Date().toLocaleDateString('hi-IN');
+
+        const instSummaryLine = regPaidCount > 0
+          ? `Regular Installments Paid: <strong>1st to ${getOrdinalSuffix(regPaidCount)} Installment</strong> | Remaining <strong>${getOrdinalSuffix(regPaidCount + 1)} to ${getOrdinalSuffix(totalTenure)} Installment(s)</strong> Settled via One-Time Foreclosure.`
+          : `Entire Loan Tenure (<strong>1st to ${getOrdinalSuffix(totalTenure)} Installment</strong>) Settled in Full via Direct One-Time Pre-Closure / Foreclosure Settlement.`;
+
+        repaymentConductParagraph = `This Loan Account has been officially closed under <strong>One-Time Foreclosure / Pre-Closure Settlement</strong> on <strong>${escapeHtml(fcDate)}</strong> (Settlement Ref/UTR: <strong>${escapeHtml(fcTxn)}</strong>) upon receipt of the final settlement amount of <strong>Rs. ${fcAmt}</strong>${fcFee > 0 ? ` (along with Foreclosure Fee of <strong>Rs. ${fcFee}</strong>)` : ''}. All remaining installment obligations stand fully satisfied and waived.`;
+
+        foreclosureHighlightBoxHtml = `
+          <div class="p-2.5 rounded-xl bg-indigo-50 border-2 border-indigo-700 text-indigo-950 text-[10px] leading-snug space-y-0.5">
+            <div class="font-extrabold text-[10.5px] uppercase text-indigo-900">⚡ THIS LOAN ACCOUNT IS PAID & CLOSED UNDER ONE-TIME FORECLOSURE SETTLEMENT:</div>
+            <div class="font-semibold">${instSummaryLine}</div>
+            <div class="font-extrabold text-emerald-900">One-Time Foreclosure Settlement Paid: <u>Rs. ${fcAmt}</u> ${fcFee > 0 ? `(+ Foreclosure Fee: Rs. ${fcFee})` : ''} | Settlement UTR / Ref: <span class="font-mono">${escapeHtml(fcTxn)}</span> | Date: ${escapeHtml(fcDate)}</div>
+          </div>`;
+      } else if (totalLateFeePaid > 0) {
+        repaymentConductParagraph = `The Borrower has completed all ${totalTenure} monthly installments for this loan account. As per repayment records, ${escapeHtml(lateInstallmentsList.join(', '))} experienced a delay, attracting a cumulative <strong>Late Fee of Rs. ${totalLateFeePaid}</strong>, which has been duly paid and settled in full along with the principal EMI. All other installments were paid on time.`;
+      } else {
+        repaymentConductParagraph = `The Borrower has maintained an exemplary and disciplined repayment track record throughout the loan tenure. All ${totalTenure} monthly installments, from the 1st Installment to the final installment, were paid strictly on time (100% Paid on Time) without any default or late fee.`;
+      }
 
       document.getElementById('modalTitle').innerText = `No_Dues_Certificate_${app.orderId}`;
       document.getElementById('modalPrintableArea').innerHTML = `
-        <div class="a4-page-box text-[10.5px] leading-snug" id="pdfTargetContent" contenteditable="true">
-          <div class="space-y-3">
-            <div class="text-center border-b-2 border-slate-900 pb-2.5 space-y-0.5">
+        <div class="a4-page-box text-[10.2px] leading-snug" id="pdfTargetContent" contenteditable="true">
+          <div class="space-y-2.5">
+            <div class="text-center border-b-2 border-slate-900 pb-2 space-y-0.5">
               <h2 class="text-xl font-extrabold text-slate-900">RNS FINANCE</h2>
               <p class="font-bold text-[10.5px] text-emerald-800 uppercase">Personal Loan and Online Shopping Finance Service</p>
-              <p class="text-[10px]">${MUMBAI_CORP_ADDRESS}</p>
-              <p class="text-[10px]">Helpline & WhatsApp: +91 7668273774 | Email: rnsgpl2316@gmail.com | CIN: U64990MH2026PTC007402</p>
-              <div class="flex justify-between font-extrabold text-[10.5px] pt-1.5 mt-1 border-t border-slate-300">
+              <p class="text-[9.5px]">${MUMBAI_CORP_ADDRESS}</p>
+              <p class="text-[9.5px]">Helpline & WhatsApp: +91 7668273774 | Email: rnsgpl2316@gmail.com | CIN: U64990MH2026PTC007402</p>
+              <div class="flex justify-between font-extrabold text-[10px] pt-1 mt-1 border-t border-slate-300">
                 <span>Certificate Ref No: RNS/NDC/${escapeHtml(app.orderId)}/2026</span>
                 <span>Date of Issue: ${new Date().toLocaleDateString('hi-IN')}</span>
               </div>
             </div>
 
-            <div class="text-center py-1 space-y-0.5">
-              <span class="bg-emerald-800 text-white text-[10px] font-extrabold px-3.5 py-0.5 rounded-full uppercase">Official Loan Closure & No-Objection Certificate (NOC)</span>
+            <div class="text-center py-0.5 space-y-0.5">
+              <span class="bg-emerald-800 text-white text-[9.5px] font-extrabold px-3.5 py-0.5 rounded-full uppercase">Official Loan Closure & No-Objection Certificate (NOC)</span>
               <h3 class="text-sm font-extrabold underline text-slate-900 pt-0.5 uppercase">NO DUES & FULL LOAN CLEARANCE CERTIFICATE</h3>
             </div>
 
-            <p class="leading-snug text-justify text-[10.5px]">
+            <p class="leading-snug text-justify text-[10px]">
               This is to officially certify that Mr./Ms. <strong>${escapeHtml(app.name)}</strong> (Date of Birth: <strong>${escapeHtml(app.dob || '-')}</strong>, Registered Mobile: <strong>+91 ${escapeHtml(app.mobile)}</strong>, PAN: <strong>${escapeHtml(app.pan)}</strong>) had availed a <strong>${escapeHtml(app.loanType)}</strong> facility of <strong>Rs. ${app.amount}</strong> from <strong>RNS FINANCE</strong> under Loan Account / Registration No. <strong>${escapeHtml(app.orderId)}</strong> on <strong>${escapeHtml(app.createdAt)}</strong>.
             </p>
 
-            <div class="bg-slate-50 p-3 rounded-xl border-2 border-slate-300 grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-[10.5px]">
+            <div class="bg-slate-50 p-2.5 rounded-xl border-2 border-slate-300 grid grid-cols-2 sm:grid-cols-3 gap-2 text-[10px]">
               <div><span class="text-slate-500 block">Borrower Full Name:</span><strong class="text-xs">${escapeHtml(app.name)}</strong></div>
               <div><span class="text-slate-500 block">Loan Account / Registration No.:</span><strong class="text-xs">${escapeHtml(app.orderId)}</strong></div>
               <div><span class="text-slate-500 block">Facility Category:</span><strong>${escapeHtml(app.loanType)}</strong></div>
               <div><span class="text-slate-500 block">Sanctioned Loan Principal:</span><strong>Rs. ${app.amount}</strong></div>
               <div><span class="text-slate-500 block">Loan Tenure & Monthly EMI:</span><strong>${totalTenure} Months (Rs. ${app.monthlyEmi}/Month)</strong></div>
-              ${totalLateFeePaid > 0 ? `<div><span class="text-slate-500 block">Late Fee Paid & Settled:</span><strong class="text-amber-800">Rs. ${totalLateFeePaid} (Cleared)</strong></div>` : `<div><span class="text-slate-500 block">Repayment Conduct:</span><strong class="text-emerald-700">100% On-Time Payment</strong></div>`}
-              <div class="col-span-2 sm:col-span-3 pt-1.5 border-t flex justify-between items-center">
+              ${isForeclosedLoan ? `<div><span class="text-slate-500 block">Closure Mode:</span><strong class="text-indigo-800">⚡ Paid for Foreclosure</strong></div>` : (totalLateFeePaid > 0 ? `<div><span class="text-slate-500 block">Late Fee Paid & Settled:</span><strong class="text-amber-800">Rs. ${totalLateFeePaid} (Cleared)</strong></div>` : `<div><span class="text-slate-500 block">Repayment Conduct:</span><strong class="text-emerald-700">100% On-Time Payment</strong></div>`)}
+              <div class="col-span-2 sm:col-span-3 pt-1 border-t flex justify-between items-center">
                 <span class="font-extrabold text-slate-700">Current Outstanding Dues Balance:</span>
                 <span class="px-3 py-0.5 rounded bg-emerald-100 text-emerald-900 font-extrabold text-xs border border-emerald-400">Rs. 0.00 (NIL / ZERO DUES)</span>
               </div>
             </div>
 
-            <div class="p-3 rounded-xl bg-white border border-slate-300 space-y-2 text-[10px] leading-snug text-justify">
-              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">1. Installment Repayment Conduct Summary:</strong> ${repaymentConductParagraph}</div>
-              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">2. Full & Final Settlement & Zero Financial Liability:</strong> The Borrower has repaid 100% of the sanctioned principal amount, accrued interest, and all applicable charges. Effective from <strong>${new Date().toLocaleDateString('hi-IN')}</strong>, there are <strong>Zero Outstanding Dues (Rs. 0.00)</strong> pending against Loan Registration No. <strong>${escapeHtml(app.orderId)}</strong>, and the Borrower is completely discharged from all liabilities under this agreement.</div>
+            ${foreclosureHighlightBoxHtml}
+
+            <div class="p-2.5 rounded-xl bg-white border border-slate-300 space-y-1.5 text-[9.8px] leading-snug text-justify">
+              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">1. Installment Repayment & Closure Conduct Summary:</strong> ${repaymentConductParagraph}</div>
+              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">2. Full & Final Settlement & Zero Financial Liability:</strong> The Borrower has repaid 100% of the sanctioned principal, agreed settlement amount, and all applicable charges. Effective from <strong>${new Date().toLocaleDateString('hi-IN')}</strong>, there are <strong>Zero Outstanding Dues (Rs. 0.00)</strong> pending against Loan Registration No. <strong>${escapeHtml(app.orderId)}</strong>, and the Borrower is completely discharged from all liabilities under this agreement.</div>
               <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">3. Revocation & Cancellation of NACH e-Mandate:</strong> The automated bank debit mandate (NACH Reference: <strong>${escapeHtml(app.nachRefNo || 'NACH-' + app.orderId)}</strong>) linked to the Borrower's bank account (${escapeHtml(app.bankName || '')}) stands permanently terminated and cancelled with immediate effect. No further installments shall be presented or deducted.</div>
-              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">4. Release of First Charge & Credit Bureau (CIBIL) Update:</strong> RNS FINANCE hereby releases its first charge and hypothecation over the financed product/asset. The status of Loan Registration No. <strong>${escapeHtml(app.orderId)}</strong> has been officially updated as <strong>"Closed / Paid in Full with Zero Dues"</strong> across our central ledger and Credit Information Bureau records.</div>
+              <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">4. Release of First Charge & Credit Bureau (CIBIL) Update:</strong> RNS FINANCE hereby releases its first charge and hypothecation over the financed product/asset. The status of Loan Registration No. <strong>${escapeHtml(app.orderId)}</strong> has been officially updated as <strong>"Closed / Settled in Full with Zero Dues"</strong> across our central ledger and Credit Information Bureau records.</div>
               <div><strong class="font-extrabold text-slate-950 bg-slate-200 px-1 py-0.5 rounded">5. Priority Pre-Approved Customer Status:</strong> We appreciate your banking relationship with RNS FINANCE. Based on successful loan closure, your profile is eligible for higher-limit Priority Pre-Approved Finance facilities in the future.</div>
             </div>
           </div>
 
-          <div class="space-y-2 pt-2">
-            <div class="grid grid-cols-2 gap-5 pt-2 border-t-2 border-slate-800 items-end text-center">
-              <div class="p-2.5 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 space-y-0.5">
-                <div class="text-emerald-800 font-extrabold text-[10.5px]"><i class="fa-solid fa-circle-check"></i> DIGITAL SIGNATURE VERIFIED</div>
-                <div class="text-[9.5px] font-bold text-slate-700">No-Dues Approved & Issued by</div>
-                <div class="text-[10.5px] font-extrabold text-slate-900">RNS FINANCE (Authorized Signatory)</div>
+          <div class="space-y-1.5 pt-1.5">
+            <div class="grid grid-cols-2 gap-5 pt-1.5 border-t-2 border-slate-800 items-end text-center">
+              <div class="p-2 rounded-xl border-2 border-emerald-600 bg-emerald-50/70 space-y-0.5">
+                <div class="text-emerald-800 font-extrabold text-[10px]"><i class="fa-solid fa-circle-check"></i> DIGITAL SIGNATURE VERIFIED</div>
+                <div class="text-[9px] font-bold text-slate-700">No-Dues Approved & Issued by</div>
+                <div class="text-[10px] font-extrabold text-slate-900">RNS FINANCE (Authorized Signatory)</div>
               </div>
-              <div class="p-2.5 rounded-xl border border-slate-300 bg-white space-y-0.5 flex flex-col justify-end min-h-[78px]">
-                ${custSignImg ? `<img src="${custSignImg}" alt="Customer Signature" style="height:40px; max-width:150px; object-fit:contain; display:block; margin:0 auto;" />` : `<div class="text-xs font-bold italic text-slate-500 py-1">${escapeHtml(app.name)}</div>`}
-                <div class="border-t border-slate-800 pt-1 font-extrabold text-[10px] text-slate-900">Borrower Signature (${escapeHtml(app.name)})</div>
+              <div class="p-2 rounded-xl border border-slate-300 bg-white space-y-0.5 flex flex-col justify-end min-h-[70px]">
+                ${custSignImg ? `<img src="${custSignImg}" alt="Customer Signature" style="height:36px; max-width:140px; object-fit:contain; display:block; margin:0 auto;" />` : `<div class="text-xs font-bold italic text-slate-500 py-1">${escapeHtml(app.name)}</div>`}
+                <div class="border-t border-slate-800 pt-1 font-extrabold text-[9.5px] text-slate-900">Borrower Signature (${escapeHtml(app.name)})</div>
               </div>
             </div>
-            <div class="text-center pt-1.5 border-t border-slate-300 font-extrabold text-[10px]" style="color:#8b5a2b;">
+            <div class="text-center pt-1 border-t border-slate-300 font-extrabold text-[9.5px]" style="color:#8b5a2b;">
               RNS FINANCE — System Generated Document - Do Not Require Physical Sign
             </div>
           </div>
@@ -5784,6 +5959,1399 @@
         </div>
         <p class="text-[11px] text-slate-600 pt-1">Applicant identity, PAN (${escapeHtml(pan)}) and mobile number (+91 ${escapeHtml(mob)}) have been verified successfully.</p>`;
     }
+
+    // ============================================================================
+    // ADVANCED IN-BUILT SMART AI ASSISTANT + LIVE VERIFICATION ACTION CENTER
+    // + STEP-BY-STEP ONLINE CHAT LOAN APPLICATION WIZARD + UPI QR IN CHAT
+    // ============================================================================
+    let aiVerifiedOrderId = '';
+    let aiVoiceSpeakerEnabled = true;
+    let aiSpeechRecognizer = null;
+    let aiReplyVariationCounter = 0;
+
+    // Live Chat Loan Application Wizard State
+    let aiAppWizard = {
+      active: false,
+      step: '',
+      data: {
+        loanType: 'Personal Loan',
+        customerType: 'New Customer',
+        amount: 5000,
+        tenure: 6,
+        purpose: '',
+        deliveryAddress: '',
+        promoCode: '',
+        promoDiscount: 0,
+        name: '',
+        dob: '',
+        mobile: '',
+        email: '',
+        kycId: '',
+        pan: '',
+        refName: '',
+        refMobile: '',
+        bankName: '',
+        bankHolder: '',
+        accNo: '',
+        ifsc: ''
+      }
+    };
+
+    function toggleRnsAiChatWindow() {
+      const win = document.getElementById('rnsAiChatWindow');
+      if (!win) return;
+      win.classList.toggle('hidden');
+      if (!win.classList.contains('hidden')) {
+        const msgBox = document.getElementById('rnsAiMessagesBox');
+        if (msgBox && msgBox.children.length === 0) {
+          initRnsAiGreeting();
+        }
+        renderRnsAiQuickChips();
+      }
+    }
+
+    function toggleAiVoiceOutput() {
+      aiVoiceSpeakerEnabled = !aiVoiceSpeakerEnabled;
+      const btn = document.getElementById('btnAiSpeakerToggle');
+      if (btn) {
+        btn.innerHTML = aiVoiceSpeakerEnabled
+          ? '<i class="fa-solid fa-volume-high text-emerald-300"></i>'
+          : '<i class="fa-solid fa-volume-xmark text-rose-400"></i>';
+      }
+      if (!aiVoiceSpeakerEnabled && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function speakRnsAiText(rawHtmlOrText) {
+      if (!aiVoiceSpeakerEnabled || !window.speechSynthesis) return;
+      try {
+        window.speechSynthesis.cancel();
+        const tmp = document.createElement('div');
+        tmp.innerHTML = rawHtmlOrText;
+        const cleanText = (tmp.innerText || tmp.textContent || '')
+          .replace(/[📊🔗💰🏦🎟️📄👤🔒🔓✅⏳⚠️❌🎓🚚🛍️🧾🤖💬📝⚡📞💳🌟🙏]/g, '')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .slice(0, 320);
+        if (!cleanText) return;
+        const utter = new SpeechSynthesisUtterance(cleanText);
+        const hasHindiScript = /[\u0900-\u097F]/.test(cleanText);
+        utter.lang = hasHindiScript ? 'hi-IN' : 'en-IN';
+        utter.rate = 1.02;
+        window.speechSynthesis.speak(utter);
+      } catch (e) {}
+    }
+
+    function startRnsAiVoiceRecognition() {
+      const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!SpeechRec) {
+        return alert('Voice input is supported on Chrome / Android / Edge browsers. Please type your query below.');
+      }
+      const micBtn = document.getElementById('btnAiVoiceMic');
+      try {
+        if (aiSpeechRecognizer) aiSpeechRecognizer.abort();
+        aiSpeechRecognizer = new SpeechRec();
+        aiSpeechRecognizer.lang = (currentLang === 'hi') ? 'hi-IN' : 'en-IN';
+        aiSpeechRecognizer.interimResults = false;
+        aiSpeechRecognizer.maxAlternatives = 1;
+
+        if (micBtn) {
+          micBtn.className = 'w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 font-bold animate-pulse';
+        }
+
+        aiSpeechRecognizer.onresult = (event) => {
+          const transcript = event.results[0][0].transcript;
+          const inputEl = document.getElementById('rnsAiUserInput');
+          if (inputEl) {
+            inputEl.value = transcript;
+            processRnsAiQuery(transcript, true);
+            inputEl.value = '';
+          }
+        };
+
+        aiSpeechRecognizer.onend = () => {
+          if (micBtn) {
+            micBtn.className = 'w-9 h-9 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 flex items-center justify-center shrink-0 font-bold border border-amber-300 transition';
+          }
+        };
+
+        aiSpeechRecognizer.onerror = () => {
+          if (micBtn) {
+            micBtn.className = 'w-9 h-9 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 flex items-center justify-center shrink-0 font-bold border border-amber-300 transition';
+          }
+        };
+
+        aiSpeechRecognizer.start();
+      } catch (err) {}
+    }
+
+    function appendRnsAiMessage(sender, htmlContent, speakNow = false) {
+      const box = document.getElementById('rnsAiMessagesBox');
+      if (!box) return;
+      const msgDiv = document.createElement('div');
+      if (sender === 'user') {
+        msgDiv.className = 'flex justify-end';
+        msgDiv.innerHTML = `<div class="max-w-[85%] bg-emerald-700 text-white px-3.5 py-2 rounded-2xl rounded-tr-none font-semibold shadow-sm">${escapeHtml(htmlContent)}</div>`;
+      } else {
+        msgDiv.className = 'flex justify-start';
+        msgDiv.innerHTML = `<div class="max-w-[94%] bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 px-3.5 py-2.5 rounded-2xl rounded-tl-none border border-slate-200 dark:border-slate-700 shadow-sm space-y-2 leading-relaxed">${htmlContent}</div>`;
+      }
+      box.appendChild(msgDiv);
+      box.scrollTop = box.scrollHeight;
+      if (sender === 'bot' && speakNow) {
+        speakRnsAiText(htmlContent);
+      }
+    }
+
+    function initRnsAiGreeting() {
+      const box = document.getElementById('rnsAiMessagesBox');
+      if (box) box.innerHTML = '';
+      appendRnsAiMessage('bot', `
+        <div class="font-extrabold text-emerald-800 dark:text-emerald-400 text-sm">🙏 नमस्ते! RNS FINANCE Smart AI में आपका स्वागत है।</div>
+        <div>मैं आपकी <strong>हिंदी, English या Hinglish</strong> में टाइप करके या <strong>🎤 माइक दबाकर बोलकर</strong> पूरी सहायता कर सकता हूँ:</div>
+        <div class="p-2.5 rounded-xl bg-emerald-50 dark:bg-slate-900 border border-emerald-300 text-[11px] space-y-1 font-semibold">
+          <div>🔹 <strong>पहले से अप्लाई किया है?</strong> अपना <strong>Registration No. (जैसे RNSF1024)</strong> या <strong>Tracking ID</strong> भेजें—यहीं चैट से अपनी केवाईसी, NACH, री-अपलोड और QR पेमेंट पूरा करें!</div>
+          <div>🔹 <strong>नया लोन चाहिए?</strong> नीचे दिए गए बटन को दबाकर <strong>इसी चैटबॉट पर ऑनलाइन लोन अप्लाई</strong> करें!</div>
+        </div>
+        <button type="button" onclick="startAiChatLoanApplicationWizard()" class="w-full py-2 px-3 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow text-center">
+          📝 चैटबॉट पर ऑनलाइन लोन अप्लाई करें (Apply Now on Chat)
+        </button>
+      `, false);
+    }
+
+    function logoutAiCustomerSession() {
+      aiVerifiedOrderId = '';
+      aiAppWizard.active = false;
+      aiAppWizard.step = '';
+      const logoutBtn = document.getElementById('btnAiLogoutSession');
+      if (logoutBtn) logoutBtn.classList.add('hidden');
+      const bannerTxt = document.getElementById('aiSessionBannerText');
+      if (bannerTxt) bannerTxt.innerHTML = '🔓 Enter Registration No. (RNSF...) or Apply Online Here';
+      appendRnsAiMessage('bot', `🔒 <strong>Session Reset:</strong> आपकी चैट हिस्ट्री और व्यक्तिगत लोन सेशन सुरक्षा के लिए रीसेट कर दिया गया है। आप नया Registration No. डाल सकते हैं या नया आवेदन शुरू कर सकते हैं।`, true);
+      renderRnsAiQuickChips();
+    }
+
+    function renderRnsAiQuickChips() {
+      const chipBox = document.getElementById('rnsAiQuickChips');
+      if (!chipBox) return;
+      if (aiAppWizard.active) {
+        chipBox.innerHTML = `
+          <button type="button" onclick="cancelAiChatLoanWizard()" class="shrink-0 px-3 py-1 rounded-full bg-rose-100 text-rose-800 border border-rose-300 font-extrabold">✕ Cancel Application Wizard</button>
+          <span class="text-slate-500 font-bold self-center">Step: ${escapeHtml(aiAppWizard.step)}</span>
+        `;
+        return;
+      }
+      if (!aiVerifiedOrderId) {
+        chipBox.innerHTML = `
+          <button type="button" onclick="startAiChatLoanApplicationWizard()" class="shrink-0 px-2.5 py-1 rounded-full bg-emerald-600 text-white font-extrabold shadow">📝 Apply Loan on Chat</button>
+          <button type="button" onclick="askRnsAiChip('Loan kaise apply karein?')" class="shrink-0 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-900 border border-emerald-300 font-bold">⚡ Apply Process</button>
+          <button type="button" onclick="askRnsAiChip('10000 loan 6 month EMI kitni hogi?')" class="shrink-0 px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-900 border border-indigo-300 font-bold">🧮 EMI Calculator</button>
+          <button type="button" onclick="askRnsAiChip('Documents kya lagenge?')" class="shrink-0 px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-300 font-bold">📄 Documents</button>
+          <button type="button" onclick="askRnsAiChip('Interest rate kya hai?')" class="shrink-0 px-2.5 py-1 rounded-full bg-purple-50 text-purple-900 border border-purple-300 font-bold">📊 Interest Policy</button>
+          <button type="button" onclick="askRnsAiChip('Foreclosure aur CIBIL नियम क्या हैं?')" class="shrink-0 px-2.5 py-1 rounded-full bg-teal-50 text-teal-900 border border-teal-300 font-bold">🎓 Foreclosure & CIBIL</button>
+        `;
+      } else {
+        chipBox.innerHTML = `
+          <button type="button" onclick="askRnsAiChip('Mera loan status aur pending verification kya hai?')" class="shrink-0 px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-950 border border-emerald-400 font-extrabold">📊 Status & Verification</button>
+          <button type="button" onclick="askRnsAiChip('Mujhe payment karna hai QR code dikhao')" class="shrink-0 px-2.5 py-1 rounded-full bg-purple-700 text-white font-extrabold shadow">📲 Pay EMI (UPI QR)</button>
+          <button type="button" onclick="askRnsAiChip('Mera NACH link bhejiye')" class="shrink-0 px-2.5 py-1 rounded-full bg-sky-100 text-sky-950 border border-sky-400 font-extrabold">🔗 NACH Link</button>
+          <button type="button" onclick="askRnsAiChip('Mera KYC ya Document Re-upload karna hai')" class="shrink-0 px-2.5 py-1 rounded-full bg-rose-100 text-rose-950 border border-rose-400 font-extrabold">📤 KYC / Re-upload</button>
+          <button type="button" onclick="askRnsAiChip('Meri EMI aur baki due kitna hai?')" class="shrink-0 px-2.5 py-1 rounded-full bg-amber-100 text-amber-950 border border-amber-400 font-extrabold">💰 EMI & Balance</button>
+          <button type="button" onclick="askRnsAiChip('Mera UTR ya Tracking number kya hai?')" class="shrink-0 px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-950 border border-indigo-400 font-extrabold">🏦 UTR / Tracking</button>
+          <button type="button" onclick="askRnsAiChip('Agreement letter, Invoice ya NOC download')" class="shrink-0 px-2.5 py-1 rounded-full bg-teal-100 text-teal-950 border border-teal-400 font-extrabold">📄 PDF Documents</button>
+        `;
+      }
+    }
+
+    function askRnsAiChip(text) {
+      processRnsAiQuery(text, true);
+    }
+
+    function handleRnsAiUserSubmit(e) {
+      e.preventDefault();
+      const inputEl = document.getElementById('rnsAiUserInput');
+      if (!inputEl) return;
+      const q = inputEl.value.trim();
+      if (!q) return;
+      inputEl.value = '';
+      processRnsAiQuery(q, true);
+    }
+
+    // ============================================================================
+    // PART A: STEP-BY-STEP ONLINE LOAN APPLICATION WIZARD INSIDE CHATBOT
+    // ============================================================================
+    function startAiChatLoanApplicationWizard() {
+      aiVerifiedOrderId = '';
+      aiAppWizard.active = true;
+      aiAppWizard.step = 'LOAN_TYPE';
+      aiAppWizard.data = {
+        loanType: 'Personal Loan',
+        customerType: 'New Customer',
+        amount: 5000,
+        tenure: 6,
+        purpose: '',
+        deliveryAddress: '',
+        promoCode: '',
+        promoDiscount: 0,
+        name: '',
+        dob: '',
+        mobile: '',
+        email: '',
+        kycId: '',
+        pan: '',
+        refName: '',
+        refMobile: '',
+        bankName: '',
+        bankHolder: '',
+        accNo: '',
+        ifsc: ''
+      };
+      uploadedDocsTemp = { pan: '', photo: '', sign: '', statement: '', statementName: '' };
+      ocrTempResult = { scannedPan: '', rawText: '', status: 'Idle' };
+
+      const logoutBtn = document.getElementById('btnAiLogoutSession');
+      if (logoutBtn) logoutBtn.classList.remove('hidden');
+      const bannerTxt = document.getElementById('aiSessionBannerText');
+      if (bannerTxt) bannerTxt.innerHTML = '📝 <strong>Live Chat Application Mode Active</strong>';
+      renderRnsAiQuickChips();
+
+      appendRnsAiMessage('bot', `
+        <div class="font-extrabold text-emerald-800 dark:text-emerald-400 text-sm">📝 ऑनलाइन लोन एप्लीकेशन शुरू हो गई है!</div>
+        <div><strong>Step 1:</strong> कृपया नीचे किसी एक लोन विकल्प पर टिक (Click) करें, मैं उसे ऑटोमैटिक सेट कर लूँगा:</div>
+        <div class="grid grid-cols-2 gap-2 pt-1">
+          <button type="button" onclick="selectWizardLoanType('Personal Loan')" class="p-2.5 rounded-xl border-2 border-emerald-600 bg-emerald-50 hover:bg-emerald-700 hover:text-white text-emerald-950 font-extrabold text-center shadow-sm transition">
+            ☑️ 1. Personal Loan
+          </button>
+          <button type="button" onclick="selectWizardLoanType('Online Shopping Loan')" class="p-2.5 rounded-xl border-2 border-indigo-600 bg-indigo-50 hover:bg-indigo-700 hover:text-white text-indigo-950 font-extrabold text-center shadow-sm transition">
+            ☑️ 2. Online Shopping Loan
+          </button>
+        </div>
+      `, true);
+    }
+
+    function cancelAiChatLoanWizard() {
+      aiAppWizard.active = false;
+      aiAppWizard.step = '';
+      const bannerTxt = document.getElementById('aiSessionBannerText');
+      if (bannerTxt) bannerTxt.innerHTML = '🔓 Enter Registration No. (RNSF...) or Apply Online Here';
+      renderRnsAiQuickChips();
+      appendRnsAiMessage('bot', `✕ चैट लोन एप्लीकेशन प्रक्रिया बंद कर दी गई है। आप कभी भी दोबारा शुरू कर सकते हैं या कोई भी सवाल पूछ सकते हैं।`, true);
+    }
+
+    function selectWizardLoanType(typeVal) {
+      if (!aiAppWizard.active) return;
+      aiAppWizard.data.loanType = typeVal;
+      const formLoanType = document.getElementById('appLoanType');
+      if (formLoanType) {
+        formLoanType.value = typeVal;
+        toggleShoppingAddressField();
+      }
+      appendRnsAiMessage('user', `☑ ${typeVal}`, false);
+      aiAppWizard.step = 'AMOUNT';
+      renderRnsAiQuickChips();
+      appendRnsAiMessage('bot', `
+        <div class="font-extrabold text-emerald-800">✔ आपने <strong>${escapeHtml(typeVal)}</strong> चुना है।</div>
+        <div><strong>Step 2 (Loan Amount):</strong> आपको कितने रुपये का लोन चाहिए? (₹1,000 से ₹50,000 के बीच नीचे बटन चुनें या चैट में रकम लिखें):</div>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          ${[3000, 5000, 10000, 15000, 25000, 50000].map(amt => `<button type="button" onclick="handleWizardStepInput('${amt}')" class="px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-700 hover:text-white text-emerald-950 font-extrabold border border-emerald-400">₹${amt}</button>`).join('')}
+        </div>
+      `, true);
+    }
+
+    function selectWizardTenure(monthsVal) {
+      if (!aiAppWizard.active) return;
+      handleWizardStepInput(String(monthsVal));
+    }
+
+    function skipWizardPromoStep() {
+      if (!aiAppWizard.active) return;
+      handleWizardStepInput('SKIP');
+    }
+
+    // Quality & OCR Checked File Upload Handler directly inside Chatbot Wizard
+    function handleWizardFileUploadInChat(event, docKey) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const sizeBytes = file.size;
+
+      // Bank Statement (Step DOC_STMT)
+      if (docKey === 'statement') {
+        if (sizeBytes < 3000) {
+          appendRnsAiMessage('bot', `<div class="text-rose-600 font-extrabold">⚠️ यह फाइल बहुत छोटी या अस्पष्ट लग रही है! कृपया अपना साफ 3 महीने का बैंक स्टेटमेंट (PDF या साफ फोटो) दोबारा री-अपलोड करें:</div>
+          <input type="file" accept="application/pdf,image/*" onchange="handleWizardFileUploadInChat(event, 'statement')" class="text-[11px] w-full mt-1">`, true);
+          return;
+        }
+        handleBankStatementUpload(event);
+        setTimeout(() => {
+          appendRnsAiMessage('user', `📄 Uploaded Bank Statement: ${file.name}`, false);
+          aiAppWizard.step = 'FINAL_CONFIRM';
+          renderRnsAiQuickChips();
+          showWizardFinalConfirmationSummary();
+        }, 700);
+        return;
+      }
+
+      // Image Documents (pan, photo, sign) - Validate image resolution & readability
+      const reader = new FileReader();
+      reader.onload = e => {
+        const rawUrl = e.target.result;
+        const testImg = new Image();
+        testImg.onload = async () => {
+          if (testImg.width < 130 || testImg.height < 80 || sizeBytes < 2500) {
+            appendRnsAiMessage('bot', `
+              <div class="p-2.5 rounded-xl bg-rose-50 border-2 border-rose-400 text-rose-900 space-y-1">
+                <div class="font-extrabold">⚠️ फोटो साफ समझ में नहीं आ रही है (Low Quality / Too Small)!</div>
+                <div>कृपया <strong>${docKey.toUpperCase()}</strong> की साफ और स्पष्ट फोटो दोबारा अपलोड (Re-upload) करें:</div>
+                <input type="file" accept="image/*" onchange="handleWizardFileUploadInChat(event, '${docKey}')" class="text-[11px] w-full mt-1">
+              </div>
+            `, true);
+            return;
+          }
+
+          // Pass to standard 500KB / Auto-Canvas handler
+          handleFileUpload(event, docKey);
+          appendRnsAiMessage('user', `🖼️ Uploaded ${docKey.toUpperCase()}: ${file.name}`, false);
+
+          if (docKey === 'pan') {
+            appendRnsAiMessage('bot', `<div class="text-indigo-800 font-bold">🔍 AI Auto-OCR आपके पैन कार्ड की फोटो जांच रहा है, कृपया 2 सेकंड प्रतीक्षा करें...</div>`, false);
+            await runTesseractAutoOcr(rawUrl);
+            const scanned = (ocrTempResult && ocrTempResult.scannedPan) ? ocrTempResult.scannedPan.trim().toUpperCase() : '';
+            if (scanned && scanned !== aiAppWizard.data.pan) {
+              appendRnsAiMessage('bot', `
+                <div class="p-2.5 rounded-xl bg-amber-50 border-2 border-amber-500 text-amber-950 space-y-1.5">
+                  <div class="font-extrabold text-rose-700">⚠️ पैन कार्ड फोटो में नंबर अलग दिख रहा है!</div>
+                  <div>आपने पैन नंबर <strong>${escapeHtml(aiAppWizard.data.pan)}</strong> लिखा था, लेकिन फोटो में <strong>${escapeHtml(scanned)}</strong> स्कैन हुआ है।</div>
+                  <div>यदि फोटो गलत या धुंधली है तो नीचे से <strong>Re-upload</strong> करें, या आगे बढ़ने के लिए Continue दबाएं:</div>
+                  <input type="file" accept="image/*" onchange="handleWizardFileUploadInChat(event, 'pan')" class="text-[11px] w-full">
+                  <button type="button" onclick="proceedWizardToPhotoStep()" class="w-full py-1.5 rounded-lg bg-emerald-700 text-white font-extrabold">✔ Photo is Correct — Continue to Step 2 (Live Photo)</button>
+                </div>
+              `, true);
+              return;
+            }
+            proceedWizardToPhotoStep();
+          } else if (docKey === 'photo') {
+            aiAppWizard.step = 'DOC_SIGN';
+            renderRnsAiQuickChips();
+            appendRnsAiMessage('bot', `
+              <div class="font-extrabold text-emerald-800">✔ आपकी Live Photo सफलतापूर्वक सेट हो गई!</div>
+              <div><strong>Document 3 of 4 (Signature):</strong> कृपया सफेद कागज पर अपने <strong>Signature (हस्ताक्षर)</strong> की साफ फोटो अपलोड करें:</div>
+              <div class="p-2.5 rounded-xl bg-amber-50 border-2 border-dashed border-amber-500 mt-1">
+                <input type="file" accept="image/*" onchange="handleWizardFileUploadInChat(event, 'sign')" class="text-[11px] w-full">
+              </div>
+            `, true);
+          } else if (docKey === 'sign') {
+            aiAppWizard.step = 'DOC_STMT';
+            renderRnsAiQuickChips();
+            appendRnsAiMessage('bot', `
+              <div class="font-extrabold text-emerald-800">✔ आपका Signature सफलतापूर्वक सेट हो गया!</div>
+              <div><strong>Document 4 of 4 (3 Months Bank Statement):</strong> कृपया अपना <strong>3 महीने का बैंक स्टेटमेंट (PDF या साफ पासबुक फोटो)</strong> अपलोड करें:</div>
+              <div class="p-2.5 rounded-xl bg-indigo-50 border-2 border-dashed border-indigo-500 mt-1">
+                <input type="file" accept="application/pdf,image/*" onchange="handleWizardFileUploadInChat(event, 'statement')" class="text-[11px] w-full">
+              </div>
+            `, true);
+          }
+        };
+        testImg.onerror = () => {
+          appendRnsAiMessage('bot', `<div class="text-rose-600 font-extrabold">❌ यह इमेज फाइल सपोर्टेड नहीं है। कृपया साफ फोटो दोबारा अपलोड करें!</div>`, true);
+        };
+        testImg.src = rawUrl;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function proceedWizardToPhotoStep() {
+      aiAppWizard.step = 'DOC_PHOTO';
+      renderRnsAiQuickChips();
+      appendRnsAiMessage('bot', `
+        <div class="font-extrabold text-emerald-800">✔ PAN Card Photo सफलतापूर्वक वेरिफाई और अपलोड हो गई!</div>
+        <div><strong>Document 2 of 4 (Customer Live Photo):</strong> कृपया अपनी साफ <strong>Live Photo (सेल्फी/फोटो)</strong> अपलोड करें:</div>
+        <div class="p-2.5 rounded-xl bg-amber-50 border-2 border-dashed border-amber-500 mt-1">
+          <input type="file" accept="image/*" onchange="handleWizardFileUploadInChat(event, 'photo')" class="text-[11px] w-full">
+        </div>
+      `, true);
+    }
+
+    function showWizardFinalConfirmationSummary() {
+      const d = aiAppWizard.data;
+      // Sync all fields into the main DOM form as well
+      const setVal = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+      setVal('appLoanType', d.loanType);
+      setVal('appCustomerType', d.customerType);
+      setVal('appLoanAmount', d.amount);
+      setVal('appTenure', d.tenure);
+      setVal('appPurpose', d.purpose);
+      setVal('appDeliveryAddress', d.deliveryAddress);
+      setVal('appPromoInput', d.promoCode);
+      setVal('appName', d.name);
+      setVal('appDob', d.dob);
+      setVal('appMobile', d.mobile);
+      setVal('appEmail', d.email);
+      setVal('appAadhaar', d.kycId);
+      setVal('appPan', d.pan);
+      setVal('appRefName', d.refName);
+      setVal('appRefMobile', d.refMobile);
+      setVal('appBankName', d.bankName);
+      setVal('appBankHolder', d.bankHolder);
+      setVal('appAccNo', d.accNo);
+      setVal('appIfsc', d.ifsc);
+      toggleShoppingAddressField();
+      if (d.promoCode) applyPromoCode();
+      const feeObj = updateFeeCalculation();
+
+      appendRnsAiMessage('bot', `
+        <div class="p-3 rounded-xl bg-emerald-50 dark:bg-slate-900 border-2 border-emerald-600 space-y-2">
+          <div class="font-extrabold text-emerald-900 dark:text-emerald-300 text-sm border-b border-emerald-300 pb-1">
+            ✅ आपकी लोन एप्लीकेशन पूरी तरह तैयार है!
+          </div>
+          <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+            <div><span class="text-slate-500">Loan Type:</span> <strong>${escapeHtml(d.loanType)} (${escapeHtml(d.customerType)})</strong></div>
+            <div><span class="text-slate-500">Amount & Tenure:</span> <strong>₹${d.amount} (${d.tenure}M)</strong></div>
+            <div><span class="text-slate-500">Applicant:</span> <strong>${escapeHtml(d.name)} (${escapeHtml(d.dob)})</strong></div>
+            <div><span class="text-slate-500">Mobile & PAN:</span> <strong>${escapeHtml(d.mobile)} | ${escapeHtml(d.pan)}</strong></div>
+            <div><span class="text-slate-500">Family Ref:</span> <strong>${escapeHtml(d.refName)} (${escapeHtml(d.refMobile)})</strong></div>
+            <div><span class="text-slate-500">Bank A/C:</span> <strong>${escapeHtml(d.bankName)} - ${escapeHtml(d.accNo)} (${escapeHtml(d.ifsc)})</strong></div>
+            <div class="col-span-2"><span class="text-slate-500">Proc. Fee (+GST):</span> <strong class="text-emerald-800">₹${feeObj.total} ${d.promoCode ? `(Promo ${escapeHtml(d.promoCode)} Applied)` : ''}</strong></div>
+          </div>
+          <button type="button" onclick="submitChatWizardLoanApplication()" class="w-full py-2.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold text-xs shadow-lg">
+            🚀 Confirm & Final Submit Loan Application
+          </button>
+        </div>
+      `, true);
+    }
+
+    async function submitChatWizardLoanApplication() {
+      if (!uploadedDocsTemp.pan || !uploadedDocsTemp.photo || !uploadedDocsTemp.sign || !uploadedDocsTemp.statement) {
+        return appendRnsAiMessage('bot', `<div class="text-rose-600 font-extrabold">❌ कृपया चारों आवश्यक डॉक्यूमेंट्स (PAN, Photo, Signature और Bank Statement) अपलोड करें!</div>`, true);
+      }
+      const fakeEv = { preventDefault: () => {} };
+      await submitLoanApplication(fakeEv);
+
+      const db = getCloudData();
+      const newestApp = (db.applications && db.applications.length > 0) ? db.applications[0] : null;
+      aiAppWizard.active = false;
+      aiAppWizard.step = '';
+
+      if (newestApp) {
+        aiVerifiedOrderId = newestApp.orderId;
+        const bannerTxt = document.getElementById('aiSessionBannerText');
+        if (bannerTxt) bannerTxt.innerHTML = `✅ Verified: <strong>${escapeHtml(newestApp.name)} (${escapeHtml(newestApp.orderId)})</strong>`;
+        renderRnsAiQuickChips();
+        appendRnsAiMessage('bot', `
+          <div class="p-3 rounded-xl bg-emerald-100 border-2 border-emerald-700 text-emerald-950 space-y-1.5">
+            <div class="font-extrabold text-sm">🎉 बधाई हो ${escapeHtml(newestApp.name)} जी! आपका लोन आवेदन सबमिट हो गया है।</div>
+            <div>📌 <strong>आपका Registration No.:</strong> <span class="px-2 py-0.5 rounded bg-slate-900 text-white font-mono font-extrabold">${escapeHtml(newestApp.orderId)}</span></div>
+            <div>• <strong>Loan Amount:</strong> ₹${newestApp.amount} (${newestApp.tenure} Months) | <strong>Status:</strong> Processing</div>
+            <div class="text-[11px]">आपका आवेदन हमारे Live Cloud और Owner Portal पर सिंक हो चुका है। अब आप कभी भी इसी चैटबॉट में अपना स्टेटस और वेरिफिकेशन चेक कर सकते हैं!</div>
+          </div>
+        `, true);
+      }
+    }
+
+    function handleWizardStepInput(rawInput) {
+      const val = rawInput.trim();
+      const d = aiAppWizard.data;
+      const step = aiAppWizard.step;
+
+      if (step === 'LOAN_TYPE') {
+        if (val.toLowerCase().includes('shop') || val.includes('2') || val.includes('शॉपिंग')) {
+          selectWizardLoanType('Online Shopping Loan');
+        } else {
+          selectWizardLoanType('Personal Loan');
+        }
+        return;
+      }
+
+      appendRnsAiMessage('user', val, false);
+
+      if (step === 'AMOUNT') {
+        const num = Math.round(parseFloat(val.replace(/[^\d.]/g, '')) || 0);
+        if (num < 1 || num > 500000) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया ₹1 से ₹50,000 के बीच सही लोन राशि दर्ज करें (जैसे 5000 या 10000):</div>`, true);
+        }
+        d.amount = num;
+        const el = document.getElementById('appLoanAmount');
+        if (el) { el.value = num; updateFeeCalculation(); }
+        aiAppWizard.step = 'TENURE';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800">✔ लोन राशि ₹${num} सेट हो गई।</div>
+          <div><strong>Step 3 (Tenure / महीने):</strong> आप कितने महीनों की किस्त (1 से 24 महीने) चाहते हैं? नीचे चुनें या संख्या लिखें:</div>
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            ${[1, 3, 6, 9, 12, 18, 24].map(m => `<button type="button" onclick="selectWizardTenure(${m})" class="px-2.5 py-1 rounded-lg bg-indigo-100 hover:bg-indigo-700 hover:text-white text-indigo-950 font-extrabold border border-indigo-400">${m} Months</button>`).join('')}
+          </div>
+        `, true);
+      }
+
+      if (step === 'TENURE') {
+        const m = parseInt(val.replace(/\D/g, '')) || 0;
+        if (m < 1 || m > 24) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया 1 से 24 महीने के बीच सही संख्या चुनें (जैसे 6 या 12):</div>`, true);
+        }
+        d.tenure = m;
+        const el = document.getElementById('appTenure');
+        if (el) { el.value = m; updateFeeCalculation(); }
+        aiAppWizard.step = 'PURPOSE';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800">✔ ${m} महीने की अवधि सेट हो गई।</div>
+          <div><strong>Step 4 (Purpose / Product Link):</strong> कृपया ${d.loanType === 'Online Shopping Loan' ? 'ऑनलाइन शॉपिंग प्रोडक्ट का लिंक (https://...) या प्रोडक्ट का नाम' : 'लोन लेने का उद्देश्य (जैसे Medical, Business, Personal Need)'} भेजें:</div>
+        `, true);
+      }
+
+      if (step === 'PURPOSE') {
+        if (val.length < 2) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया लोन का उद्देश्य या प्रोडक्ट लिंक लिखें:</div>`, true);
+        d.purpose = val;
+        const el = document.getElementById('appPurpose');
+        if (el) el.value = val;
+        if (d.loanType === 'Online Shopping Loan') {
+          aiAppWizard.step = 'DELIVERY_ADDR';
+          renderRnsAiQuickChips();
+          return appendRnsAiMessage('bot', `<div><strong>Step 4B (Delivery Address):</strong> कृपया अपना पूरा डिलीवरी पता (मकान नंबर, गली, शहर, जिला, पिनकोड) भेजें जहाँ शॉपिंग प्रोडक्ट डिलीवर करना है:</div>`, true);
+        }
+        aiAppWizard.step = 'PROMO';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div><strong>Step 5 (Promo Code):</strong> यदि आपके पास कोई डिस्काउंट <strong>Promo Code</strong> है तो टाइप करके भेजें, अन्यथा नीचे <strong>Skip</strong> बटन दबाएं:</div>
+          <button type="button" onclick="skipWizardPromoStep()" class="mt-1 px-4 py-1.5 rounded-lg bg-slate-800 text-white font-extrabold">⏭️ Skip Promo Code / आगे बढ़ें</button>
+        `, true);
+      }
+
+      if (step === 'DELIVERY_ADDR') {
+        if (val.length < 5) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया पिनकोड सहित पूरा डिलीवरी पता लिखें:</div>`, true);
+        d.deliveryAddress = val;
+        const el = document.getElementById('appDeliveryAddress');
+        if (el) el.value = val;
+        aiAppWizard.step = 'PROMO';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div><strong>Step 5 (Promo Code):</strong> यदि आपके पास कोई <strong>Promo Code</strong> है तो भेजें, अन्यथा नीचे <strong>Skip</strong> दबाएं:</div>
+          <button type="button" onclick="skipWizardPromoStep()" class="mt-1 px-4 py-1.5 rounded-lg bg-slate-800 text-white font-extrabold">⏭️ Skip Promo Code / आगे बढ़ें</button>
+        `, true);
+      }
+
+      if (step === 'PROMO') {
+        if (val.toUpperCase() !== 'SKIP' && val.toUpperCase() !== 'NO' && val.toUpperCase() !== 'NAHI') {
+          d.promoCode = val.toUpperCase();
+          const pIn = document.getElementById('appPromoInput');
+          if (pIn) pIn.value = d.promoCode;
+        } else {
+          d.promoCode = '';
+        }
+        aiAppWizard.step = 'NAME';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 6 (Full Name):</strong> कृपया आवेदक का <strong>पूरा नाम (Full Name)</strong> लिखें (जैसा पैन कार्ड पर है):</div>`, true);
+      }
+
+      if (step === 'NAME') {
+        if (val.length < 3) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया अपना सही पूरा नाम दर्ज करें:</div>`, true);
+        d.name = val;
+        const el = document.getElementById('appName');
+        if (el) el.value = val;
+        aiAppWizard.step = 'DOB';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 7 (Date of Birth):</strong> कृपया अपनी <strong>जन्मतिथि (DD/MM/YYYY)</strong> भेजें (जैसे 15/08/1995):</div>`, true);
+      }
+
+      if (step === 'DOB') {
+        if (val.length < 6) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया जन्मतिथि DD/MM/YYYY फॉर्मेट में लिखें (जैसे 15/08/1995):</div>`, true);
+        d.dob = val;
+        const el = document.getElementById('appDob');
+        if (el) el.value = val;
+        aiAppWizard.step = 'MOBILE';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 8 (Mobile Number):</strong> कृपया अपना <strong>10-अंकों का मोबाइल नंबर</strong> भेजें:</div>`, true);
+      }
+
+      if (step === 'MOBILE') {
+        const cleanMob = val.replace(/\D/g, '').slice(-10);
+        if (!isValidMobile(cleanMob)) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ यह मोबाइल नंबर अमान्य है! कृपया सही 10-अंकों का मोबाइल नंबर भेजें:</div>`, true);
+        }
+        d.mobile = cleanMob;
+        const el = document.getElementById('appMobile');
+        if (el) el.value = cleanMob;
+        d.customerType = autoDetectCustomerTypeByMobileOrPan(true);
+        aiAppWizard.step = 'EMAIL';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800">✔ मोबाइल नंबर वेरिफाई हो गया (Detected: ${escapeHtml(d.customerType)})।</div>
+          <div><strong>Step 9 (Email ID):</strong> कृपया अपनी <strong>सही Email ID</strong> भेजें (जैसे name@gmail.com):</div>
+        `, true);
+      }
+
+      if (step === 'EMAIL') {
+        if (!isValidEmail(val)) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ कृपया एक सही और मान्य Email ID दर्ज करें (जैसे rahul123@gmail.com):</div>`, true);
+        }
+        d.email = val;
+        const el = document.getElementById('appEmail');
+        if (el) el.value = val;
+        aiAppWizard.step = 'KYC_ID';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 10 (12-Digit KYC ID):</strong> कृपया अपना <strong>12-अंकों का KYC ID नंबर</strong> भेजें:</div>`, true);
+      }
+
+      if (step === 'KYC_ID') {
+        const digits = val.replace(/\D/g, '');
+        if (digits.length !== 12) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ कृपया पूरे 12 अंकों का सही KYC ID नंबर दर्ज करें:</div>`, true);
+        }
+        d.kycId = digits;
+        const el = document.getElementById('appAadhaar');
+        if (el) el.value = digits;
+        aiAppWizard.step = 'PAN';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 11 (PAN Card Number):</strong> कृपया अपना 10-अंकों का <strong>PAN Card नंबर</strong> भेजें (जैसे ABCDE1234F):</div>`, true);
+      }
+
+      if (step === 'PAN') {
+        const cleanPan = val.replace(/\s+/g, '').toUpperCase();
+        if (!/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(cleanPan)) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ पैन नंबर का फॉर्मेट गलत है! कृपया 10-अक्षरों का सही PAN नंबर भेजें (जैसे ABCDE1234F):</div>`, true);
+        }
+        d.pan = cleanPan;
+        const el = document.getElementById('appPan');
+        if (el) el.value = cleanPan;
+        d.customerType = autoDetectCustomerTypeByMobileOrPan(true);
+        aiAppWizard.step = 'REF_NAME';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-amber-900">👪 अब फैमिली रेफरेंस विवरण (Family Reference Details):</div>
+          <div><strong>Step 12 (Family Reference Name):</strong> कृपया अपने परिवार के किसी सदस्य या रेफरेंस का <strong>पूरा नाम (Family Reference Name)</strong> भेजें:</div>
+        `, true);
+      }
+
+      if (step === 'REF_NAME') {
+        if (val.length < 2) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया फैमिली रेफरेंस का सही नाम लिखें:</div>`, true);
+        d.refName = val;
+        const el = document.getElementById('appRefName');
+        if (el) el.value = val;
+        aiAppWizard.step = 'REF_MOBILE';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 13 (Family Reference Mobile No.):</strong> कृपया <strong>${escapeHtml(d.refName)}</strong> जी का <strong>10-अंकों का मोबाइल नंबर</strong> भेजें:</div>`, true);
+      }
+
+      if (step === 'REF_MOBILE') {
+        const cleanRefMob = val.replace(/\D/g, '').slice(-10);
+        if (!isValidMobile(cleanRefMob)) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ कृपया सही 10-अंकों का रेफरेंस मोबाइल नंबर दर्ज करें:</div>`, true);
+        }
+        if (cleanRefMob === d.mobile) {
+          return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">❌ आवेदक का मोबाइल नंबर और फैमिली रेफरेंस का मोबाइल नंबर एक समान नहीं हो सकता! कृपया घर के किसी दूसरे सदस्य का नंबर दें:</div>`, true);
+        }
+        d.refMobile = cleanRefMob;
+        const el = document.getElementById('appRefMobile');
+        if (el) el.value = cleanRefMob;
+        aiAppWizard.step = 'BANK_NAME';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-indigo-900">🏦 अब बैंक खाता विवरण (Bank Account Details):</div>
+          <div><strong>Step 14 (Bank Name):</strong> कृपया अपने <strong>बैंक का नाम (Bank Name)</strong> भेजें (जैसे SBI, PNB, HDFC, Bank of Baroda):</div>
+        `, true);
+      }
+
+      if (step === 'BANK_NAME') {
+        if (val.length < 2) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया बैंक का सही नाम लिखें:</div>`, true);
+        d.bankName = val;
+        const el = document.getElementById('appBankName');
+        if (el) el.value = val;
+        aiAppWizard.step = 'BANK_HOLDER';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 15 (Account Holder Name):</strong> कृपया <strong>खाताधारक का नाम (Account Holder Name)</strong> भेजें:</div>`, true);
+      }
+
+      if (step === 'BANK_HOLDER') {
+        if (val.length < 2) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया खाताधारक का सही नाम लिखें:</div>`, true);
+        d.bankHolder = val;
+        const el = document.getElementById('appBankHolder');
+        if (el) el.value = val;
+        aiAppWizard.step = 'BANK_ACC';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 16 (Bank Account Number):</strong> कृपया अपना <strong>बैंक अकाउंट नंबर (Account Number)</strong> भेजें:</div>`, true);
+      }
+
+      if (step === 'BANK_ACC') {
+        const cleanAcc = val.replace(/\s+/g, '');
+        if (cleanAcc.length < 6) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया अपना सही बैंक अकाउंट नंबर दर्ज करें:</div>`, true);
+        d.accNo = cleanAcc;
+        const el = document.getElementById('appAccNo');
+        if (el) el.value = cleanAcc;
+        aiAppWizard.step = 'BANK_IFSC';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `<div><strong>Step 17 (IFSC Code):</strong> कृपया अपने बैंक का <strong>IFSC Code</strong> भेजें (जैसे SBIN0001234):</div>`, true);
+      }
+
+      if (step === 'BANK_IFSC') {
+        const cleanIfsc = val.replace(/\s+/g, '').toUpperCase();
+        if (cleanIfsc.length < 6) return appendRnsAiMessage('bot', `<div class="text-rose-600 font-bold">⚠️ कृपया सही बैंक IFSC Code दर्ज करें:</div>`, true);
+        d.ifsc = cleanIfsc;
+        const el = document.getElementById('appIfsc');
+        if (el) el.value = cleanIfsc;
+        aiAppWizard.step = 'DOC_PAN';
+        renderRnsAiQuickChips();
+        return appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800">✔ बैंक खाता विवरण पूरा हो गया! अब केवाईसी डॉक्यूमेंट अपलोड करें:</div>
+          <div><strong>Document 1 of 4 (PAN Card Photo):</strong> कृपया नीचे बटन दबाकर अपने <strong>PAN Card की साफ फोटो</strong> अपलोड करें (AI इसे ऑटो-स्कैन करेगा):</div>
+          <div class="p-2.5 rounded-xl bg-emerald-50 border-2 border-dashed border-emerald-500 mt-1">
+            <input type="file" accept="image/*" onchange="handleWizardFileUploadInChat(event, 'pan')" class="text-[11px] w-full">
+          </div>
+        `, true);
+      }
+    }
+
+    // ============================================================================
+    // PART B: INTERACTIVE VERIFICATION & PAYMENT ACTIONS DIRECTLY INSIDE CHATBOT
+    // ============================================================================
+    function chatVerifyKycStep1(orderId) {
+      const inEl = document.getElementById('chatKycId_' + orderId);
+      const aNum = inEl ? inEl.value.trim() : '';
+      if (!/^\d{12}$/.test(aNum)) return alert('कृपया 12-अंकों का सही KYC ID नंबर दर्ज करें!');
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (app) {
+        app.aadhaarVerifyInput = aNum;
+        app.aadhaarStep1Done = true;
+        app.aadhaarAuthStatus = 'ID Number Sent - Enter OTP Below';
+        app.updatedAt = Date.now();
+        saveCloudData(db, 'ID Number Sent from Chatbot!');
+        const otpBox = document.getElementById('chatOtpStep2Box_' + orderId);
+        if (otpBox) otpBox.classList.remove('hidden');
+        appendRnsAiMessage('bot', `<div class="font-extrabold text-indigo-800">✔ आपका 12-अंकों का KYC ID नंबर सेव हो गया है! अब ऊपर खुले बॉक्स में <strong>6-अंकों का OTP</strong> डालकर <strong>Submit OTP</strong> दबाएं।</div>`, true);
+      }
+    }
+
+    function chatVerifyKycOtpStep2(orderId) {
+      const otpEl = document.getElementById('chatKycOtp_' + orderId);
+      const aOtp = otpEl ? otpEl.value.trim() : '';
+      if (!aOtp || aOtp.length < 4) return alert('कृपया प्राप्त हुआ सही OTP दर्ज करें!');
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (app) {
+        app.aadhaarOtpInput = aOtp;
+        app.aadhaarAuthStatus = 'OTP Submitted - Pending Owner Verification';
+        app.updatedAt = Date.now();
+        saveCloudData(db, '✅ OTP Sent to Owner Portal from Chatbot!');
+        appendRnsAiMessage('bot', `<div class="p-2.5 rounded-xl bg-emerald-100 border border-emerald-500 text-emerald-950 font-extrabold">✅ आपका OTP सफलतापूर्वक सबमिट होकर Owner Portal पर भेज दिया गया है! एडमिन द्वारा वेरिफाई करते ही आपकी e-KYC Approved हो जाएगी।</div>`, true);
+      }
+    }
+
+    function chatReuploadDocFromBot(event, orderId, docKey) {
+      const file = event.target.files[0];
+      if (!file) return;
+      customerReuploadDocument(event, orderId, docKey);
+      setTimeout(() => {
+        appendRnsAiMessage('bot', `
+          <div class="p-2.5 rounded-xl bg-emerald-100 border-2 border-emerald-600 text-emerald-950 font-extrabold">
+            ✅ आपका डॉक्यूमेंट (${escapeHtml((docKey || 'Document').toUpperCase())}: ${escapeHtml(file.name)}) सफलतापूर्वक री-अपलोड होकर Owner Portal पर सिंक हो गया है!
+          </div>
+        `, true);
+      }, 600);
+    }
+
+    function chatSubmitUtrFromBot(orderId) {
+      const utrEl = document.getElementById('chatUtrNo_' + orderId);
+      const amtEl = document.getElementById('chatUtrAmt_' + orderId);
+      const utrNo = utrEl ? utrEl.value.trim() : '';
+      const utrAmt = amtEl ? Math.round(parseFloat(amtEl.value) || 0) : 0;
+      if (!utrNo || utrAmt <= 0) return alert('कृपया अपना UTR / Reference No. और जमा की गई राशि दर्ज करें!');
+
+      const db = getCloudData();
+      const app = db.applications.find(a => a.orderId === orderId);
+      if (!app) return;
+      if (!app.pendingUtrSubmissions) app.pendingUtrSubmissions = [];
+
+      app.pendingUtrSubmissions.push({
+        id: 'UTR-' + Date.now().toString().slice(-5),
+        utr: utrNo,
+        amount: utrAmt,
+        date: new Date().toLocaleDateString('hi-IN'),
+        screenshot: tempCustomerUtrScreenshot || '',
+        status: 'Pending'
+      });
+      tempCustomerUtrScreenshot = '';
+      app.updatedAt = Date.now();
+      saveCloudData(db, '✅ UTR Payment Proof Sent from Chatbot!');
+      appendRnsAiMessage('bot', `
+        <div class="p-2.5 rounded-xl bg-emerald-100 border-2 border-emerald-600 text-emerald-950 font-extrabold">
+          ✅ आपका पेमेंट UTR नंबर (<span class="font-mono">${escapeHtml(utrNo)}</span> — ₹${utrAmt}) सफलतापूर्वक वेरिफिकेशन के लिए सबमिट हो गया है! अप्रूव होते ही आपकी EMI रसीद जनरेट हो जाएगी।
+        </div>
+      `, true);
+    }
+
+    function chatToggleInsuranceFromBot(orderId, checked) {
+      toggleCustomerInsurance(orderId, checked);
+      appendRnsAiMessage('bot', `<div class="font-extrabold text-sky-900">🛡️ Loan Protection Insurance को <strong>${checked ? 'Active (चयनित)' : 'Unselected (हटाया गया)'}</strong> कर दिया गया है और क्लाउड पर सेव कर दिया गया है।</div>`, true);
+    }
+
+    // Renders Live UPI QR Code & UTR Submission Box Directly Inside Chatbot
+    function buildChatUpiPaymentWidget(app) {
+      const inApprovedOrRunning = ['Approved', 'Loan Running'].includes(app.status);
+      if (!inApprovedOrRunning) {
+        return `<div class="p-2.5 rounded-xl bg-amber-50 border border-amber-400 text-amber-950 font-bold">⏳ आपका लोन अभी <strong>${escapeHtml(app.status)}</strong> स्टेज में है। लोन <strong>Approved / Loan Running</strong> में आने के बाद आपका ऑफिशियल EMI पेमेंट QR कोड यहाँ एक्टिव हो जाएगा। (हमारे यहां कोई एडवांस फीस नहीं ली जाती—फीस सीधे लोन से कटती है)।</div>`;
+      }
+      const upiId = app.upiId || 'rahul9656170@slc';
+      const upiAmt = Math.round(Number(app.upiAmount) || app.monthlyEmi);
+      const expDateStr = app.upiExpiryDate || '';
+      const todayStr = new Date().toISOString().split('T')[0];
+      const isExpired = (expDateStr && todayStr > expDateStr);
+      // UPI Note has ONLY Registration No. (app.orderId)
+      const upiUri = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent('RNS FINANCE')}&am=${upiAmt}&cu=INR&tn=${encodeURIComponent(app.orderId)}`;
+      const qrImgUrl = `https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=${encodeURIComponent(upiUri)}`;
+
+      return `
+        <div class="p-3 rounded-xl bg-purple-50 dark:bg-slate-900 border-2 border-purple-500 space-y-2.5">
+          <div class="font-extrabold text-purple-950 dark:text-purple-300 flex items-center justify-between">
+            <span>📲 RNS FINANCE — LIVE UPI QR PAYMENT</span>
+            <span class="px-2 py-0.5 rounded bg-purple-700 text-white text-[10px]">Note: ${escapeHtml(app.orderId)}</span>
+          </div>
+          ${isExpired ? `
+            <div class="p-2.5 rounded-lg bg-rose-100 text-rose-800 font-extrabold text-center">
+              ❌ QR Code Expired on ${escapeHtml(expDateStr)}! कृपया नया QR एक्टिव कराने के लिए सपोर्ट से संपर्क करें।
+            </div>
+          ` : `
+            <div class="bg-white p-2.5 rounded-xl border text-center space-y-1.5">
+              <img src="${qrImgUrl}" alt="UPI QR" class="w-36 h-36 mx-auto object-contain rounded border p-1" />
+              <div class="text-[11px] font-bold text-slate-700">UPI ID: <span class="font-mono text-purple-800">${escapeHtml(upiId)}</span> | Payable: <strong class="text-emerald-700 text-sm">₹${upiAmt}</strong></div>
+              <a href="${escapeHtml(upiUri)}" class="block w-full py-2 rounded-xl bg-purple-700 hover:bg-purple-800 text-white font-extrabold shadow">
+                ⚡ Pay ₹${upiAmt} via Any UPI App
+              </a>
+            </div>
+          `}
+          <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-emerald-500 space-y-1.5">
+            <div class="font-extrabold text-emerald-900 dark:text-emerald-300 text-[11px]">📸 पेमेंट कर दिया? यहीं अपना 12-अंकों का UTR / Ref No. सबमिट करें:</div>
+            <input type="text" id="chatUtrNo_${escapeHtml(app.orderId)}" placeholder="Enter UTR / Reference No. *" class="w-full rounded-lg border px-2.5 py-1.5 font-mono font-bold">
+            <div class="flex gap-1.5 items-center">
+              <input type="number" id="chatUtrAmt_${escapeHtml(app.orderId)}" value="${upiAmt}" class="w-24 rounded-lg border px-2 py-1.5 font-extrabold text-emerald-700">
+              <input type="file" accept="image/*" onchange="handleCustomerUtrScreenshot(event)" class="text-[9.5px] flex-grow">
+            </div>
+            <button type="button" onclick="chatSubmitUtrFromBot('${escapeHtml(app.orderId)}')" class="w-full py-1.5 rounded-lg bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow">
+              ✅ Submit UTR & Get Receipt
+            </button>
+          </div>
+        </div>`;
+    }
+
+    // Builds Interactive Verification Center Widget Right Inside Chatbot
+    function buildChatInteractiveVerificationCenter(app) {
+      const isAadhaarVerified = (app.aadhaarAuthStatus === 'Verified ✔' || app.aadhaarAuthStatus === 'Verified');
+      const isNachApproved = (app.nachState === 'Approved');
+      const safeNachUrl = cleanSafeUrl(app.nachLink);
+      const isInsuranceLocked = ['Approved', 'Loan Running', 'Loan Closed', 'Rejected'].includes(app.status);
+
+      let html = `<div class="space-y-2.5">`;
+      html += `<div class="font-extrabold text-purple-900 dark:text-purple-300 border-b pb-1">🔍 Live Verification & Action Center (${escapeHtml(app.orderId)} — ${escapeHtml(app.status)}):</div>`;
+
+      // 1. Document Re-upload Remark Box (If pending)
+      if (app.remarkText) {
+        html += `
+          <div class="p-2.5 rounded-xl bg-rose-50 border-2 border-rose-500 text-rose-950 space-y-1.5">
+            <div class="font-extrabold">⚠️ Document Re-upload Pending (${escapeHtml((app.remarkDocType || 'Document').toUpperCase())}):</div>
+            <div class="text-[11px] font-semibold">Remark: "${escapeHtml(app.remarkText)}"</div>
+            <div class="text-[10.5px] font-bold text-indigo-900">👇 री-अपलोड करने के लिए नीचे क्लिक करके साफ फाइल चुनें:</div>
+            <input type="file" accept="image/*,application/pdf" onchange="chatReuploadDocFromBot(event, '${escapeHtml(app.orderId)}', '${escapeHtml(app.remarkDocType || 'other')}')" class="text-[10.5px] w-full bg-white p-1 rounded border">
+          </div>`;
+      }
+
+      // 2. Full Application Re-Update (If unlocked by Owner)
+      if (app.allowReupdate) {
+        html += `
+          <div class="p-2.5 rounded-xl bg-amber-50 border-2 border-amber-500 text-amber-950 space-y-1">
+            <div class="font-extrabold">✏️ Application Re-Update Unlocked!</div>
+            <div class="text-[11px]">एडमिन ने आपके फॉर्म में सुधार करने का विकल्प ऑन किया है। नीचे क्लिक करके अपना फॉर्म सुधारें:</div>
+            <button type="button" onclick="switchCustomerTab('track'); document.getElementById('trackSearchInput').value='${escapeHtml(app.orderId)}'; searchCustomerApplication(); toggleRnsAiChatWindow();" class="w-full py-1.5 rounded-lg bg-amber-600 text-white font-extrabold">
+              ✏️ यहाँ क्लिक करके पूरा फॉर्म एडिट/अपडेट करें
+            </button>
+          </div>`;
+      }
+
+      // 3. Step 1: Digital e-KYC Verification inside Chat
+      if (isAadhaarVerified) {
+        html += `<div class="p-2 rounded-xl bg-emerald-100 border border-emerald-500 text-emerald-950 font-extrabold flex justify-between"><span>🆔 Step 1: Digital e-KYC</span><span>✔ Verified</span></div>`;
+      } else {
+        html += `
+          <div class="p-2.5 rounded-xl bg-indigo-50 dark:bg-slate-900 border-2 border-indigo-400 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="font-extrabold text-indigo-950 dark:text-indigo-300">🆔 Step 1: Digital e-KYC (${escapeHtml(app.aadhaarAuthStatus || 'Pending')})</span>
+              <button type="button" onclick="document.getElementById('chatKycForm_${escapeHtml(app.orderId)}').classList.toggle('hidden')" class="px-2.5 py-1 rounded-lg bg-indigo-700 text-white font-extrabold text-[10.5px] shadow">
+                ⚡ यहाँ क्लिक करें (Verify Now)
+              </button>
+            </div>
+            <div id="chatKycForm_${escapeHtml(app.orderId)}" class="space-y-2 pt-1 border-t border-indigo-200">
+              <div class="flex gap-1.5">
+                <input type="text" id="chatKycId_${escapeHtml(app.orderId)}" maxlength="12" value="${escapeHtml(app.aadhaarVerifyInput || app.aadhaar || '')}" placeholder="12-Digit KYC ID" class="flex-grow rounded border px-2 py-1 font-mono font-bold bg-white">
+                <button type="button" onclick="chatVerifyKycStep1('${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded bg-indigo-700 text-white font-extrabold">Send ID</button>
+              </div>
+              <div id="chatOtpStep2Box_${escapeHtml(app.orderId)}" class="${app.aadhaarStep1Done ? '' : 'hidden'} flex gap-1.5 pt-1">
+                <input type="text" id="chatKycOtp_${escapeHtml(app.orderId)}" maxlength="6" value="${escapeHtml(app.aadhaarOtpInput || '')}" placeholder="Enter 6-Digit OTP" class="flex-grow rounded border px-2 py-1 font-mono font-extrabold text-rose-700 bg-white">
+                <button type="button" onclick="chatVerifyKycOtpStep2('${escapeHtml(app.orderId)}')" class="px-3 py-1 rounded bg-emerald-700 text-white font-extrabold">Submit OTP</button>
+              </div>
+            </div>
+          </div>`;
+      }
+
+      // 4. Step 2: NACH Auto-Debit Mandate inside Chat
+      if (isNachApproved) {
+        html += `<div class="p-2 rounded-xl bg-emerald-100 border border-emerald-500 text-emerald-950 font-extrabold flex justify-between"><span>✅ Step 2: NACH e-Mandate</span><span>Approved (${escapeHtml(app.nachRefNo || 'Active')})</span></div>`;
+      } else if (safeNachUrl) {
+        html += `
+          <div class="p-2.5 rounded-xl bg-sky-50 border-2 border-sky-400 space-y-1.5">
+            <div class="font-extrabold text-sky-950">🔗 Step 2: NACH Auto-Debit Pending!</div>
+            <div class="text-[11px]">आपका NACH लिंक एक्टिव है। वेरिफिकेशन पूरा करने के लिए नीचे क्लिक करें:</div>
+            <a href="${escapeHtml(safeNachUrl)}" target="_blank" rel="noopener noreferrer" onclick="markNachProcessing('${escapeHtml(app.orderId)}')" class="block w-full text-center py-2 rounded-lg bg-sky-700 hover:bg-sky-800 text-white font-extrabold shadow">
+              🔗 यहाँ क्लिक करके NACH फॉर्म पूरा करें ↗
+            </a>
+          </div>`;
+      } else {
+        const waReqText = encodeURIComponent(`Hello Team RNS FINANCE, my Registration No. is *${app.orderId}* (${app.name}, Status: ${app.status}). Please send my NACH Mandate link.`);
+        html += `
+          <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-400 space-y-1">
+            <div class="font-extrabold text-amber-950">⏳ Step 2: NACH Mandate Link (Awaiting Link)</div>
+            <a href="https://wa.me/917668273774?text=${waReqText}" target="_blank" class="block w-full text-center py-1.5 rounded-lg bg-emerald-600 text-white font-extrabold">
+              <i class="fa-brands fa-whatsapp"></i> Request NACH Link on WhatsApp
+            </a>
+          </div>`;
+      }
+
+      // 5. Optional Insurance Toggle inside Chat (if not locked)
+      if (!isInsuranceLocked) {
+        html += `
+          <div class="p-2 rounded-xl bg-white dark:bg-slate-900 border flex items-center justify-between">
+            <label class="flex items-center gap-2 font-bold cursor-pointer">
+              <input type="checkbox" ${app.insuranceOpted ? 'checked' : ''} onchange="chatToggleInsuranceFromBot('${escapeHtml(app.orderId)}', this.checked)" class="w-4 h-4 accent-emerald-600">
+              <span>🛡️ Loan Protection Insurance (Optional)</span>
+            </label>
+            <span class="text-[10px] font-extrabold text-emerald-700">${app.insuranceOpted ? 'Selected ✔' : 'Optional'}</span>
+          </div>`;
+      }
+
+      html += `</div>`;
+      return html;
+    }
+
+    // ============================================================================
+    // PART C: MAIN CONVERSATIONAL AI ROUTER (HANDLES WIZARD, VERIFIED & GENERAL)
+    // ============================================================================
+    function processRnsAiQuery(rawQuery, shouldSpeak = true) {
+      const q = rawQuery.trim();
+      const lower = q.toLowerCase();
+      const upper = q.toUpperCase();
+      const db = getCloudData();
+      const apps = db.applications || [];
+
+      // 0. If Wizard is Active and user didn't ask to cancel
+      if (aiAppWizard.active) {
+        if (lower === 'cancel' || lower === 'stop' || lower === 'बंद करो' || lower === 'रद्द करें') {
+          cancelAiChatLoanWizard();
+          return;
+        }
+        handleWizardStepInput(q);
+        return;
+      }
+
+      appendRnsAiMessage('user', rawQuery, false);
+
+      // 1. WARM "WELCOME" RESPONSE ON "THANK YOU / THANKS / धन्यवाद / शुक्रिया"
+      if (
+        lower.includes('thank you') || lower.includes('thanks') || lower.includes('thnx') ||
+        lower.includes('धन्यवाद') || lower.includes('शुक्रिया') || lower.includes('shukriya') || lower.includes('dhanyawad')
+      ) {
+        const welcomeVariations = [
+          `<div class="font-extrabold text-emerald-800 dark:text-emerald-400 text-sm">🙏 Most Welcome! आपका बहुत-बहुत धन्यवाद!</div>
+           <div><strong>RNS FINANCE</strong> परिवार में आपका हार्दिक स्वागत है। आपकी हर आर्थिक ज़रूरत और ऑनलाइन शॉपिंग को तेज़, पारदर्शी व भरोसेमंद बनाना ही हमारा संकल्प है। भविष्य में कभी भी लोन या सहायता की आवश्यकता हो, तो हम 24×7 आपकी सेवा में तत्पर हैं। आपका दिन शुभ और मंगलमय हो! 🌟</div>`,
+          `<div class="font-extrabold text-emerald-800 dark:text-emerald-400 text-sm">🌟 You are Most Welcome! स्वागत है आपका RNS FINANCE में!</div>
+           <div>हम पर विश्वास जताने के लिए आपका हृदय से आभार। <strong>RNS FINANCE</strong> में हम सदैव आपकी सुविधा और त्वरित वित्तीय सेवा के लिए प्रतिबद्ध हैं। यदि आपको आगे कोई भी जानकारी चाहिए तो बेझिझक पूछें! 🙏</div>`
+        ];
+        const chosenWelcome = welcomeVariations[aiReplyVariationCounter % welcomeVariations.length];
+        aiReplyVariationCounter++;
+        appendRnsAiMessage('bot', chosenWelcome, shouldSpeak);
+        return;
+      }
+
+      // 2. Check if user wants to apply online right inside the chatbot
+      if (
+        lower.includes('chat par apply') || lower.includes('chatbot par apply') || lower.includes('yahi apply') ||
+        lower.includes('online apply karna hai') || lower.includes('अप्लाई करना है') || lower.includes('चैटबॉट पर') ||
+        lower.includes('start application') || lower.includes('apply online here')
+      ) {
+        startAiChatLoanApplicationWizard();
+        return;
+      }
+
+      // 3. Check if user entered a Registration No. (RNSF...) or Tracking ID (ORD-TRK...) or Disbursal UTR
+      const regMatch = upper.match(/RNSF\d{3,6}/);
+      const trkMatch = upper.match(/ORD-TRK-\d{3,8}/);
+      let matchedApp = null;
+
+      if (regMatch) {
+        matchedApp = apps.find(a => a.orderId.toUpperCase() === regMatch[0]);
+      } else if (trkMatch) {
+        matchedApp = apps.find(a => (a.shoppingTrackingNo || '').toUpperCase() === trkMatch[0]);
+      } else {
+        const words = upper.split(/[\s,.:;-]+/).filter(Boolean);
+        matchedApp = apps.find(a =>
+          words.includes((a.orderId || '').toUpperCase()) ||
+          (a.shoppingTrackingNo && words.includes(a.shoppingTrackingNo.toUpperCase())) ||
+          (a.disbursalUtrNo && words.includes(a.disbursalUtrNo.toUpperCase()))
+        );
+      }
+
+      if (matchedApp) {
+        aiVerifiedOrderId = matchedApp.orderId;
+        const logoutBtn = document.getElementById('btnAiLogoutSession');
+        if (logoutBtn) logoutBtn.classList.remove('hidden');
+        const bannerTxt = document.getElementById('aiSessionBannerText');
+        if (bannerTxt) bannerTxt.innerHTML = `✅ Verified: <strong>${escapeHtml(matchedApp.name)} (${escapeHtml(matchedApp.orderId)})</strong>`;
+        renderRnsAiQuickChips();
+
+        const strippedQuery = lower.replace(/rnsf\d+/g, '').replace(/ord-trk-\d+/g, '').trim();
+        if (strippedQuery.length < 4) {
+          // Show personalized greeting + pending verification alerts with clickable buttons
+          let pendingAlertHtml = '';
+          if (matchedApp.status === 'Verification' || matchedApp.remarkText || matchedApp.allowReupdate) {
+            pendingAlertHtml = `<div class="mt-2">${buildChatInteractiveVerificationCenter(matchedApp)}</div>`;
+          }
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-emerald-800 dark:text-emerald-400">✅ नमस्ते ${escapeHtml(matchedApp.name)} जी!</div>
+            <div>आपका रजिस्ट्रेशन नंबर <strong>${escapeHtml(matchedApp.orderId)}</strong> (${escapeHtml(matchedApp.loanType)} — <strong>${escapeHtml(matchedApp.status)}</strong>) सफलतापूर्वक वेरिफाई हो गया है।</div>
+            ${pendingAlertHtml || `<div class="p-2 rounded-lg bg-emerald-50 dark:bg-slate-900 border border-emerald-300 text-[11px] font-bold">कृपया बताइए, आप अपने लोन के बारे में क्या जानना या करना चाहते हैं? (नीचे बटन दबाएं या पूछें: स्टेटस, पेमेंट QR, NACH लिंक, EMI, या सर्टिफिकेट)।</div>`}
+          `, shouldSpeak);
+          return;
+        }
+      }
+
+      // 4. If Customer is Verified (`aiVerifiedOrderId`), handle all specific queries & actions
+      if (aiVerifiedOrderId) {
+        const app = apps.find(a => a.orderId === aiVerifiedOrderId);
+        if (app) {
+          answerVerifiedCustomerSpecificQuery(app, lower, shouldSpeak);
+          return;
+        }
+      }
+
+      // 5. GENERAL MODE: Greeting / How are you / Who are you
+      if (/^(hi|hello|hey|namaste|namaskar|प्रणाम|नमस्ते|हेलो|हाय|good morning|good afternoon|good evening|kaise ho|कैसे हो)$/i.test(lower)) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">🙏 नमस्ते! मैं RNS FINANCE का डिजिटल AI असिस्टेंट हूँ।</div>
+          <div>मैं बिल्कुल बढ़िया हूँ और आपकी सेवा में हाज़िर हूँ! बताइए, आज मैं आपकी क्या मदद कर सकता हूँ?<br>
+          • <strong>नया लोन अप्लाई करने के लिए:</strong> नीचे <em>"📝 Apply Loan on Chat"</em> दबाएं।<br>
+          • <strong>पुराना लोन चेक करने या पेमेंट के लिए:</strong> अपना <strong>Registration No. (RNSF...)</strong> भेजें।</div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 6. GENERAL MODE: Live EMI Calculator inside Chat (e.g. "10000 ka loan 6 month")
+      const numMatches = lower.match(/\d+/g);
+      if (numMatches && (lower.includes('emi') || lower.includes('kist') || lower.includes('किस्त') || lower.includes('loan') || lower.includes('लोन') || lower.includes('month') || lower.includes('महीने'))) {
+        let calcAmt = 5000, calcMonths = 6;
+        numMatches.forEach(nStr => {
+          const val = parseInt(nStr);
+          if (val >= 500 && val <= 500000) calcAmt = val;
+          else if (val >= 1 && val <= 36) calcMonths = val;
+        });
+        const slabFee = calcAmt <= 5000 ? 300 : (calcAmt <= 15000 ? 600 : 1000);
+        const gstFee = Math.round(slabFee * 0.18);
+        const totFee = slabFee + gstFee;
+        const netHand = Math.max(0, calcAmt - totFee);
+        const estPrincipalPerMonth = Math.ceil(calcAmt / calcMonths);
+
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-indigo-900 dark:text-indigo-300">🧮 ₹${calcAmt} लोन (${calcMonths} महीने) का अनुमानित विवरण:</div>
+          <div class="p-2.5 rounded-xl bg-indigo-50 dark:bg-slate-900 border border-indigo-300 space-y-1 text-[11px]">
+            <div>• <strong>लोन राशि (Principal):</strong> ₹${calcAmt}</div>
+            <div>• <strong>अवधि (Tenure):</strong> ${calcMonths} Months</div>
+            <div>• <strong>प्रोसेसिंग फीस (+18% GST):</strong> ₹${totFee} <em>(Promo Code लगाने पर ₹0 तक माफ़)</em></div>
+            <div>• <strong>खाते में प्राप्त राशि (Net Disbursal):</strong> <strong class="text-emerald-700">₹${netHand}</strong></div>
+            <div>• <strong>अनुमानित मासिक मूलधन किस्त:</strong> ₹${estPrincipalPerMonth}/माह (+ आपकी क्रेडिट प्रोफाइल के अनुसार न्यूनतम मासिक ब्याज वेरिफिकेशन में तय होगा)।</div>
+          </div>
+          <button type="button" onclick="startAiChatLoanApplicationWizard()" class="w-full py-1.5 rounded-lg bg-emerald-700 text-white font-extrabold">📝 अभी ₹${calcAmt} लोन के लिए चैट पर अप्लाई करें</button>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 7. GENERAL MODE: Personal query without Registration No.
+      if (
+        lower.includes('mera ') || lower.includes('meri ') || lower.includes('मेरा ') || lower.includes('मेरी ') ||
+        lower.includes('nach link') || lower.includes('एनएसीएच') || lower.includes('utr') ||
+        lower.includes('payment karna') || lower.includes('पेमेंट करना') || lower.includes('qr code') ||
+        lower.includes('status') || lower.includes('स्टेटस') || lower.includes('noc') || lower.includes('re-upload')
+      ) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-amber-800 dark:text-amber-300">🔐 कृपया पहले अपना Registration No. भेजें:</div>
+          <div>आपका स्टेटस देखने, <strong>UPI QR पेमेंट</strong> करने, या <strong>Verification / Re-upload</strong> यहीं चैट से पूरा करने के लिए कृपया अपना <strong>Registration No. (जैसे RNSF1024)</strong> या <strong>Tracking ID</strong> लिखकर या बोलकर भेजें!</div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 8. GENERAL MODE: Polite & Professional Interest Rate Answer (Hides 3% fixed rate)
+      if (lower.includes('interest') || lower.includes('byaj') || lower.includes('ब्याज') || lower.includes('rate') || lower.includes('%')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">📊 RNS FINANCE — Pocket-Friendly Interest Policy:</div>
+          <div>RNS FINANCE में सभी ग्राहकों पर कोई एक समान फिक्स ब्याज दर नहीं थोपी जाती। आपकी ब्याज दर आपके <strong>CIBIL स्कोर, चुनी गई समय-सीमा (1 से 24 महीने)</strong> और <strong>3 महीने के बैंक स्टेटमेंट</strong> के आधार पर सबसे किफायती (Pocket-Friendly) रखी जाती है।</div>
+          <div class="text-[11px] text-slate-600 dark:text-slate-300">आवेदन के <strong>Verification</strong> स्टेज में लोन स्वीकार करने से पहले ही आपको आपकी सटीक मासिक किस्त (EMI) स्पष्ट रूप से दिखा दी जाती है।</div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 9. GENERAL MODE: Foreclosure, CIBIL, Late Fee, Bounce Rules
+      if (lower.includes('foreclos') || lower.includes('pre-clos') || lower.includes('settle') || lower.includes('cibil') || lower.includes('सिबिल') || lower.includes('late') || lower.includes('bounce') || lower.includes('बाउंस') || lower.includes('पेनल्टी')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-teal-800 dark:text-teal-300">🎓 CIBIL, Foreclosure एवं Repayment नियम:</div>
+          <div class="space-y-1 text-[11px]">
+            <div>• <strong>One-Time Foreclosure सुविधा:</strong> आप समय से पहले कभी भी बकाया राशि का एकमुश्त भुगतान (Foreclosure Settlement) करके अपना लोन बंद कर सकते हैं और तुरंत <strong>No Dues Certificate (NOC)</strong> प्राप्त कर सकते हैं।</div>
+            <div>• <strong>CIBIL Score लाभ:</strong> समय पर किस्त चुकाने से आपका CIBIL स्कोर तेज़ी से बढ़ता है और भविष्य में प्री-अप्रूव्ड बड़े लोन की पात्रता मिलती है। (आप हमारे पोर्टल के <em>Check CIBIL Score</em> टैब से मुफ्त में अपना स्कोर भी चेक कर सकते हैं)।</div>
+            <div>• <strong>EMI Due Date:</strong> हर महीने की निर्धारित तारीख को खाते में पर्याप्त बैलेंस रखें ताकि NACH बाउंस या लेट फीस से बचा जा सके।</div>
+          </div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 10. GENERAL MODE: Processing Fee / Promo Code
+      if (lower.includes('fee') || lower.includes('charge') || lower.includes('फीस') || lower.includes('चार्ज') || lower.includes('promo') || lower.includes('प्रोमो')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">💳 Processing Fee & Promo Code छूट:</div>
+          <div>• ₹1 से ₹5,000 तक के लोन पर: <strong>₹300 (+ 18% GST)</strong><br>• ₹5,001 से ₹15,000 तक: <strong>₹600 (+ 18% GST)</strong><br>• ₹15,000 से ऊपर: <strong>₹1,000 (+ 18% GST)</strong></div>
+          <div class="text-[11px] font-bold text-indigo-800 dark:text-indigo-300">🎟️ ध्यान दें: हम कोई भी फीस एडवांस में नहीं मांगते। प्रोसेसिंग फीस लोन अप्रूव होने पर ही कटती है, और <strong>100% Promo Code</strong> लगने पर प्रोसेसिंग फीस <strong>₹0 (पूरी तरह माफ़)</strong> हो जाती है!</div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 11. GENERAL MODE: Documents Required
+      if (lower.includes('document') || lower.includes('kagaj') || lower.includes('डॉक्यूमेंट') || lower.includes('कागज') || lower.includes('kyc') || lower.includes('pan') || lower.includes('statement')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">📄 आवश्यक दस्तावेज (Minimal KYC Documents):</div>
+          <div>1. <strong>PAN Card</strong> की साफ फोटो<br>2. आपकी <strong>Live Photo (सेल्फी/फोटो)</strong><br>3. सफेद कागज पर <strong>Signature (हस्ताक्षर)</strong><br>4. <strong>3 महीने का बैंक स्टेटमेंट</strong> (पासबुक प्रिंट या बैंक ऑथराइज्ड स्टैम्प स्टेटमेंट)<br>5. 12-अंकों का <strong>KYC ID नंबर</strong>, बैंक खाता विवरण और 1 फैमिली रेफरेंस नंबर।</div>
+          <button type="button" onclick="startAiChatLoanApplicationWizard()" class="w-full py-1.5 rounded-lg bg-emerald-700 text-white font-extrabold mt-1">📝 यहीं चैटबॉट पर डॉक्यूमेंट अपलोड करके अप्लाई करें</button>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 12. GENERAL MODE: How to Apply / Shopping Loan / Personal Loan
+      if (lower.includes('apply') || lower.includes('kaise') || lower.includes('कैसे') || lower.includes('लोन') || lower.includes('loan') || lower.includes('shopping') || lower.includes('शॉपिंग')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">⚡ Personal Loan एवं Online Shopping Loan सुविधा:</div>
+          <div>• <strong>Personal Loan (₹1,000 - ₹50,000):</strong> अप्रूवल के <strong>2 घंटे के अंदर</strong> राशि सीधे आपके बैंक खाते में ट्रांसफर होती है और आपको Bank UTR नंबर मिलता है।<br>
+          • <strong>Online Shopping Loan:</strong> Flipkart/Amazon या किसी भी ऑनलाइन प्रोडक्ट का लिंक दें—अप्रूवल के 2 घंटे में आपका ऑर्डर डिस्पैच होता है और आपको <strong>Tracking ID</strong> व <strong>Official Product Invoice</strong> मिलता है।</div>
+          <button type="button" onclick="startAiChatLoanApplicationWizard()" class="w-full py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold shadow mt-1">
+            📝 चैटबॉट पर अभी ऑनलाइन लोन अप्लाई करें (Start Now)
+          </button>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 13. GENERAL MODE: Helpline / Contact / Address
+      if (lower.includes('helpline') || lower.includes('contact') || lower.includes('number') || lower.includes('संपर्क') || lower.includes('नंबर') || lower.includes('address') || lower.includes('पता') || lower.includes('complaint')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-emerald-800 dark:text-emerald-400">📞 RNS FINANCE — 24×7 Helpline & Corporate Office:</div>
+          <div>• <strong>Helpline & WhatsApp:</strong> <a href="https://wa.me/917668273774" target="_blank" class="underline text-emerald-700 font-extrabold">+91 7668273774</a><br>• <strong>Grievance Email:</strong> <a href="mailto:rnsgpl2316@gmail.com" class="underline text-indigo-700 font-bold">rnsgpl2316@gmail.com</a><br>• <strong>Corporate Office:</strong> ${MUMBAI_CORP_ADDRESS}</div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // Dynamic Varied Fallback (Never repeats the exact same robotic text)
+      const fallbackReplies = [
+        `<div class="font-extrabold text-slate-900 dark:text-white">🤖 मैं आपकी हर प्रकार से सहायता के लिए तैयार हूँ!</div>
+         <div>• यदि आपने पहले से आवेदन किया है, तो कृपया अपना <strong>Registration No. (जैसे RNSF1024)</strong> भेजें।<br>
+         • यदि आप <strong>इसी चैटबॉट पर नया लोन अप्लाई</strong> करना चाहते हैं, तो नीचे बटन दबाएं:</div>
+         <button type="button" onclick="startAiChatLoanApplicationWizard()" class="w-full py-1.5 rounded-lg bg-emerald-700 text-white font-extrabold mt-1">📝 Apply Online on Chatbot</button>`,
+        `<div class="font-extrabold text-emerald-800 dark:text-emerald-400">💡 RNS FINANCE स्मार्ट सहायता केंद्र:</div>
+         <div>आप मुझसे लोन पात्रता, मासिक किस्त का हिसाब (जैसे <em>"10000 का लोन 6 महीने के लिए"</em>), आवश्यक डॉक्यूमेंट्स, शॉपिंग ईएमआई या फोरक्लोजर नियमों के बारे में कुछ भी पूछ सकते हैं, या अपना <strong>Registration No.</strong> डालकर लाइव स्टेटस व पेमेंट कर सकते हैं!</div>`
+      ];
+      const replyHtml = fallbackReplies[aiReplyVariationCounter % fallbackReplies.length];
+      aiReplyVariationCounter++;
+      appendRnsAiMessage('bot', replyHtml, shouldSpeak);
+    }
+
+    // ============================================================================
+    // PART D: VERIFIED CUSTOMER SPECIFIC Q&A + IN-CHAT ACTIONS (QR, KYC, RE-UPLOAD)
+    // ============================================================================
+    function answerVerifiedCustomerSpecificQuery(app, lower, shouldSpeak) {
+      const db = getCloudData();
+      const cfg = (db.orderAgreements && db.orderAgreements[app.orderId]) ? db.orderAgreements[app.orderId] : db.agreementSettings;
+      const isInterestUnlocked = Boolean(app.interestUnlocked || app.offeredAmount || ['Approved', 'Loan Running', 'Loan Closed'].includes(app.status));
+      const rateNum = Number(app.customInterestRate) || parseFloat(cfg.interestRate) || 3;
+      const extraInt = isInterestUnlocked ? Math.round(app.amount * (rateNum / 100) * app.tenure) : 0;
+      const totalPayable = isInterestUnlocked ? Math.round(Number(app.amount) + extraInt) : Math.round(Number(app.amount));
+      const paidSum = Math.round((app.emis || []).reduce((s, e) => s + (Number(e.amount) || 0), 0));
+      const remDue = Math.max(0, totalPayable - paidSum);
+
+      const procFee = (app.totalFee !== undefined && app.totalFee !== null)
+        ? Math.round(Number(app.totalFee))
+        : Math.round(Number(app.processingFee || 0) + Number(app.gstFee || 0));
+      const insAmt = Math.round(app.insuranceOpted ? (Number(app.insuranceAmount) || 0) : 0);
+      const netDisb = Math.max(0, Math.round(app.amount - procFee - insAmt));
+      const isShoppingLoan = app.loanType && app.loanType.toLowerCase().includes('shopping');
+      const inApprovedOrRunning = ['Approved', 'Loan Running', 'Loan Closed'].includes(app.status);
+      const hasDisbursalOrTracking = isShoppingLoan ? Boolean(app.shoppingTrackingNo) : Boolean(app.disbursalUtrNo);
+
+      // 1. PAYMENT / QR CODE REQUEST ("mujhe payment karna hai", "qr code", "pay emi")
+      if (
+        lower.includes('payment') || lower.includes('पेमेंट') || lower.includes('qr') ||
+        lower.includes('क्यूआर') || lower.includes('pay ') || lower.includes('jama karna') ||
+        lower.includes('जमा करना') || lower.includes('upi')
+      ) {
+        appendRnsAiMessage('bot', buildChatUpiPaymentWidget(app), shouldSpeak);
+        return;
+      }
+
+      // 2. VERIFICATION, KYC PENDING, NACH PENDING OR DOCUMENT RE-UPLOAD IN CHAT
+      if (
+        lower.includes('verif') || lower.includes('वेरिफिकेशन') || lower.includes('pending') || lower.includes('पेंडिंग') ||
+        lower.includes('nach') || lower.includes('एनएसीएच') || lower.includes('नेच') || lower.includes('mandate') ||
+        lower.includes('link') || lower.includes('लिंक') || lower.includes('re-upload') || lower.includes('reupload') ||
+        lower.includes('री-अपलोड') || lower.includes('अपलोड') || lower.includes('remark') || lower.includes('रिमार्क') ||
+        lower.includes('otp') || lower.includes('ओटीपी')
+      ) {
+        appendRnsAiMessage('bot', buildChatInteractiveVerificationCenter(app), shouldSpeak);
+        return;
+      }
+
+      // 3. EMI, INSTALLMENTS, REMAINING BALANCE & DUE DATE (+ Pay Now button)
+      if (lower.includes('emi') || lower.includes('kist') || lower.includes('किस्त') || lower.includes('due') || lower.includes('बकाया') || lower.includes('balance') || lower.includes('baki') || lower.includes('बाकी')) {
+        const dueDay = cfg.emiDate || '5';
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-indigo-900 dark:text-indigo-300">💰 आपकी मासिक किस्त (EMI) एवं बकाया विवरण:</div>
+          <div>• <strong>Sanctioned Loan:</strong> ₹${app.amount} (${app.tenure} Months)<br>
+          • <strong>Monthly EMI:</strong> <strong class="text-emerald-700">${isInterestUnlocked ? `₹${app.monthlyEmi} प्रति माह` : 'वेरिफिकेशन के बाद दिखेगा'}</strong><br>
+          • <strong>Paid Installments:</strong> ${app.emis.length} / ${app.tenure} किस्त जमा (कुल जमा: ₹${paidSum})<br>
+          • <strong>Remaining Due Balance:</strong> <strong class="text-rose-600">${app.status === 'Loan Closed' ? '₹0 (Loan Closed)' : (isInterestUnlocked ? `₹${remDue}` : '—')}</strong><br>
+          • <strong>EMI Due Date:</strong> हर महीने की <strong>${escapeHtml(dueDay)} तारीख</strong> को।</div>
+          ${inApprovedOrRunning && app.status !== 'Loan Closed' ? `<button type="button" onclick="askRnsAiChip('Mujhe payment karna hai QR code dikhao')" class="w-full py-1.5 rounded-lg bg-purple-700 text-white font-extrabold mt-1 shadow">📲 Pay EMI Now (Show Live UPI QR)</button>` : ''}
+        `, shouldSpeak);
+        return;
+      }
+
+      // 4. UTR NUMBER / SHOPPING TRACKING ID / DISBURSAL
+      if (lower.includes('utr') || lower.includes('यूटीआर') || lower.includes('tracking') || lower.includes('ट्रैकिंग') || lower.includes('transfer') || lower.includes('ट्रांसफर') || lower.includes('dispatch') || lower.includes('order') || lower.includes('ऑर्डर')) {
+        if (!inApprovedOrRunning) {
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-amber-800">⏳ Disbursal / Tracking Update:</div>
+            <div>आपका आवेदन अभी <strong>${escapeHtml(app.status)}</strong> स्टेज में है। जैसे ही आपका लोन <strong>Approved</strong> होगा, 2 घंटे के अंदर आपका ${isShoppingLoan ? 'Order Tracking ID' : 'Bank Transfer UTR No.'} जारी कर दिया जाएगा।</div>
+          `, shouldSpeak);
+        } else if (isShoppingLoan) {
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-sky-900">🚚 Online Shopping Order Tracking:</div>
+            <div>• <strong>Order Tracking ID:</strong> <span class="font-mono font-extrabold text-sky-700">${escapeHtml(app.shoppingTrackingNo || 'Dispatched — Updating Soon')}</span><br>
+            • <strong>Delivery Address:</strong> ${escapeHtml(app.deliveryAddress || 'As per KYC')}<br>
+            ${app.invoiceProductName ? `• <strong>Product:</strong> ${escapeHtml(app.invoiceProductName)} (₹${app.invoiceProductAmount || app.amount})` : ''}</div>
+          `, shouldSpeak);
+        } else {
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-emerald-900">🏦 Personal Loan Bank Transfer Status:</div>
+            <div>• <strong>Bank Transfer UTR No.:</strong> <span class="font-mono font-extrabold text-emerald-700">${escapeHtml(app.disbursalUtrNo || 'Processing Transfer (Within 2 Hours)')}</span><br>
+            • <strong>Net Disbursed Amount:</strong> ₹${netDisb}<br>
+            • <strong>Bank Account:</strong> ${escapeHtml(app.bankName || '')} — A/C: ${escapeHtml(app.accNo || '')}</div>
+          `, shouldSpeak);
+        }
+        return;
+      }
+
+      // 5. PROMO CODE, PROCESSING FEE, INSURANCE & NET DISBURSAL
+      if (lower.includes('promo') || lower.includes('प्रोमो') || lower.includes('coupon') || lower.includes('कूपन') || lower.includes('fee') || lower.includes('फीस') || lower.includes('insurance') || lower.includes('इंश्योरेंस') || lower.includes('disbursal') || lower.includes('kitna milega')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-purple-900 dark:text-purple-300">🎟️ Promo Code, Fee & Net Disbursal Breakdown:</div>
+          <div>• <strong>Sanctioned Principal:</strong> ₹${app.amount}<br>
+          • <strong>Promo Code Applied:</strong> <strong class="text-emerald-700">${app.promoCode ? `${escapeHtml(app.promoCode)} (-₹${app.promoDiscount || 0} Off)` : 'No Promo Applied'}</strong><br>
+          • <strong>Processing Fee (+18% GST):</strong> ₹${procFee}<br>
+          • <strong>Insurance Fee:</strong> ₹${insAmt} (${app.insuranceOpted ? 'Opted' : 'Not Opted'})<br>
+          • <strong>Net Disbursal / Financed Value:</strong> <strong class="text-emerald-700">₹${netDisb}</strong></div>
+        `, shouldSpeak);
+        return;
+      }
+
+      // 6. DOCUMENTS / AGREEMENT LETTER / NO DUES CERTIFICATE / PRODUCT INVOICE / RECEIPT
+      if (lower.includes('agreement') || lower.includes('एग्रीमेंट') || lower.includes('noc') || lower.includes('no dues') || lower.includes('नो ड्यूज') || lower.includes('certificate') || lower.includes('invoice') || lower.includes('इनवॉइस') || lower.includes('बिल') || lower.includes('pdf') || lower.includes('receipt') || lower.includes('रसीद')) {
+        let btnsHtml = '';
+        if (inApprovedOrRunning && hasDisbursalOrTracking) {
+          btnsHtml += `<button type="button" onclick="openAgreementModal('${escapeHtml(app.orderId)}')" class="w-full py-1.5 px-3 rounded-lg bg-indigo-700 text-white font-extrabold shadow text-center block">📄 Open Agreement letter</button>`;
+        }
+        if (inApprovedOrRunning && app.invoiceProductName) {
+          btnsHtml += `<button type="button" onclick="openProductInvoiceModal('${escapeHtml(app.orderId)}')" class="w-full py-1.5 px-3 rounded-lg bg-emerald-700 text-white font-extrabold shadow text-center block mt-1.5">🧾 Open Product Invoice</button>`;
+        }
+        if (app.status === 'Loan Closed') {
+          btnsHtml += `<button type="button" onclick="openNoDuesModal('${escapeHtml(app.orderId)}')" class="w-full py-1.5 px-3 rounded-lg bg-teal-800 text-white font-extrabold shadow text-center block mt-1.5">🎓 Open No Dues Certificate</button>`;
+        }
+        if (app.emis && app.emis.length > 0) {
+          btnsHtml += `<button type="button" onclick="openEmiReceiptModal('${escapeHtml(app.orderId)}', ${app.emis.length - 1})" class="w-full py-1.5 px-3 rounded-lg bg-slate-800 text-white font-extrabold shadow text-center block mt-1.5">🧾 Latest EMI Receipt (#${app.emis.length})</button>`;
+        }
+
+        if (!btnsHtml) {
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-amber-800">📄 Official Documents Status:</div>
+            <div>• <strong>Agreement letter:</strong> यह आपका लोन <strong>Approved</strong> होने और UTR/Tracking नंबर जारी होने के तुरंत बाद यहाँ उपलब्ध हो जाएगा।<br>
+            • <strong>No Dues Certificate:</strong> यह लोन की सभी किस्तें पूरी होने (<strong>Loan Closed</strong>) पर उपलब्ध होता है।</div>
+          `, shouldSpeak);
+        } else {
+          appendRnsAiMessage('bot', `
+            <div class="font-extrabold text-emerald-800">📄 आपके उपलब्ध ऑफिशियल डॉक्यूमेंट्स:</div>
+            <div>नीचे दिए गए बटन पर टैप करके अपना डॉक्यूमेंट देखें व PDF डाउनलोड करें:</div>
+            <div class="pt-1">${btnsHtml}</div>
+          `, shouldSpeak);
+        }
+        return;
+      }
+
+      // 7. KYC, BANK DETAILS & FAMILY REFERENCE DETAILS
+      if (lower.includes('kyc') || lower.includes('केवाईसी') || lower.includes('bank') || lower.includes('बैंक') || lower.includes('account') || lower.includes('खाता') || lower.includes('pan') || lower.includes('पैन') || lower.includes('reference') || lower.includes('रेफरेंस') || lower.includes('edit') || lower.includes('सुधार')) {
+        appendRnsAiMessage('bot', `
+          <div class="font-extrabold text-slate-900 dark:text-white">👤 आपकी KYC, फैमिली रेफरेंस एवं बैंक खाता जानकारी:</div>
+          <div>• <strong>Name & DOB:</strong> ${escapeHtml(app.name)} (${escapeHtml(app.dob || '-')})<br>
+          • <strong>Mobile & PAN:</strong> +91 ${escapeHtml(app.mobile)} | PAN: ${escapeHtml(app.pan)}<br>
+          • <strong>Family Reference:</strong> ${escapeHtml(app.refName || '-')} (Mob: ${escapeHtml(app.refMobile || '-')})<br>
+          • <strong>Bank Name & Holder:</strong> ${escapeHtml(app.bankName || '-')} (${escapeHtml(app.bankHolder || app.name)})<br>
+          • <strong>Account No. & IFSC:</strong> <span class="font-mono font-bold">${escapeHtml(app.accNo || '-')}</span> (${escapeHtml(app.ifsc || '-')})</div>
+          ${(app.status === 'Verification' || app.remarkText || app.allowReupdate) ? `<div class="mt-2">${buildChatInteractiveVerificationCenter(app)}</div>` : ''}
+        `, shouldSpeak);
+        return;
+      }
+
+      // 8. DEFAULT FOR VERIFIED CUSTOMER: LOAN STATUS + INTERACTIVE VERIFICATION IF PENDING
+      let nextStepAdvice = '';
+      if (app.status === 'Processing') {
+        nextStepAdvice = 'आपका आवेदन अभी शुरुआती जांच (Processing) में है। जल्द ही इसे Verification स्टेज में भेजा जाएगा।';
+      } else if (app.status === 'Verification') {
+        nextStepAdvice = 'आपका आवेदन Verification स्टेज में है! आप नीचे दिए गए विकल्पों पर क्लिक करके यहीं चैटबॉट से अपनी e-KYC, NACH या Document Re-upload पूरा कर सकते हैं:';
+      } else if (app.status === 'Approved') {
+        nextStepAdvice = isShoppingLoan
+          ? `आपका लोन Approved है! ${app.shoppingTrackingNo ? `आपका ऑर्डर डिस्पैच हो चुका है (Tracking ID: ${escapeHtml(app.shoppingTrackingNo)})।` : '2 घंटे में आपका शॉपिंग ऑर्डर डिस्पैच हो जाएगा।'}`
+          : `आपका लोन Approved है! ${app.disbursalUtrNo ? `राशि आपके बैंक में ट्रांसफर हो चुकी है (UTR: ${escapeHtml(app.disbursalUtrNo)})।` : '2 घंटे में लोन राशि आपके बैंक खाते में ट्रांसफर हो जाएगी।'}`;
+      } else if (app.status === 'Loan Running') {
+        nextStepAdvice = `आपका लोन *Active & In Process* है। आपकी मासिक किस्त ₹${app.monthlyEmi} है (${app.emis.length}/${app.tenure} जमा)।`;
+      } else if (app.status === 'Loan Closed') {
+        nextStepAdvice = 'बधाई हो! आपका यह लोन खाता पूरी तरह बंद (100% Closed with Zero Dues) हो चुका है।';
+      } else if (app.status === 'Rejected') {
+        nextStepAdvice = 'क्षमा करें, आंतरिक क्रेडिट नियमों के कारण यह आवेदन स्वीकृत नहीं हो सका।';
+      }
+
+      appendRnsAiMessage('bot', `
+        <div class="font-extrabold text-emerald-800 dark:text-emerald-400">📊 Loan Status (${escapeHtml(app.orderId)}):</div>
+        <div>• <strong>Applicant:</strong> ${escapeHtml(app.name)}<br>
+        • <strong>Current Status:</strong> <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-extrabold">${escapeHtml(app.status)}</span><br>
+        • <strong>Loan Facility:</strong> ₹${app.amount} (${escapeHtml(app.loanType)} — ${app.tenure} Months)</div>
+        <div class="p-2 rounded-lg bg-slate-100 dark:bg-slate-900 border text-[11px] font-semibold">${nextStepAdvice}</div>
+        ${(app.status === 'Verification' || app.remarkText || app.allowReupdate) ? `<div class="mt-2">${buildChatInteractiveVerificationCenter(app)}</div>` : ''}
+        <div class="pt-1 flex gap-1.5">
+          <button type="button" onclick="switchCustomerTab('track'); document.getElementById('trackSearchInput').value='${escapeHtml(app.orderId)}'; searchCustomerApplication();" class="flex-1 py-1.5 px-2 rounded-lg bg-indigo-700 hover:bg-indigo-800 text-white font-extrabold text-[11px] shadow">
+            📦 Open Tracking Card
+          </button>
+          ${inApprovedOrRunning && app.status !== 'Loan Closed' ? `<button type="button" onclick="askRnsAiChip('Mujhe payment karna hai QR code dikhao')" class="flex-1 py-1.5 px-2 rounded-lg bg-purple-700 hover:bg-purple-800 text-white font-extrabold text-[11px] shadow">📲 Pay EMI (QR)</button>` : ''}
+        </div>
+      `, shouldSpeak);
+    }
+
+    // Automatically hide Floating AI Assistant when Owner Portal is opened, and show on Customer Portal
+    (function hookAiVisibilityWithPortalSwitch() {
+      const origSwitch = window.switchMainView;
+      if (typeof origSwitch === 'function') {
+        window.switchMainView = function(view) {
+          origSwitch(view);
+          const aiWrap = document.getElementById('rnsAiAssistantWrapper');
+          if (aiWrap) {
+            aiWrap.classList.toggle('hidden', view !== 'customer');
+          }
+        };
+      }
+    })();
   </script>
 </body>
 </html>
